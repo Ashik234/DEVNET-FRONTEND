@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useState,useEffect } from 'react'
 import loginIMG from '../../assets/login.jpg';
 import { useNavigate,Link } from 'react-router-dom'
-import { useState } from 'react';
 import { userRegister ,userRegisterWithGoogle} from '../../services/userApi';
 import { toast } from 'react-toastify'
-import { GoogleLogin } from '@react-oauth/google';
+import { FcGoogle } from "react-icons/fc";
 import {useGoogleLogin } from '@react-oauth/google';
 import axios from "axios";
 
@@ -51,12 +50,6 @@ function Register() {
     [ user ]
 );
 
-// log out function to log the user out of google and set the profile array to null
-// const logOut = () => {
-//     googleLogout();
-//     setProfile(null);
-// };
-
   const handleSubmit = (e) => {
     e.preventDefault()
     if (values.username.trim() == "") {
@@ -88,31 +81,30 @@ function Register() {
     <img className='w-full h-full object-cover' src={loginIMG} alt="" />
     </div>
     <div className='flex flex-col justify-center'>
-      <form onSubmit={handleSubmit} className='max-w-[400px] w-full mx-auto bg-gray-500 p-8 px-8 rounded-lg' >
-          <h2 className='text-4xl text-white font-bold text-center'>Sign In</h2>
+      <form onSubmit={handleSubmit} className='max-w-[400px] w-full mx-auto p-8 px-8 rounded-lg' >
+          <h2 className='text-4xl text-black font-bold text-center'>SIGN IN</h2>
           <div className='flex flex-col text-white py-2 '> 
-            <input onChange={(e) => { setValues({...values, [e.target.name]:e.target.value }) }} className='rounded-lg bg-gray-300 mt-2 p-2 focus:border-black focus:bg-gray-800 focus:outline-none'  type="text" placeholder='Username' name='username'/>
+            <input onChange={(e) => { setValues({...values, [e.target.name]:e.target.value }) }} className='rounded-lg bg-gray-300 mt-2 p-2 '  type="text" placeholder='Username' name='username'/>
           </div>
           <div className='flex flex-col text-white py-2 '>
-            <input onChange={(e) => { setValues({...values, [e.target.name]:e.target.value }) }} className='rounded-lg bg-gray-300 mt-2 p-2 focus:border-black focus:bg-gray-800 focus:outline-none' type="email" placeholder='Email' name='email' />
+            <input onChange={(e) => { setValues({...values, [e.target.name]:e.target.value }) }} className='rounded-lg bg-gray-300 mt-2 p-2 ' type="email" placeholder='Email' name='email' />
           </div>
           <div className='flex flex-col text-white py-2 '>
-            <input onChange={(e) => { setValues({...values, [e.target.name]:e.target.value }) }} className='rounded-lg bg-gray-300 mt-2 p-2 focus:border-black focus:bg-gray-800 focus:outline-none' type="password" placeholder='Password' name='password'/>
+            <input onChange={(e) => { setValues({...values, [e.target.name]:e.target.value }) }} className='rounded-lg bg-gray-300 mt-2 p-2 ' type="password" placeholder='Password' name='password'/>
           </div>
-          <button className='w-full my-5 py-2 bg-blue-900 rounded-lg shadow-lg shadow-slate-700/10 hover:shadow-slate-700/10 text-white font-semibold'>Sign In</button>
-          <div>
-            <h2>React Google Login</h2>
-            <br />
-            <br />
-            <GoogleLogin />
+          <div className="flex justify-center">
+          <button className='mx-auto my-5 py-2 px-4 w-48 bg-blue-900 rounded-lg  text-white font-semibold'>SIGN IN</button>
           </div>
-          <button type='button' onClick={() => {
+          <div className="flex justify-center">
+          <button className='mx-auto my-5 py-2 px-4 w-48 bg-gray-400 rounded-lg  text-white font-semibold shadow-lg transform transition hover:scale-105 focus:outline-none' type='button' onClick={() => {
             login()
-          }}>GOOGLE</button>
-          <div>
-            <span>Already have an account? </span>
+            }}>
+               <FcGoogle/>Sign In with Google</button>
+          </div>
+          <div className="flex justify-center">
+            <span>Already have an account?</span>
             <Link to="/login">
-              Log IN
+              Log In
             </Link>
           </div>
         </form>

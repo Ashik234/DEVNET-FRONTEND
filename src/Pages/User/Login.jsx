@@ -1,9 +1,10 @@
 import React,{useState,useEffect} from 'react'
 import loginIMG from '../../assets/login.jpg';
 import { useNavigate,Link } from 'react-router-dom'
-import { toast } from 'react-toastify'
 import { userLogin,userLoginwithGoogle } from '../../services/userApi';
-import {useGoogleLogin } from '@react-oauth/google';
+import { toast } from 'react-toastify'
+import { FcGoogle } from "react-icons/fc";
+import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 
 function Login() {
@@ -84,19 +85,24 @@ function Login() {
     </div>
 
     <div className='flex flex-col justify-center'>
-      <form onSubmit={handleSubmit} className='max-w-[400px] w-full mx-auto bg-gray-500 p-8 px-8 rounded-lg' action="">
-          <h2 className='text-4xl text-white font-bold text-center'>LOGIN</h2>
+      <form onSubmit={handleSubmit} className='max-w-[400px] w-full mx-auto p-8 px-8 rounded-lg' >
+          <h2 className='text-4xl text-black font-bold text-center'>LOGIN</h2>
           <div className='flex flex-col text-white py-2 '>
-            <input onChange={(e)=>{setValues({...values, [e.target.name]:[e.target.value]})}} className='rounded-lg bg-gray-300 mt-2 p-2 focus:border-black focus:bg-gray-800 focus:outline-none' type="email" placeholder='Email' name='email' />
+            <input onChange={(e)=>{setValues({...values, [e.target.name]:[e.target.value]})}} className='rounded-lg bg-gray-300 mt-2 p-2  ' type="email" placeholder='Email' name='email' />
           </div>
           <div className='flex flex-col text-white py-2 '>
-            <input onChange={(e)=>{setValues({...values, [e.target.name]:[e.target.value]})}} className='rounded-lg bg-gray-300 mt-2 p-2 focus:border-black focus:bg-gray-800 focus:outline-none' type="password" placeholder='Password' name='password' />
+            <input onChange={(e)=>{setValues({...values, [e.target.name]:[e.target.value]})}} className='rounded-lg bg-gray-300 mt-2 p-2   ' type="password" placeholder='Password' name='password' />
           </div>
-          <button className='w-full my-5 py-2 bg-blue-900 rounded-lg shadow-lg shadow-slate-700/10 hover:shadow-slate-700/10 text-white font-semibold'>LOGIN</button>
-          <button type='button' onClick={() => {
+          <div className="flex justify-center">
+          <button className='mx-auto my-5 py-2 px-4 w-48 bg-blue-900 rounded-lg  text-white font-semibold'>LOGIN</button>
+          </div>
+          <div className="flex justify-center">
+          <button className='mx-auto my-5 py-2 px-4 w-48 bg-gray-400 rounded-lg  text-white font-semibold shadow-lg transform transition hover:scale-105 focus:outline-none' type='button' onClick={() => {
             login()
-          }}>GOOGLE</button>
-          <div>
+          }}>
+            <FcGoogle />Login with Google</button>
+          </div>
+          <div className="flex justify-center">
             <span>Don't have an account? </span>
             <Link to="/register">
               Sign up
