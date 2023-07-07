@@ -37,10 +37,10 @@ function Register() {
                 userRegisterWithGoogle(res.data).then((res) => {
                   if (res.data.created) {
                     localStorage.setItem("userJWT", res.data.token);
-                    toast.success("registered successfully");
+                    toast.success("Registered successfully");
                     navigate("/");
                   } else if (res.data.exists) {
-                    toast.warn("account already exists");
+                    toast.warn("Account already exists");
                   }
                   })
                 })
@@ -64,7 +64,6 @@ function Register() {
           if (res.data.created) {
             localStorage.setItem("userJWT", res.data.token);   
             toast.success(res.data.message);
-            navigate("/");
           } else if (res.data.exists) {
             return toast.warn("Account already exists");
         }
@@ -96,13 +95,15 @@ function Register() {
           <button className='mx-auto my-5 py-2 px-4 w-48 bg-blue-900 rounded-lg  text-white font-semibold'>SIGN IN</button>
           </div>
           <div className="flex justify-center">
-          <button className='mx-auto my-5 py-2 px-4 w-48 bg-gray-400 rounded-lg  text-white font-semibold shadow-lg transform transition hover:scale-105 focus:outline-none' type='button' onClick={() => {
+          <button className='mx-auto my-5 py-2 px-4 w-48 bg-gray-400 rounded-lg text-white font-semibold shadow-lg transform transition hover:scale-105 focus:outline-none' type='button' onClick={() => {
             login()
-            }}>
-               <FcGoogle/>Sign In with Google</button>
+          }}>
+          <FcGoogle className="inline-block w-6 h-6 mr-2"/>
+          <span className="font-normal align-middle">Sign In with Google</span>
+          </button>
           </div>
           <div className="flex justify-center">
-            <span>Already have an account?</span>
+            <span className='font-light'>Already have an account?</span>
             <Link to="/login">
               Log In
             </Link>

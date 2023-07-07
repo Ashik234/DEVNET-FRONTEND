@@ -83,7 +83,6 @@ function Login() {
     <div className='hidden sm:block'>
     <img className='w-full h-full object-cover' src={loginIMG} alt="" />
     </div>
-
     <div className='flex flex-col justify-center'>
       <form onSubmit={handleSubmit} className='max-w-[400px] w-full mx-auto p-8 px-8 rounded-lg' >
           <h2 className='text-4xl text-black font-bold text-center'>LOGIN</h2>
@@ -97,13 +96,15 @@ function Login() {
           <button className='mx-auto my-5 py-2 px-4 w-48 bg-blue-900 rounded-lg  text-white font-semibold'>LOGIN</button>
           </div>
           <div className="flex justify-center">
-          <button className='mx-auto my-5 py-2 px-4 w-48 bg-gray-400 rounded-lg  text-white font-semibold shadow-lg transform transition hover:scale-105 focus:outline-none' type='button' onClick={() => {
+          <button className='mx-auto my-5 py-2 px-4 w-48 bg-gray-400 rounded-lg text-white font-semibold shadow-lg transform transition hover:scale-105 focus:outline-none' type='button' onClick={() => {
             login()
           }}>
-            <FcGoogle />Login with Google</button>
+          <FcGoogle className="inline-block w-5 h-6 mr-2"/>
+          <span className="font-normal align-middle">Google Sign in</span>
+          </button>
           </div>
           <div className="flex justify-center">
-            <span>Don't have an account? </span>
+            <span className='font-light'>Don't have an account? </span>
             <Link to="/register">
               Sign up
             </Link>
