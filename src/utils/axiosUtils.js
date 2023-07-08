@@ -1,5 +1,5 @@
 import axios from "axios";
-import { userBaseUrl } from "../constants/constants";
+import { userBaseUrl,adminBaseUrl } from "../constants/constants";
 
 const createAxiosClient=(baseURL)=>{
     const client =axios.create({
@@ -24,4 +24,10 @@ userAxiosInstance.interceptors.request.use(async(req)=>{
     return modifiedReq;
 })
 
-export { userAxiosInstance }
+const adminAxiosInstance = createAxiosClient(adminBaseUrl)
+adminAxiosInstance.interceptors.request.use(async (req) => {
+    const modifiedReq = attachToken(req, "adminJWT")
+    return modifiedReq
+})
+
+export { userAxiosInstance ,adminAxiosInstance}

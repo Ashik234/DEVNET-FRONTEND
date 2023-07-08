@@ -6,16 +6,18 @@ import { toast } from 'react-toastify'
 import { FcGoogle } from "react-icons/fc";
 import {useGoogleLogin } from '@react-oauth/google';
 import axios from "axios";
+import { useDispatch } from 'react-redux';
 
 function Register() {
-  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
   
+  const [user, setUser] = useState(null);
   const [values, setValues] = useState({
     username: "",
     email: "",
     password:""
   })
-  const navigate = useNavigate();
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => setUser(codeResponse),
