@@ -63,20 +63,25 @@ function NavBar() {
             <span>Profile</span>
           </Link>
         </div>
+          <hr className='' />
       <Link to="/questions">
         <div className="mr-2 ml-2 flex items-center">
           <p className="text-gray-400 text-xs">Questions</p>
         </div>
+        <hr className='' />
       </Link>
       <Link to="/compiler">
         <div className="mr-2 ml-2 flex items-center">
           <p className="text-gray-400 text-xs">Compiler</p>
         </div>
+        <hr className='' />
       </Link> 
       <Link to="/communities">     
         <div className="mr-2 ml-2 flex items-center">
           <p className="text-gray-400 text-xs">Communities</p>
         </div>
+        <hr className='' />
+
       </Link>
       <Link to="/events">     
         <div className="mr-2 ml-2 flex items-center">

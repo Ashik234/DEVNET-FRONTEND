@@ -6,14 +6,19 @@ import { toast } from 'react-toastify'
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import { changeUserDetails } from '../../Redux/user/UserSlice';
+import { useDispatch } from "react-redux";
+
 
 function Login() {
   const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
 
   const [values, setValues] = useState({
     email: "",
     password: ""
   })
+
   const navigate = useNavigate();
 
   const login = useGoogleLogin({
@@ -42,6 +47,8 @@ function Login() {
                 toast.success(res.data.message);
               } else if (res.data.exists) {
                 toast.warn("account already exists");
+              } else if (!res.data.exists) {
+                toast.warn("Account Not Registered");
               }
             })
             .catch((error) => {
@@ -63,13 +70,19 @@ function Login() {
     // } else { 
       try {
         userLogin({ ...values }).then((res) => {
-          console.log(res);
           if (res.data.status) {
+            dispatch(
+              changeUserDetails({
+                userId:res.data.user._id,
+                username:res.data.user.username,
+                email:res.data.user.email,
+              })
+            )
             localStorage.setItem("userJWT", res.data.token);   
             toast.success(res.data.message);
             navigate("/");
           } else {
-            return toast.warn(" already Accountists");
+            return toast.warn("Account Already Exists");
           }
         })
       } catch (error) {

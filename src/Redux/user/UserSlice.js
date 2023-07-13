@@ -6,18 +6,13 @@ export const UserSlice = createSlice({
         userId:"",
         username: "",
         email:"",
-        image: "",
-        picture:""
     },
     reducers: {
         changeUserDetails: (state, action) => {
             state.userId = action.payload.userId
             state.username = action.payload.username
             state.email = action.payload.email
-            state.image = action.payload.image
         }
-
-
     }
 })
 

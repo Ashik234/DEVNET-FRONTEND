@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import PROFILE from "../../assets/profile.jpeg";
+import { useSelector } from 'react-redux/es/hooks/useSelector';
 
 function Profile() {
-  const [name, setName] = useState('John Doe');
-  const [email, setEmail] = useState('johndoe@example.com');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [github, setGithub] = useState('');
   const [linkedin, setLinkedin] = useState('');
   const [about, setAbout] = useState('');
 
+  const profiledata = useSelector((state)=>state.user)
+  
   const handleSave = () => {
     console.log('Profile saved');
   };
@@ -18,24 +22,23 @@ function Profile() {
   };
 
   return (
-    <div className="bg-gray-100">
-      <div className="container mx-auto px-4 py-8">
+    <div className="bg-gray-100 px-4 py-8">
+      <div className="container mx-auto max-w-5xl ">
         <h2 className="text-3xl font-semibold mb-4">Profile</h2>
         <div className="bg-white shadow rounded-lg p-4">
           <div className="flex items-center mb-4">
             <div className="mr-4">
               <img
                 className="w-20 h-20 rounded-full object-cover"
-                src="profile-image.jpg"
+                src={PROFILE}
                 alt="Profile"
               />
             </div>
             <div>
-              <h3 className="text-2xl font-semibold">{name}</h3>
-              <p className="text-gray-600">{email}</p>
+              <h3 className="text-2xl font-semibold">{profiledata.username}</h3>
+              <p className="text-gray-600">{profiledata.email}</p>
               <div className="flex mt-2">
                 {/* {github && ( */}
-                { (                 
                   <a
                     href={github}
                     target="_blank"
@@ -43,31 +46,30 @@ function Profile() {
                     className="mr-2"
                   >
                     <FontAwesomeIcon
-                    icon={faGithub}
-                    className="w-6 h-6 text-gray-600 hover:text-gray-800"
+                      icon={faGithub}
+                      className="w-6 h-6 text-gray-600 hover:text-gray-800"
                     />
                   </a>
-                )}
+                {/* )} */}
                 {/* {linkedin && ( */}
-                {(
                   <a
                     href={linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <FontAwesomeIcon
-                    icon={faLinkedin}
-                    className="w-6 h-6 text-gray-600 hover:text-gray-800"
+                      icon={faLinkedin}
+                      className="w-6 h-6 text-gray-600 hover:text-gray-800"
                     />
                   </a>
-                )}
+                {/* )} */}
               </div>
             </div>
           </div>
           <p className="text-gray-600 mb-2">
             Joined: {new Date().toLocaleDateString()}
           </p>
-          <div className="flex">
+          <div className="flex justify-end">
             <button
               className="bg-blue-500 hover:bg-blue-600 text-white rounded px-4 py-2 mr-2"
               onClick={handleEdit}
@@ -78,7 +80,7 @@ function Profile() {
               className="bg-green-500 hover:bg-green-600 text-white rounded px-4 py-2"
               onClick={handleSave}
             >
-              Save
+              Saved
             </button>
           </div>
         </div>
