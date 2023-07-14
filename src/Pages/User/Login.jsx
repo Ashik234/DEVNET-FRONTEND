@@ -46,7 +46,7 @@ function Login() {
                 navigate("/");
                 toast.success(res.data.message);
               } else if (res.data.exists) {
-                toast.warn("account already exists");
+                toast.warn("Account already exists");
               } else if (!res.data.exists) {
                 toast.warn("Account Not Registered");
               }
@@ -82,7 +82,7 @@ function Login() {
             toast.success(res.data.message);
             navigate("/");
           } else {
-            return toast.warn("Account Already Exists");
+            return toast.warn(res.data.message);
           }
         })
       } catch (error) {

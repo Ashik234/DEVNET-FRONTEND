@@ -21,6 +21,7 @@ export default function EmailVerify() {
                       userId:data.user._id,
                       username:data.user.username,
                       email:data.user.email,
+                      joinedDate:data.user.joinedDate
                     })
                   )
                 setValidUrl(true)
@@ -42,7 +43,7 @@ export default function EmailVerify() {
                     </Link>
                 </div>
             ): (
-                    <h1>404 Not Found</h1>
+                <h1>404 Not Found</h1>
             )}
         </>
     )

@@ -42,6 +42,14 @@ const getQuestion =()=>{
   })
 }
 
+const getSingleQuestion = (id)=>{
+  return userAxiosInstance.get(`/viewquestion/${id}`,{
+    withCredentials:true
+  })
+}
+
+
+
 export {
   userRegister,
   userLogin,
@@ -49,5 +57,6 @@ export {
   userLoginwithGoogle,
   isUserAuth,
   askQuestion,
-  getQuestion
+  getQuestion,
+  getSingleQuestion
 };

@@ -10,6 +10,9 @@ import Questions from "../components/Questions/Questions";
 import Profile from "../components/Profile/Profile";
 import PrivateRoutes from "../protectedRoutes/privateRoutes";
 import AskQuestion from "../components/Questions/askQuestion";
+import Communities from "../components/Communities/Communities";
+import ViewQuestion from "../components/Questions/ViewQuestion";
+import CreateCommunity from "../components/Communities/createCommunity";
 
 function UserRoutes() {
   return (
@@ -24,6 +27,9 @@ function UserRoutes() {
         <Route index element={<Home />}></Route>
         <Route exact path="/questions" element={<Questions />} />
         <Route exact path="/questions/ask" element={<AskQuestion />} />
+        <Route exact path="/questions/viewquestion" element={<ViewQuestion/>}/>
+        <Route exact path="/communities" element={<Communities/>} />
+       <Route exact path="/communities/createcommunity" element={<CreateCommunity/>}/>
         <Route exact path="/profile" element={<Profile />} />
       </Route>
       </Route>

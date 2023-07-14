@@ -12,7 +12,7 @@ function Profile() {
   const [about, setAbout] = useState('');
 
   const profiledata = useSelector((state)=>state.user)
-  
+
   const handleSave = () => {
     console.log('Profile saved');
   };
@@ -67,7 +67,7 @@ function Profile() {
             </div>
           </div>
           <p className="text-gray-600 mb-2">
-            Joined: {new Date().toLocaleDateString()}
+            Joined: {profiledata.joinedDate}
           </p>
           <div className="flex justify-end">
             <button

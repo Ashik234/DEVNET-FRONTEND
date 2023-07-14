@@ -8,7 +8,6 @@ function privateRoutes({ role, route }) {
     if (role === "user") {
       isUserAuth()
         .then((res) => {
-          console.log(res.data);
           setVerify(res.data.success);
         })
         .catch((err) => {
