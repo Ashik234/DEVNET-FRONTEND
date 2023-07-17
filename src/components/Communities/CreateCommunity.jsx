@@ -1,114 +1,103 @@
 import React, { useState } from 'react';
+import { createCommunity } from '../../services/userApi';
+import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
 
 function CreateCommunity() {
-  const [title, setTitle] = useState('');
-  const [profileImage, setProfileImage] = useState('');
-  const [type, setType] = useState('');
-  const [description, setDescription] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
+  const [community, setCommunity] = useState('');
+  const navigate = useNavigate()
 
-  const handleCreate = () => {
-    // Perform the create action here
-    console.log('Create community:', {
-      title,
-      profileImage,
-      type,
-      description
-    });
 
-    // Reset the form
-    setTitle('');
-    setProfileImage('');
-    setType('');
-    setDescription('');
-
-    // Close the modal
-    setIsOpen(false);
+  const handleSubmit = (e) => {
+   e.preventDefault()
+   if (!community || !community.title || community.title.trim() === "") {
+    return toast.warn("Title should not be empty");
+  } else if (!community || !community.type || community.type.trim() === "") {
+    return toast.warn("Type should not be empty");
+  } else if (!community || !community.description || community.description.trim() === "") {
+    return toast.warn("Description should not be empty");
+  } else {
+   try {
+    const formData = new FormData();
+      formData.append("title", community.title);
+      formData.append("image", community.image);
+      formData.append("type", community.type);
+      formData.append("description", community.description);
+    createCommunity(formData).then((res)=>{
+      setCommunity(res.data)
+      if(res.data.success){
+        toast.success(res.data.message)
+        navigate("/communities")
+      }
+    })
+   } catch (error) {
+    console.log(error);
+   }
+  }
   };
 
   return (
-    <div>
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={() => setIsOpen(true)}
-      >
-        Create Community
-      </button>
-
-      {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-10">
-          <div className="bg-white w-1/3 rounded p-6">
-            <h2 className="text-lg font-bold mb-4">Create Community</h2>
-
-            <div className="mb-4">
-              <label htmlFor="title" className="block font-bold mb-1">
-                Title
-              </label>
-              <input
-                id="title"
-                type="text"
-                className="border border-gray-400 p-2 w-full"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="profileImage" className="block font-bold mb-1">
-                Profile Image
-              </label>
-              <input
-                id="profileImage"
-                type="text"
-                className="border border-gray-400 p-2 w-full"
-                value={profileImage}
-                onChange={(e) => setProfileImage(e.target.value)}
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="type" className="block font-bold mb-1">
-                Type
-              </label>
-              <input
-                id="type"
-                type="text"
-                className="border border-gray-400 p-2 w-full"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="description" className="block font-bold mb-1">
-                Description
-              </label>
-              <textarea
-                id="description"
-                className="border border-gray-400 p-2 w-full"
-                rows={4}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
-
-            <div className="flex justify-end">
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-                onClick={handleCreate}
-              >
-                Create
-              </button>
-              <button
-                className="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
-                onClick={() => setIsOpen(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="rounded-lg shadow-md bg-white p-6 w-96">
+        <h2 className="text-2xl font-bold mb-4">Create Community</h2>
+        <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label htmlFor="title" className="block font-bold mb-1">
+            Title
+          </label>
+          <input
+            id="title"
+            name='title'
+            type="text"
+            className="border border-gray-400 p-2 w-full"
+            onChange={(e) => {setCommunity({...community,[e.target.name]:e.target.value})}}
+          />
         </div>
-      )}
+
+        <div className="mb-4">
+          <label htmlFor="profileImage" className="block font-bold mb-1">
+            Profile Image
+          </label>
+          <input
+            id="profileImage"
+            type="file"
+            name='image'
+            accept="image/*"
+            className="border border-gray-400 p-2 w-full"
+            onChange={(e) => {setCommunity({...community,[e.target.name]:e.target.files[0]})}}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="type" className="block font-bold mb-1">
+            Type
+          </label>
+          <input
+            id="type"
+            name='type'
+            type="text"
+            className="border border-gray-400 p-2 w-full"
+            onChange={(e) => {setCommunity({...community,[e.target.name]:e.target.value})}}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="description" className="block font-bold mb-1">
+            Description
+          </label>
+          <textarea
+            id="description"
+            name='description'
+            className="border border-gray-400 p-2 w-full"
+            onChange={(e) => {setCommunity({...community,[e.target.name]:e.target.value})}}
+          />
+        </div>
+
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Create
+        </button>
+        </form>
+      </div>
     </div>
   );
 }

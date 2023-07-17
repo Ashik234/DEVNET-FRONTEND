@@ -8,18 +8,20 @@ import NotFoundPage from "../Pages/NotFoundPage";
 import Layout from "../Pages/User/Layout";
 import Questions from "../components/Questions/Questions";
 import Profile from "../components/Profile/Profile";
-import PrivateRoutes from "../protectedRoutes/privateRoutes";
-import AskQuestion from "../components/Questions/askQuestion";
+import PrivateRoutes from "../protectedRoutes/PrivateRoutes";
+import PublicRoutes from "../protectedRoutes/PublicRoutes";
+import AskQuestion from "../components/Questions/AskQuestion";
 import Communities from "../components/Communities/Communities";
 import ViewQuestion from "../components/Questions/ViewQuestion";
-import CreateCommunity from "../components/Communities/createCommunity";
+import CreateCommunity from "../components/Communities/CreateCommunity";
+import ViewCommunity from "../components/Communities/ViewCommunity";
 
 function UserRoutes() {
   return (
     <Routes>
       <Route path="*" element={<NotFoundPage />} />
 
-      <Route exact path="/login" element={<Login />} />
+      <Route exact path="/login" element={<PublicRoutes><Login /></PublicRoutes>} />
       <Route exact path="/register" element={<Register />} />
       <Route exact path="/:id/verify/:token" element={<EmailVerify />} />
       <Route element={<PrivateRoutes role={"user"} route={"/login"} />}>
@@ -29,7 +31,8 @@ function UserRoutes() {
         <Route exact path="/questions/ask" element={<AskQuestion />} />
         <Route exact path="/questions/viewquestion" element={<ViewQuestion/>}/>
         <Route exact path="/communities" element={<Communities/>} />
-       <Route exact path="/communities/createcommunity" element={<CreateCommunity/>}/>
+        <Route exact path="/communities/createcommunity" element={<CreateCommunity/>}/>
+        <Route exact path="/communities/viewcommunity" element={<ViewCommunity/>}/>
         <Route exact path="/profile" element={<Profile />} />
       </Route>
       </Route>

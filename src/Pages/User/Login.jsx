@@ -45,8 +45,6 @@ function Login() {
                 localStorage.setItem("userJWT", res.data.token);
                 navigate("/");
                 toast.success(res.data.message);
-              } else if (res.data.exists) {
-                toast.warn("Account already exists");
               } else if (!res.data.exists) {
                 toast.warn("Account Not Registered");
               }

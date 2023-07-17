@@ -48,7 +48,17 @@ const getSingleQuestion = (id)=>{
   })
 }
 
+const submitAnswer = (id,data)=>{
+  return userAxiosInstance.post(`/answer/${id}`,data,{
+    withCredentials:true
+  })
+}
 
+const createCommunity =(data)=>{
+  return userAxiosInstance.post("/createcommunity",data,{
+    withCredentials:true
+  })
+}
 
 export {
   userRegister,
@@ -58,5 +68,7 @@ export {
   isUserAuth,
   askQuestion,
   getQuestion,
-  getSingleQuestion
+  getSingleQuestion,
+  submitAnswer,
+  createCommunity
 };

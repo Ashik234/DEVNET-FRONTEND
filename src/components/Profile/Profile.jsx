@@ -12,7 +12,7 @@ function Profile() {
   const [about, setAbout] = useState('');
 
   const profiledata = useSelector((state)=>state.user)
-
+console.log(profiledata);
   const handleSave = () => {
     console.log('Profile saved');
   };

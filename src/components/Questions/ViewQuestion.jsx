@@ -1,55 +1,76 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from "react-toastify";
 import { getSingleQuestion } from '../../services/userApi';
+import { submitAnswer } from '../../services/userApi';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function ViewQuestion() {
+  const navigate = useNavigate();
   const location = useLocation();
   const id = location.state;
 
-  const [question, setQuestion] = useState({});
+  const [question, setQuestion] = useState(null);
   const [answer, setAnswer] = useState('');
-
   useEffect(() => {
     getSingleQuestion(id).then((res) => {
-      setQuestion(res.data);
+      setQuestion(res.data.singlequestion);
     });
   }, []);
 
-  const handleAnswerChange = (e) => {
-    setAnswer(e.target.value);
-  };
+  const SubmitAnswer = (e) => {
+    e.preventDefault()
+    if(!answer || !answer.answer || answer.answer.trim() === ""){
+      return toast.warn("Answer should not be empty");
+    }else{
+    try {
 
-  const submitAnswer = () => {
-    
-    console.log(answer);
+      submitAnswer(id,answer).then((res)=>{
+        console.log(id);
+        setAnswer(res.data)
+        if(res.data.success){
+          toast.success(res.data.message);
+          navigate("/questions/viewquestion")
+        }else {
+          console.log("jjjjjjjjjjjjj");
+        }
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
   };
+  console.log(question);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-400">
+    <>
+    {question ? <div className="flex flex-col items-center justify-center min-h-screen bg-gray-400">
       <div className="max-w-4xl mt-8 w-full bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold mb-4">{question.singlequestion?.title}</h1>
-        <p className="text-gray-500">Posted by {question.singlequestion?.userId.username}</p>
+        <h1 className="text-2xl font-bold mb-4">{question.title}</h1>
+        <p className="text-gray-500">Posted by {question.userId.username}</p>
         <p className="text-gray-500 text-sm mb-4">Posted on July 14, 2023</p>
         <div className="bg-gray-200 p-4 rounded-md">
-          <p>{question.singlequestion?.description}</p>
+          <p>{question.description}</p>
         </div>
       </div>
 
       <div className="mt-6 max-w-4xl w-full bg-white rounded-lg shadow-md p-6">
         <h2 className="text-lg font-bold mb-2">Answers</h2>
 
-        <div className="bg-gray-200 p-4 rounded-md">
-          <div className="flex items-center mb-2">
-            <div className="bg-blue-500 rounded-full h-8 w-8 flex items-center justify-center mr-2">
-              <p className="text-white font-bold">JS</p>
+        {question.answers.map((item, index) => (
+          <div key={index} className="bg-gray-200 p-4 rounded-md mb-4">
+            <div className="flex items-center mb-2">
+              <div className="bg-blue-500 rounded-full h-8 w-8 flex items-center justify-center mr-2">
+                <p className="text-white font-bold">JS</p>
+              </div>
+              <div>
+                <p className="text-gray-500 mb-1">Posted by {item.userId.username}</p>
+                <p className="text-gray-500 text-sm">Posted on July 14, 2023</p>
+              </div>
             </div>
-            <div>
-              <p className="text-gray-500 mb-1">Posted by Jane Smith</p>
-              <p className="text-gray-500 text-sm">Posted on July 14, 2023</p>
-            </div>
+            <p className="text-gray-800">{item.answer}</p>
           </div>
-          <p className="text-gray-800">This is a description of the answer.</p>
-        </div>
+        ))}
       </div>
 
       <div className="mt-6 max-w-4xl w-full bg-white rounded-lg shadow-md p-6">
@@ -60,18 +81,20 @@ function ViewQuestion() {
             className="w-full px-3 py-2 mb-2 rounded-md resize-none"
             rows="4"
             placeholder="Enter your answer..."
-            value={answer}
-            onChange={handleAnswerChange}
+            name='answer'
+            onChange={(e)=>{setAnswer({...answer,[e.target.name]:e.target.value})}}
           ></textarea>
           <button
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-            onClick={submitAnswer}
+            onClick={SubmitAnswer}
           >
             Submit Answer
           </button>
         </div>
       </div>
-    </div>
+    </div>:<div></div> }
+   
+    </>
   );
 }
 
