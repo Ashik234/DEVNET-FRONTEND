@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { createCommunity } from '../../services/userApi';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
-
+import { useLocation } from 'react-router-dom';
 function CreateCommunity() {
   const [community, setCommunity] = useState('');
   const navigate = useNavigate()
-
+  const location = useLocation();
+  const id = location.state;
 
   const handleSubmit = (e) => {
    e.preventDefault()
@@ -17,13 +18,15 @@ function CreateCommunity() {
   } else if (!community || !community.description || community.description.trim() === "") {
     return toast.warn("Description should not be empty");
   } else {
+
+
    try {
     const formData = new FormData();
       formData.append("title", community.title);
       formData.append("image", community.image);
       formData.append("type", community.type);
       formData.append("description", community.description);
-    createCommunity(formData).then((res)=>{
+    createCommunity(id,formData).then((res)=>{
       setCommunity(res.data)
       if(res.data.success){
         toast.success(res.data.message)

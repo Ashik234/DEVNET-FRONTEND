@@ -18,9 +18,9 @@ function Questions() {
     getQuestions();
   }, []);
 
-  const navigateToView=(id)=>{
-     navigate(`/questions/viewquestion`,{state:id})
-  }
+  const navigateToView = (id) => {
+    navigate(`/questions/viewquestion`, { state: id });
+  };
   return (
     <div>
       {data.length === 0 ? (
@@ -44,34 +44,34 @@ function Questions() {
         </div>
       ) : (
         <div>
-        <div className="bg-gray-400 mt-4 mx-auto max-w-4xl p-4 text-center rounded-lg">
-  <div className="flex flex-wrap items-center justify-between">
-    <div className="flex items-center mb-2">
-      <div className="relative mr-4">
-        <select className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 focus:outline-none">
-          <option value="">Tags</option>
-          <option value="">JAVASCRIPT</option>
-        </select>
-      </div>
-    </div>
-    <div className="flex items-center mb-2">
-      <div className="mr-2">Sorted by:</div>
-      <div className="relative">
-        <select className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 focus:outline-none">
-          <option value="">Sort by</option>
-          <option value="">Highest Votes</option>
-        </select>
-      </div>
-    </div>
-    <div className="ml-auto">
-      <Link to="/questions/ask">
-        <button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full py-1 px-4">
-          Ask a Question
-        </button>
-      </Link>
-    </div>
-  </div>
-</div>
+          <div className="bg-gray-400 mt-4 mx-auto max-w-4xl p-4 text-center rounded-lg">
+            <div className="flex flex-wrap items-center justify-between">
+              <div className="flex items-center mb-2">
+                <div className="relative mr-4">
+                  <select className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 focus:outline-none">
+                    <option value="">Tags</option>
+                    <option value="">JAVASCRIPT</option>
+                  </select>
+                </div>
+              </div>
+              <div className="flex items-center mb-2">
+                <div className="mr-2">Sorted by:</div>
+                <div className="relative">
+                  <select className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 focus:outline-none">
+                    <option value="">Sort by</option>
+                    <option value="">Highest Votes</option>
+                  </select>
+                </div>
+              </div>
+              <div className="ml-auto">
+                <Link to="/questions/ask">
+                  <button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full py-1 px-4">
+                    Ask a Question
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
 
           <div>
             {data.map((item, index) => {
@@ -119,7 +119,7 @@ function Questions() {
                     />
                     5 Answers
                   </div>
-                  <button onClick={()=>navigateToView(item._id)}>
+                  <button onClick={() => navigateToView(item._id)}>
                     View Question
                   </button>
                 </div>

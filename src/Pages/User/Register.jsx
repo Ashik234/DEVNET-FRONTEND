@@ -65,7 +65,6 @@ function Register() {
       try {
         userRegister({ ...values }).then((res) => {
           if (res.data.created) {
-            localStorage.setItem("userJWT", res.data.token);
             toast.success(res.data.message);
           } else if (res.data.exists) {
             return toast.warn("Account already exists");

@@ -54,8 +54,26 @@ const submitAnswer = (id,data)=>{
   })
 }
 
-const createCommunity =(data)=>{
-  return userAxiosInstance.post("/createcommunity",data,{
+const createCommunity =(id,data)=>{
+  return userAxiosInstance.post(`/createcommunity/${id}`,data,{
+    withCredentials:true
+  })
+}
+
+const getCommunity =()=>{
+  return userAxiosInstance.get("/communities",{
+    withCredentials:true
+  })
+}
+
+const getSingleCommunity =(id)=>{
+  return userAxiosInstance.get(`/viewcommunity/${id}`,{
+    withCredentials:true
+  })
+}
+
+const joinCommunity =(id)=>{
+  return userAxiosInstance.post(`/join/${id}`,{
     withCredentials:true
   })
 }
@@ -70,5 +88,8 @@ export {
   getQuestion,
   getSingleQuestion,
   submitAnswer,
-  createCommunity
+  createCommunity,
+  getCommunity,
+  getSingleCommunity,
+  joinCommunity
 };

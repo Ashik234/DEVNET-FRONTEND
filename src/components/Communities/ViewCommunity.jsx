@@ -1,65 +1,132 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import JAVASCRIPT from "../../assets/javascript-logo.png";
 import COMMUNITY from "../../assets/community.jpg";
+import { useLocation } from "react-router-dom";
+import { getSingleCommunity, joinCommunity } from "../../services/userApi";
+import { toast } from "react-toastify";
+import CommunityMembers from "./CommunityMembers";
+import CommunityEvents from "./CommunityEvents";
+import CommunityDiscussions from "./CommunityDiscussions";
 
 function ViewCommunity() {
+  const location = useLocation();
+  const id = location.state;
+
+  const [community, setCommunity] = useState(null);
+  const [activeSection, setActiveSection] = useState("about");
+
+  useEffect(() => {
+    getSingleCommunity(id).then((res) => {
+      setCommunity(res.data.singlecommunity);
+    });
+  }, []);
+
+  const handleJoin = (id) => {
+    joinCommunity(id).then((res) => {
+      toast.success(res.data.message);
+    });
+  };
+
+  const handleSectionChange = (section) => {
+    setActiveSection(section);
+  };
+
   return (
-    <div>
-      <div className="relative">
-        <img
-          src={COMMUNITY}
-          alt="Community Image"
-          className="w-full h-72 object-cover"
-        />
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-          <h2 className="text-2xl font-bold">
-            Building Bridges, Embracing Unity: Our Community, Our Strength.
-          </h2>
-        </div>
-        <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-3 absolute top-52 left-0 right-0 z-10">
-          <div className="flex flex-col sm:flex-row items-center justify-between">
-            <div className="flex items-center">
-              <div className="w-28 h-28 overflow-hidden">
-                <img
-                  src={JAVASCRIPT}
-                  alt="Community Profile"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="ml-4">
-                <h3 className="text-xl font-bold">Community Name</h3>
-                <p className="text-gray-600">Members: 100</p>
-                <p className="text-gray-600">Created At: July 1, 2023</p>
+    <>
+      {community ? (
+        <div>
+          <div className="relative">
+            <img
+              src={COMMUNITY}
+              alt="Community Image"
+              className="w-full h-72 object-cover"
+            />
+            <div className="absolute inset-0 bg-black opacity-50"></div>
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+              <h2 className="text-2xl font-bold">
+                Building Bridges, Embracing Unity: Our Community, Our Strength.
+              </h2>
+            </div>
+            <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-3 absolute top-52 left-0 right-0 z-10">
+              <div className="flex flex-col sm:flex-row items-center justify-between">
+                <div className="flex items-center">
+                  <div className="w-28 h-28 overflow-hidden">
+                    <img
+                      src={JAVASCRIPT}
+                      alt="Community Profile"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-xl font-bold">{community.title}</h3>
+                    <p className="text-gray-600">
+                      Members: {community.numberOfMembers}
+                    </p>
+                    <p className="text-gray-600">
+                      Created At: {community.createdAt}
+                    </p>
+                  </div>
+                </div>
+                {/* {community.members[0].role != "admin" &&  */}
+
+                <button
+                  onClick={() => handleJoin(community._id)}
+                  className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
+                >
+                  Join
+                </button>
+                {/* } */}
               </div>
             </div>
-            <button className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md">
-              Join
-            </button>
           </div>
+
+          <div className="bottom-4 sm:bottom-0 left-0 right-0 mt-20 z-20">
+            <nav className="bg-slate-100">
+              <div className="max-w-3xl mx-auto px-8 py-2">
+                <ul className="flex space-x-36">
+                  <li>
+                    <button onClick={() => handleSectionChange("about")}>
+                      <h1 href="#">About Us</h1>
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => handleSectionChange("members")}>
+                      <h1 href="#">Members</h1>
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => handleSectionChange("events")}>
+                      <h1 href="#">Events</h1>
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => handleSectionChange("discussions")}>
+                      <h1 href="#">Discussions</h1>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+
+          {activeSection === "about" && (
+            <div className="bottom-0 left-0 right-0 mt-8 z-20">
+              <div className="max-w-5xl mx-auto p-8 bg-slate-100 rounded-lg shadow-lg">
+                <h2 className="text-2xl font-bold mb-4">
+                  About {community?.title}
+                </h2>
+                <p className="text-gray-600">{community?.description}</p>
+              </div>
+            </div>
+          )}
+          {activeSection === "members" && <CommunityMembers />}
+          {activeSection === "events" && <CommunityEvents />}
+          {activeSection === "discussions" && <CommunityDiscussions />}
         </div>
-      </div>
-      <div className="absolute bottom-4 sm:bottom-28 left-0 right-0 z-20">
-        <nav className="bg-slate-100">
-          <div className="max-w-3xl mx-auto px-8 py-2">
-            <ul className="flex space-x-36">
-              <li>
-                <a href="#">About Us</a>
-              </li>
-              <li>
-                <a href="#">Members</a>
-              </li>
-              <li>
-                <a href="#">Events</a>
-              </li>
-              <li>
-                <a href="#">Discussions</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    </div>
+      ) : (
+        <div></div>
+      )}
+    </>
   );
 }
 

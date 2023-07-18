@@ -12,6 +12,7 @@ function ViewQuestion() {
 
   const [question, setQuestion] = useState(null);
   const [answer, setAnswer] = useState('');
+  
   useEffect(() => {
     getSingleQuestion(id).then((res) => {
       setQuestion(res.data.singlequestion);
@@ -24,9 +25,7 @@ function ViewQuestion() {
       return toast.warn("Answer should not be empty");
     }else{
     try {
-
       submitAnswer(id,answer).then((res)=>{
-        console.log(id);
         setAnswer(res.data)
         if(res.data.success){
           toast.success(res.data.message);
@@ -40,7 +39,6 @@ function ViewQuestion() {
     }
   }
   };
-  console.log(question);
 
   return (
     <>

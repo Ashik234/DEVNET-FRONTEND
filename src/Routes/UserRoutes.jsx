@@ -15,7 +15,9 @@ import Communities from "../components/Communities/Communities";
 import ViewQuestion from "../components/Questions/ViewQuestion";
 import CreateCommunity from "../components/Communities/CreateCommunity";
 import ViewCommunity from "../components/Communities/ViewCommunity";
-
+import CommunityMembers from "../components/Communities/CommunityMembers";
+import CommunityEvents from "../components/Communities/CommunityEvents"
+import CommunityDiscussions from "../components/Communities/CommunityDiscussions"
 function UserRoutes() {
   return (
     <Routes>
@@ -33,6 +35,9 @@ function UserRoutes() {
         <Route exact path="/communities" element={<Communities/>} />
         <Route exact path="/communities/createcommunity" element={<CreateCommunity/>}/>
         <Route exact path="/communities/viewcommunity" element={<ViewCommunity/>}/>
+        <Route exact path="/communities/viewcommunity/members" element={<CommunityMembers/>}/>
+        <Route exact path="/communities/viewcommunity/events" element={<CommunityEvents/>}/>
+        <Route exact path="/communities/viewcommunity/discussions" element={<CommunityDiscussions/>}/>
         <Route exact path="/profile" element={<Profile />} />
       </Route>
       </Route>
