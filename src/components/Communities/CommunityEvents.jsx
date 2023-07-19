@@ -1,9 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-function CommunityEvents() {
+function CommunityEvents( ) {
   return (
     <div className="container mx-auto px-4">
       <h4 className="text-3xl font-bold mt-4 mb-4">Events happening around our community</h4>
+      <Link to="/communities/viewcommunity/create">
+      <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded float-right">
+            Create Event
+      </button>
+      </Link>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div className="border border-gray-300 p-4 rounded-lg hover:shadow-md transition-shadow">
           <img
@@ -19,6 +25,8 @@ function CommunityEvents() {
             See Details
           </button>
         </div>
+      </div>
+      <div>
       </div>
     </div>
   );

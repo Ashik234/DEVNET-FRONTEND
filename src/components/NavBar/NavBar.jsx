@@ -1,33 +1,33 @@
-import React, { useState } from 'react';
-import DEVNET from '../../assets/DEVNET-bg.png';
-import { FiUser, FiMenu } from 'react-icons/fi';
-import { Link, useNavigate } from 'react-router-dom';
-import { BiSearch } from 'react-icons/bi';
-import { useSelector } from 'react-redux';
+import React, { useState } from "react";
+import DEVNET from "../../assets/DEVNET-bg.png";
+import { FiUser, FiMenu, FiLogOut } from "react-icons/fi";
+import { Link, useNavigate } from "react-router-dom";
+import { BiSearch } from "react-icons/bi";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { changeUserDetails } from '../../Redux/user/UserSlice'
+import { changeUserDetails } from "../../Redux/user/UserSlice";
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const profiledata = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
-  const handleLogout = ()=>{
+  const handleLogout = () => {
     dispatch(
       changeUserDetails({
-        userId:"",
-        username:"",
-        email:"",
-        joinedDate:""
+        userId: "",
+        username: "",
+        email: "",
+        joinedDate: "",
       }),
       localStorage.removeItem("userJWT"),
       navigate("/")
-    )
-  }
+    );
+  };
 
   return (
     <div className="bg-slate-100 h-20 text-white flex justify-between items-center">
@@ -76,10 +76,10 @@ function NavBar() {
       </div>
       <div
         className={`${
-          menuOpen ? 'block' : 'hidden'
+          menuOpen ? "block" : "hidden"
         } sm:hidden absolute top-20 right-0 bg-white py-2 px-4 rounded-md shadow-md transition duration-300`}
       >
-        {profiledata ? (
+        {profiledata.username ? (
           <>
             <div className="mt-4 flex items-center">
               <Link
@@ -91,27 +91,8 @@ function NavBar() {
               </Link>
             </div>
             <hr className="my-2" />
-            <button
-              className="text-gray-400 flex items-center transition duration-300 hover:text-gray-800"
-              onClick={handleLogout}
-            >
-            <FiUser className="text-gray-400 text-sm mr-2" />
-              <span>Logout</span>
-            </button>
-            
           </>
-        ) : (
-          <div>
-            <Link
-              to="/login"
-              className="text-gray-400 flex items-center transition duration-300 hover:text-gray-800"
-            >
-              <FiUser className="text-gray-400 text-sm mr-2" />
-              <span>Login</span>
-            </Link>
-          </div>
-        )}
-        <hr className="my-2" />
+        ) : null}
         <Link
           to="/questions"
           className="mr-2 ml-2 flex items-center transition duration-300 hover:text-gray-800"
@@ -139,33 +120,65 @@ function NavBar() {
         >
           <p className="text-gray-400 text-xs">Events</p>
         </Link>
-      </div>
-      <div className="pr-4 hidden sm:block">
-        {profiledata ? (
+        <hr className="my-2" />
+        {profiledata.username ? (
           <>
-            <div className="mt-4 flex items-center">
-              <Link
-                to="/profile"
-                className="text-gray-400 flex items-center transition duration-300 hover:text-gray-800"
-              >
-                <FiUser className="text-gray-400 text-sm mr-2" />
-                <span>{profiledata.username}</span>
-              </Link>
-            </div>
-            <hr className="my-2" />
             <button
               className="text-gray-400 flex items-center transition duration-300 hover:text-gray-800"
               onClick={handleLogout}
             >
-            <FiUser className="text-gray-400 text-sm mr-2" />
+              <FiLogOut className="text-gray-400 text-sm mr-2" />
               <span>Logout</span>
             </button>
-
           </>
         ) : (
-          <Link to="/login">
-            <FiUser className="text-gray-400 text-xl mx-4 transition duration-300 hover:text-gray-800" />
-          </Link>
+          <>
+            <div>
+              <Link
+                to="/login"
+                className="text-gray-400 flex items-center transition duration-300 hover:text-gray-800"
+              >
+                <FiUser className="text-gray-400 text-sm mr-2" />
+                <span>Login</span>
+              </Link>
+            </div>
+            <hr className="my-2" />
+          </>
+        )}
+      </div>
+
+      <div className="pr-4 hidden sm:block">
+        {profiledata.username ? (
+         <>
+         <div className="flex items-center">
+           <Link
+             to="/profile"
+             className="text-gray-400 flex items-center transition duration-300 hover:text-gray-800"
+           >
+             <FiUser className="text-gray-400 text-sm mr-2" />
+             <span>{profiledata.username}</span>
+           </Link>
+           <button
+             className="text-gray-400 flex items-center ml-4 transition duration-300 hover:text-gray-800"
+             onClick={handleLogout}
+           >
+             <FiLogOut className="text-gray-400 text-sm mr-2" />
+             <span>Logout</span>
+           </button>
+         </div>
+         
+       </>
+       
+        ) : (
+          <div>
+            <Link
+              to="/login"
+              className="text-gray-400 flex items-center transition duration-300 hover:text-gray-800"
+            >
+              <FiUser className="text-gray-400 text-sm mr-2" />
+              <span>Login</span>
+            </Link>
+          </div>
         )}
       </div>
     </div>

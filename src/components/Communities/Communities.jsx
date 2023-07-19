@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from "react";
 import COMMUNITY from "../../assets/community.jpg";
 import JAVASCRIPT from "../../assets/javascript-logo.png";
-import {useNavigate, Link } from "react-router-dom";
-import { getCommunity,joinCommunity } from "../../services/userApi";
+import { useNavigate, Link } from "react-router-dom";
+import { getCommunity, joinCommunity } from "../../services/userApi";
 import { toast } from "react-toastify";
 
 function Communities() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+
   useEffect(() => {
     getCommunity().then((res) => {
+      console.log(res.data);
       setData(res.data.communityData);
     });
   }, []);
 
   const navigateToView = (id) => {
-    navigate(`/communities/viewcommunity`, { state: id});
+    navigate(`/communities/viewcommunity`, { state: id });
   };
 
-  const handleJoin =(id)=>{
-    joinCommunity(id).then((res)=>{
+  const handleJoin = (id) => {
+    joinCommunity(id).then((res) => {
       toast.success(res.data.message);
-      navigate(`/communities/viewcommunity`, { state: id});
-    })
-  }
+      navigate(`/communities/viewcommunity`, { state: id });
+    });
+  };
 
   return (
     <div>
@@ -55,29 +57,78 @@ function Communities() {
             </button>
           </Link>
         </div>
-          <div>
-            {data.map((item, index) => (
-              <div className="mt-6 ml-2 sm:ml-16 relative z-10" key={index}>
-                <div className="flex items-center">
-                  <img
-                    src={JAVASCRIPT}
-                    alt="Community Profile"
-                    className="w-16 h-16"
-                  />
-                  <div className="ml-4">
-                    <h3 className="text-xl font-bold">{item.title}</h3>
-                    <p>Number of Members</p>
+        {data.length === 0 ? (
+          <p className="font-bold text-xl text-center text-gray-500 mt-10">
+            No Communities Found. Be The First One To Create One!
+          </p>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+              {data.slice(0, 3).map((item, index) => (
+                <div
+                  className="mt-6 ml-2 sm:ml-16 relative z-10 p-4 bg-white shadow-md rounded-lg border border-gray-300"
+                  key={index}
+                >
+                  <div className="flex items-center">
+                    <img
+                      src={JAVASCRIPT}
+                      alt="Community Profile"
+                      className="w-16 h-16"
+                    />
+                    <div className="ml-4">
+                      <h3 className="text-xl font-bold">{item.title}</h3>
+                      <p className="text-gray-600">Number of Members</p>
+                    </div>
                   </div>
+                  <button
+                    onClick={() => handleJoin(item._id)}
+                    className="px-4 py-2 mt-2 bg-blue-500 text-white rounded-lg ml-16"
+                  >
+                    Join
+                  </button>
+                  <button
+                    onClick={() => navigateToView(item._id)}
+                    className="px-4 py-2 mt-2 bg-blue-500 text-white rounded-lg ml-16"
+                  >
+                    View
+                  </button>
                 </div>
-                <button onClick={()=> handleJoin(item._id)}  className="px-4 py-2 mt-2 bg-blue-500 text-white rounded-lg ml-16">
-                  Join
-                </button>
-                <button onClick={() => navigateToView(item._id)} className="px-4 py-2 mt-2 bg-blue-500 text-white rounded-lg ml-16">
-                  View
-                </button>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+              {data.slice(3).map((item, index) => (
+                <div
+                  className="mt-6 ml-2 sm:ml-16 relative z-10 p-4 bg-white shadow-md rounded-lg border border-gray-300"
+                  key={index}
+                >
+                  <div className="flex items-center">
+                    <img
+                      src={JAVASCRIPT}
+                      alt="Community Profile"
+                      className="w-16 h-16 "
+                    />
+                    <div className="ml-4">
+                      <h3 className="text-xl font-bold">{item.title}</h3>
+                      <p className="text-gray-600">Number of Members</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => handleJoin(item._id)}
+                    className="px-4 py-2 mt-2 bg-blue-500 text-white rounded-lg ml-16"
+                  >
+                    Join
+                  </button>
+                  <button
+                    onClick={() => navigateToView(item._id)}
+                    className="px-4 py-2 mt-2 bg-blue-500 text-white rounded-lg ml-16"
+                  >
+                    View
+                  </button>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

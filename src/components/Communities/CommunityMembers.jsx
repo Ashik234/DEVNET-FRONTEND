@@ -1,30 +1,59 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import { getSingleCommunity } from "../../services/userApi";
+import { useLocation } from "react-router-dom";
 
 function CommunityMembers() {
+  const location = useLocation();
+  const id = location.state;
+
+  const [community, setCommunity] = useState(null);
+
+  useEffect(() => {
+    getSingleCommunity(id).then((res) => {
+      setCommunity(res.data.singlecommunity);
+    });
+  }, []);
+
+  console.log(community);
+  if (!community) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="bottom-0 left-0 right-0 mt-8 mb-8 z-20">
-              <div className="bg-slate-100 max-w-5xl mx-auto p-8 rounded-lg shadow-lg">
-                <table className="w-full">
-                  <thead>
-                    <tr>
-                      <th className="py-2">Name</th>
-                      <th className="py-2">Role</th>
-                      <th className="py-2">Profile</th>
-                      <th className="py-2">Message</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="py-2">John Doe</td>
-                      <td className="py-2">Developer</td>
-                      <td className="py-2">Profile Link</td>
-                      <td className="py-2">Hello, nice to meet you!</td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </div>
-  )
+      <div className="bg-slate-100 max-w-5xl mx-auto p-8 rounded-lg shadow-lg">
+        <table className="w-full table-auto">
+          <thead>
+            <tr>
+              <th className="py-2  font-bold">Name</th>
+              <th className="py-2  font-bold">Role</th>
+              <th className="py-2  font-bold">Profile</th>
+              <th className="py-2  font-bold">Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            {community.members.map((member, index) => (
+              <tr key={index}>
+                <td className="py-2">{member.member.username}</td>
+                <td className="py-2">{member.role}</td>
+                <td className="py-2">
+                  <a
+                    href={member.profileLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500"
+                  >
+                    Profile Link
+                  </a>
+                </td>
+                <td className="py-2">{member.message}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 
-export default CommunityMembers
+export default CommunityMembers;

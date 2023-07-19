@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import PROFILE from "../../assets/profile.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
+import { FaBookmark } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
-import { getQuestion } from "../../services/userApi";
+import { getQuestion,saveQuestion } from "../../services/userApi";
+import { toast } from "react-toastify";
 
 function Questions() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-
   useEffect(() => {
     const getQuestions = () => {
       getQuestion().then((res) => {
@@ -17,10 +18,29 @@ function Questions() {
     };
     getQuestions();
   }, []);
+console.log(data);
 
   const navigateToView = (id) => {
     navigate(`/questions/viewquestion`, { state: id });
   };
+  
+  useEffect(()=>{
+    const saveQuestions = ()=>{
+      try {
+        saveQuestion(id).then((res)=>{
+          
+          if(res.data.success){
+            toast.success(res.data.message)
+          }
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    saveQuestions()
+  },[])
+  
+
   return (
     <div>
       {data.length === 0 ? (
@@ -90,7 +110,7 @@ function Questions() {
                       <div className="font-bold mr-4">
                         {item.userId.username}
                       </div>
-                      <div className="mr-4">(Time)</div>
+                      <div className="mr-4">({item.createdAt})</div>
                     </div>
                   </div>
                   <div className="flex items-center font-bold ml-7">
@@ -118,6 +138,13 @@ function Questions() {
                       className="w-6 h-6 text-gray-600 hover:text-gray-800 mr-3"
                     />
                     5 Answers
+                  </div>
+                  <div className="justify-between">
+                  <button onClick={() => saveQuestion(item._id)}  className="">
+                    <div className="relative ml-auto">
+                      <FaBookmark className="w-6 h-6 text-gray-600 hover:text-gray-800 mr-3 absolute bottom-0 right-0" />
+                    </div>
+                  </button>
                   </div>
                   <button onClick={() => navigateToView(item._id)}>
                     View Question

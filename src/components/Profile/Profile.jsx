@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import PROFILE from "../../assets/profile.jpeg";
 import { useSelector } from 'react-redux/es/hooks/useSelector';
+import ProfileSaved from './ProfileSaved';
 
 function Profile() {
   const [name, setName] = useState('');
@@ -11,18 +12,21 @@ function Profile() {
   const [linkedin, setLinkedin] = useState('');
   const [about, setAbout] = useState('');
 
+  const [activeSection, setActiveSection] = useState("about");
+
   const profiledata = useSelector((state)=>state.user)
-console.log(profiledata);
-  const handleSave = () => {
-    console.log('Profile saved');
-  };
 
   const handleEdit = () => {
     console.log('Edit profile');
   };
 
+  const handleSectionChange = (section) => {
+    setActiveSection(section);
+
+  };
+
   return (
-    <div className="bg-gray-100 px-4 py-8">
+    <div className="bg-gray-100 px-4 py-10">
       <div className="container mx-auto max-w-5xl ">
         <h2 className="text-3xl font-semibold mb-4">Profile</h2>
         <div className="bg-white shadow rounded-lg p-4">
@@ -78,12 +82,13 @@ console.log(profiledata);
             </button>
             <button
               className="bg-green-500 hover:bg-green-600 text-white rounded px-4 py-2"
-              onClick={handleSave}
+              onClick={() => handleSectionChange("saved")}
             >
               Saved
             </button>
           </div>
         </div>
+        {activeSection === "about" && (
         <div className="mt-4">
           <h3 className="text-2xl font-semibold mb-2">About</h3>
           <textarea
@@ -94,6 +99,8 @@ console.log(profiledata);
             placeholder="Write something about yourself"
           />
         </div>
+        )}
+        {activeSection ==="saved" && <ProfileSaved id={profiledata.id}/>}
       </div>
     </div>
   );

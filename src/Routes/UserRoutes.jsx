@@ -18,6 +18,8 @@ import ViewCommunity from "../components/Communities/ViewCommunity";
 import CommunityMembers from "../components/Communities/CommunityMembers";
 import CommunityEvents from "../components/Communities/CommunityEvents"
 import CommunityDiscussions from "../components/Communities/CommunityDiscussions"
+import CommunityCreateEvent from "../components/Communities/CommunityCreateEvent";
+import ProfileSaved from "../components/Profile/ProfileSaved";
 function UserRoutes() {
   return (
     <Routes>
@@ -29,6 +31,8 @@ function UserRoutes() {
       <Route element={<PrivateRoutes role={"user"} route={"/login"} />}>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />}></Route>
+        <Route exact path="/profile" element={<Profile />} />
+        <Route exact path="/profile/saved" element={<ProfileSaved/>}/>
         <Route exact path="/questions" element={<Questions />} />
         <Route exact path="/questions/ask" element={<AskQuestion />} />
         <Route exact path="/questions/viewquestion" element={<ViewQuestion/>}/>
@@ -37,8 +41,8 @@ function UserRoutes() {
         <Route exact path="/communities/viewcommunity" element={<ViewCommunity/>}/>
         <Route exact path="/communities/viewcommunity/members" element={<CommunityMembers/>}/>
         <Route exact path="/communities/viewcommunity/events" element={<CommunityEvents/>}/>
+        <Route exact path="/communities/viewcommunity/create" element={<CommunityCreateEvent/>}/>
         <Route exact path="/communities/viewcommunity/discussions" element={<CommunityDiscussions/>}/>
-        <Route exact path="/profile" element={<Profile />} />
       </Route>
       </Route>
     </Routes>

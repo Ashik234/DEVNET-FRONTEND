@@ -36,6 +36,19 @@ const askQuestion = (data) => {
     })
 };
 
+const saveQuestion = (id)=>{
+  return userAxiosInstance.post(`/save/${id}`,{
+    withCredentials:true
+  })
+}
+
+const getSavedQuestions = (id)=>{
+  console.log(id);
+  return userAxiosInstance.get(`/savedquestions/${id}`,{
+    withCredentials:true
+  })
+}
+
 const getQuestion =()=>{
   return userAxiosInstance.get("/questions",{
     withCredentials:true
@@ -78,6 +91,12 @@ const joinCommunity =(id)=>{
   })
 }
 
+const createEvent = (id,data)=>{
+  return userAxiosInstance.post(`/create/${id}`,data,{
+    withCredentials:true
+  })
+}
+
 export {
   userRegister,
   userLogin,
@@ -85,11 +104,14 @@ export {
   userLoginwithGoogle,
   isUserAuth,
   askQuestion,
+  saveQuestion,
+  getSavedQuestions,
   getQuestion,
   getSingleQuestion,
   submitAnswer,
   createCommunity,
   getCommunity,
   getSingleCommunity,
-  joinCommunity
+  joinCommunity,
+  createEvent
 };
