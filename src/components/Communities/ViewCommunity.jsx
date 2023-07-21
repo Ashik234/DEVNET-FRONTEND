@@ -31,6 +31,8 @@ function ViewCommunity() {
     setActiveSection(section);
   };
 
+  console.log(community);
+
   return (
     <>
       {community ? (
@@ -120,7 +122,7 @@ function ViewCommunity() {
             </div>
           )}
           {activeSection === "members" && <CommunityMembers />}
-          {activeSection === "events" && <CommunityEvents />}
+          {activeSection === "events" && <CommunityEvents id={community._id} />}
           {activeSection === "discussions" && <CommunityDiscussions />}
         </div>
       ) : (

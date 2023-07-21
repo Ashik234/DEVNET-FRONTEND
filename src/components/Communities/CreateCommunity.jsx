@@ -3,6 +3,7 @@ import { createCommunity } from '../../services/userApi';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+
 function CreateCommunity() {
   const [community, setCommunity] = useState('');
   const navigate = useNavigate()
@@ -18,8 +19,6 @@ function CreateCommunity() {
   } else if (!community || !community.description || community.description.trim() === "") {
     return toast.warn("Description should not be empty");
   } else {
-
-
    try {
     const formData = new FormData();
       formData.append("title", community.title);

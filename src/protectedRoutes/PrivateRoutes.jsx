@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { isUserAuth } from "../services/userApi";
+import { isAdminAuth } from "../services/adminApi";
 
 function privateRoutes({ role, route }) {
   const [verify, setVerify] = useState(null);
@@ -15,6 +16,16 @@ function privateRoutes({ role, route }) {
           localStorage.removeItem("userJWT");
           console.log(err);
         });
+    }else if(role==="admin"){
+      isAdminAuth()
+      .then((res)=>{
+        setVerify(res.data.success)
+      })
+      .catch((err) => {
+        setVerify(false);
+        localStorage.removeItem("adminJWT");
+        console.log(err);
+      });
     }
   }, []);
   if (verify == null) return;

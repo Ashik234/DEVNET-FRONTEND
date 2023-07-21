@@ -8,6 +8,8 @@ import NotFoundPage from "../Pages/NotFoundPage";
 import Layout from "../Pages/User/Layout";
 import Questions from "../components/Questions/Questions";
 import Profile from "../components/Profile/Profile";
+import ProfileSaved from "../components/Profile/ProfileSaved";
+import EditProfile from "../components/Profile/EditProfile"
 import PrivateRoutes from "../protectedRoutes/PrivateRoutes";
 import PublicRoutes from "../protectedRoutes/PublicRoutes";
 import AskQuestion from "../components/Questions/AskQuestion";
@@ -19,19 +21,20 @@ import CommunityMembers from "../components/Communities/CommunityMembers";
 import CommunityEvents from "../components/Communities/CommunityEvents"
 import CommunityDiscussions from "../components/Communities/CommunityDiscussions"
 import CommunityCreateEvent from "../components/Communities/CommunityCreateEvent";
-import ProfileSaved from "../components/Profile/ProfileSaved";
+import ViewEvent from "../components/Communities/ViewEvent";
 function UserRoutes() {
   return (
     <Routes>
       <Route path="*" element={<NotFoundPage />} />
 
       <Route exact path="/login" element={<PublicRoutes><Login /></PublicRoutes>} />
-      <Route exact path="/register" element={<Register />} />
+      <Route exact path="/register" element={<PublicRoutes><Register /></PublicRoutes>} />
       <Route exact path="/:id/verify/:token" element={<EmailVerify />} />
       <Route element={<PrivateRoutes role={"user"} route={"/login"} />}>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />}></Route>
         <Route exact path="/profile" element={<Profile />} />
+        <Route exact path="/profile/edit" element={<EditProfile/>}/>
         <Route exact path="/profile/saved" element={<ProfileSaved/>}/>
         <Route exact path="/questions" element={<Questions />} />
         <Route exact path="/questions/ask" element={<AskQuestion />} />
@@ -43,6 +46,7 @@ function UserRoutes() {
         <Route exact path="/communities/viewcommunity/events" element={<CommunityEvents/>}/>
         <Route exact path="/communities/viewcommunity/create" element={<CommunityCreateEvent/>}/>
         <Route exact path="/communities/viewcommunity/discussions" element={<CommunityDiscussions/>}/>
+        <Route exact path="/communities/viewcommunity/viewevent" element={<ViewEvent/>}/>
       </Route>
       </Route>
     </Routes>

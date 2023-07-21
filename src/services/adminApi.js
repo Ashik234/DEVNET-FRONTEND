@@ -6,6 +6,13 @@ const adminLogin = (value) => {
     })
 }
 
+const isAdminAuth =()=>{
+    return adminAxiosInstance.get("/adminAuth",{
+        withCredentials:true
+    })
+}
+
 export {
-    adminLogin
+    adminLogin,
+    isAdminAuth
 }

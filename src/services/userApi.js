@@ -30,6 +30,8 @@ const isUserAuth = () => {
   });
 };
 
+// QUESTIONS
+
 const askQuestion = (data) => {
     return userAxiosInstance.post("/ask",data,{
       withCredentials: true,
@@ -67,6 +69,8 @@ const submitAnswer = (id,data)=>{
   })
 }
 
+// COMMUNITY
+
 const createCommunity =(id,data)=>{
   return userAxiosInstance.post(`/createcommunity/${id}`,data,{
     withCredentials:true
@@ -91,8 +95,17 @@ const joinCommunity =(id)=>{
   })
 }
 
+//EVENT
+
 const createEvent = (id,data)=>{
+  console.log(id,"idapi");
   return userAxiosInstance.post(`/create/${id}`,data,{
+    withCredentials:true
+  })
+}
+
+const getEvents = ()=>{
+  return userAxiosInstance.get("/events",{
     withCredentials:true
   })
 }
@@ -113,5 +126,6 @@ export {
   getCommunity,
   getSingleCommunity,
   joinCommunity,
-  createEvent
+  createEvent,
+  getEvents
 };

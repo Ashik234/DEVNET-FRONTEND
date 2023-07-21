@@ -17,7 +17,7 @@ function AdminLogin() {
         if (res.data.login) {
           localStorage.setItem("adminJWT", res.data.token);
           toast.success(res.data.message);
-          navigate("/admin/home");
+          navigate("/admin");
         }
       });
     } catch (error) {

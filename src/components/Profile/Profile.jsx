@@ -4,6 +4,7 @@ import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import PROFILE from "../../assets/profile.jpeg";
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import ProfileSaved from './ProfileSaved';
+import { Link } from 'react-router-dom';
 
 function Profile() {
   const [name, setName] = useState('');
@@ -16,13 +17,8 @@ function Profile() {
 
   const profiledata = useSelector((state)=>state.user)
 
-  const handleEdit = () => {
-    console.log('Edit profile');
-  };
-
   const handleSectionChange = (section) => {
     setActiveSection(section);
-
   };
 
   return (
@@ -74,12 +70,13 @@ function Profile() {
             Joined: {profiledata.joinedDate}
           </p>
           <div className="flex justify-end">
+            <Link to="/profile/edit">
             <button
               className="bg-blue-500 hover:bg-blue-600 text-white rounded px-4 py-2 mr-2"
-              onClick={handleEdit}
             >
               Edit
             </button>
+            </Link>
             <button
               className="bg-green-500 hover:bg-green-600 text-white rounded px-4 py-2"
               onClick={() => handleSectionChange("saved")}

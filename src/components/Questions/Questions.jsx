@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 function Questions() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  
   useEffect(() => {
     const getQuestions = () => {
       getQuestion().then((res) => {
@@ -28,7 +29,6 @@ console.log(data);
     const saveQuestions = ()=>{
       try {
         saveQuestion(id).then((res)=>{
-          
           if(res.data.success){
             toast.success(res.data.message)
           }
