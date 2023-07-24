@@ -11,7 +11,6 @@ function Communities() {
 
   useEffect(() => {
     getCommunity().then((res) => {
-      console.log(res.data);
       setData(res.data.communityData);
     });
   }, []);

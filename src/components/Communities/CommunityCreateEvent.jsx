@@ -9,11 +9,9 @@ function CommunityCreateEvent() {
   const navigate = useNavigate();
   const location = useLocation();
   const id = location.state;
-  console.log(id,"iddddddd");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(id);
     try {
       createEvent(id,event).then((res)=>{
         toast.success(res.data.message)

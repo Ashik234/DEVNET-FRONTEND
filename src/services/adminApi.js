@@ -12,7 +12,48 @@ const isAdminAuth =()=>{
     })
 }
 
+const getUsers = ()=>{
+    return adminAxiosInstance.get("/users",{
+        withCredentials:true
+    })
+}
+
+const getEvents = ()=>{
+    return adminAxiosInstance.get("/events",{
+        withCredentials:true
+    })
+}
+
+const getCommunity = ()=>{
+    return adminAxiosInstance.get("/communities",{
+        withCredentials:true
+    })
+}
+
+const userAction = (id)=>{
+    return adminAxiosInstance.get(`/useraction/${id}`,{
+        withCredentials:true
+    })
+}
+
+const eventAction = (id)=>{
+    return adminAxiosInstance.get(`/eventaction/${id}`,{
+        withCredentials:true
+    })
+}
+
+const communityAction = (id)=>{
+    return adminAxiosInstance.get(`/communityAction/${id}`,{
+        withCredentials:true
+    })
+}
 export {
     adminLogin,
-    isAdminAuth
+    isAdminAuth,
+    getUsers,
+    getEvents,
+    getCommunity,
+    userAction,
+    eventAction,
+    communityAction
 }

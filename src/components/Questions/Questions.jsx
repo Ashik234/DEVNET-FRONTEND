@@ -4,13 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { FaBookmark } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
-import { getQuestion,saveQuestion } from "../../services/userApi";
+import { getQuestion, saveQuestion } from "../../services/userApi";
 import { toast } from "react-toastify";
 
 function Questions() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  
+
   useEffect(() => {
     const getQuestions = () => {
       getQuestion().then((res) => {
@@ -19,27 +19,25 @@ function Questions() {
     };
     getQuestions();
   }, []);
-console.log(data);
 
   const navigateToView = (id) => {
     navigate(`/questions/viewquestion`, { state: id });
   };
-  
-  useEffect(()=>{
-    const saveQuestions = ()=>{
+
+  useEffect(() => {
+    const saveQuestions = () => {
       try {
-        saveQuestion(id).then((res)=>{
-          if(res.data.success){
-            toast.success(res.data.message)
+        saveQuestion(id).then((res) => {
+          if (res.data.success) {
+            toast.success(res.data.message);
           }
-        })
+        });
       } catch (error) {
         console.log(error);
       }
-    }
-    saveQuestions()
-  },[])
-  
+    };
+    saveQuestions();
+  }, []);
 
   return (
     <div>
@@ -98,10 +96,10 @@ console.log(data);
               return (
                 <div
                   key={index}
-                  className="bg-gray-400 mt-6 mx-auto max-w-4xl p-4 text-center rounded-lg"
+                  className="bg-gray-400 mt-6 mx-auto max-w-4xl p-4 text-center rounded-lg relative"
                 >
-                  <div className="flex items-center justify-between mb-4 mr-4">
-                    <div className="flex items-center mr-4 ml-3">
+                  <div className="flex items-center justify-between mb-4 mr-4 ml-3">
+                    <div className="flex items-center mr-4 ml-5">
                       <img
                         src={PROFILE}
                         alt="Profile"
@@ -113,14 +111,14 @@ console.log(data);
                       <div className="mr-4">({item.createdAt})</div>
                     </div>
                   </div>
-                  <div className="flex items-center font-bold ml-7">
+                  <div className="flex items-center font-bold ml-7 px-9">
                     {item.title}
                   </div>
-                  <div className="flex items-center my-4 ml-7">
+                  <div className="flex items-center my-4 ml-7 px-9">
                     {item.description}
                   </div>
 
-                  <div className="flex items-center text-left">
+                  <div className="flex items-center text-left px-9">
                     <div className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 mr-4 ml-5">
                       {item.tags}
                     </div>
@@ -132,23 +130,25 @@ console.log(data);
                     </div>
                   </div>
 
-                  <div className="text-left py-3 mr-4 ml-7">
-                    <FontAwesomeIcon
-                      icon={faComment}
-                      className="w-6 h-6 text-gray-600 hover:text-gray-800 mr-3"
-                    />
-                    5 Answers
-                  </div>
-                  <div className="justify-between">
-                  <button onClick={() => saveQuestion(item._id)}  className="">
-                    <div className="relative ml-auto">
-                      <FaBookmark className="w-6 h-6 text-gray-600 hover:text-gray-800 mr-3 absolute bottom-0 right-0" />
+                  <div className="flex items-center justify-between mx-7 px-9">
+                    <div className="flex items-center">
+                      <FontAwesomeIcon
+                        icon={faComment}
+                        className="w-6 h-6 text-gray-600 hover:text-gray-800 mr-3"
+                      />
+                      <span className="text-left py-3">{item.answers} 2 Answers</span>
                     </div>
-                  </button>
+
+                    <div className="flex items-center">
+                      <button onClick={() => navigateToView(item._id)}>View Question</button>
+                      <button
+                        onClick={() => saveQuestion(item._id)}
+                        className="relative ml-3"
+                      >
+                        <FaBookmark className="w-6 h-6 text-gray-600 hover:text-gray-800 mr-3" />
+                      </button>
+                    </div>
                   </div>
-                  <button onClick={() => navigateToView(item._id)}>
-                    View Question
-                  </button>
                 </div>
               );
             })}

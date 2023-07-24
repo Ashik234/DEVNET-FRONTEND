@@ -1,13 +1,20 @@
-import React from 'react'
+import React from 'react';
+import DEVNET from "../../assets/DEVNET-bg.png";
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <div className='bg-slate-600 h-20 text-white flex justify-between items-center'>
-    <div className='pl-4'>
-      <img src="" className='w-24 sm:w-32 md:w-40' alt="" />
+    <div className='bg-gray-400 h-20 text-white flex justify-between items-center px-4 sm:px-8'>
+      <div>
+        <img src={DEVNET} className='w-24 sm:w-32 md:w-40' alt="" />
+      </div>
+      <Link to="/admin/adminprofile">
+      <div className='flex-grow text-right'>
+        <h1>Admin</h1>
+      </div>
+      </Link>
     </div>
-  </div>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

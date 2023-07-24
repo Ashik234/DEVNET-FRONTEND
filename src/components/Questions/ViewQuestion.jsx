@@ -30,8 +30,6 @@ function ViewQuestion() {
         if(res.data.success){
           toast.success(res.data.message);
           navigate("/questions/viewquestion")
-        }else {
-          console.log("jjjjjjjjjjjjj");
         }
       })
     } catch (error) {

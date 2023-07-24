@@ -45,7 +45,6 @@ const saveQuestion = (id)=>{
 }
 
 const getSavedQuestions = (id)=>{
-  console.log(id);
   return userAxiosInstance.get(`/savedquestions/${id}`,{
     withCredentials:true
   })
@@ -65,6 +64,12 @@ const getSingleQuestion = (id)=>{
 
 const submitAnswer = (id,data)=>{
   return userAxiosInstance.post(`/answer/${id}`,data,{
+    withCredentials:true
+  })
+}
+
+const searchQuesions = ()=>{
+  return userAxiosInstance.get("/searchquestions",{
     withCredentials:true
   })
 }
@@ -98,14 +103,19 @@ const joinCommunity =(id)=>{
 //EVENT
 
 const createEvent = (id,data)=>{
-  console.log(id,"idapi");
   return userAxiosInstance.post(`/create/${id}`,data,{
     withCredentials:true
   })
 }
 
-const getEvents = ()=>{
-  return userAxiosInstance.get("/events",{
+const getEvents = (id)=>{
+  return userAxiosInstance.get(`/events/${id}`,{
+    withCredentials:true
+  })
+}
+
+const getSingleEvent =(id)=>{
+  return userAxiosInstance.get(`/viewevent/${id}`,{
     withCredentials:true
   })
 }
@@ -122,10 +132,12 @@ export {
   getQuestion,
   getSingleQuestion,
   submitAnswer,
+  searchQuesions,
   createCommunity,
   getCommunity,
   getSingleCommunity,
   joinCommunity,
   createEvent,
-  getEvents
+  getEvents,
+  getSingleEvent
 };

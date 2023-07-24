@@ -6,7 +6,8 @@ export const UserSlice = createSlice({
         userId:"",
         username: "",
         email:"",
-        joinedDate:""
+        joinedDate:"",
+        status:""
     },
     reducers: {
         changeUserDetails: (state, action) => {
@@ -14,6 +15,7 @@ export const UserSlice = createSlice({
             state.username = action.payload.username
             state.email = action.payload.email
             state.joinedDate = action.payload.joinedDate
+            state.status = action.payload.status
         }
     }
 })

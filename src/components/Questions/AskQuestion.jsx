@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { askQuestion } from "../../services/userApi";
-import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useNavigate } from "react-router-dom";
 
 function AskQuestion() {
   const navigate = useNavigate();
-  const userdata = useSelector((state)=>state.user)
   const [question, setQuestion] = useState({
     title:"",
     description:"",
@@ -24,7 +22,7 @@ function AskQuestion() {
       return toast.warn("Tags Should Not Be Empty")
     }else{
       try {
-        askQuestion({...question,user:userdata.userId}).then((res)=>{
+        askQuestion({...question}).then((res)=>{
           if(res.data.success){
             toast.success(res.data.message);
             navigate("/questions")

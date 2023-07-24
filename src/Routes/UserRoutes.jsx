@@ -22,6 +22,7 @@ import CommunityEvents from "../components/Communities/CommunityEvents"
 import CommunityDiscussions from "../components/Communities/CommunityDiscussions"
 import CommunityCreateEvent from "../components/Communities/CommunityCreateEvent";
 import ViewEvent from "../components/Communities/ViewEvent";
+
 function UserRoutes() {
   return (
     <Routes>

@@ -14,7 +14,6 @@ function CommunityMembers() {
     });
   }, []);
 
-  console.log(community);
   if (!community) {
     return <div>Loading...</div>;
   }
@@ -25,6 +24,7 @@ function CommunityMembers() {
         <table className="w-full table-auto">
           <thead>
             <tr>
+              <th  className="py-2  font-bold">No</th>
               <th className="py-2  font-bold">Name</th>
               <th className="py-2  font-bold">Role</th>
               <th className="py-2  font-bold">Profile</th>
@@ -33,10 +33,11 @@ function CommunityMembers() {
           </thead>
           <tbody>
             {community.members.map((member, index) => (
-              <tr key={index}>
-                <td className="py-2">{member.member.username}</td>
-                <td className="py-2">{member.role}</td>
-                <td className="py-2">
+              <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
+                <td className="py-2 text-center">{index + 1}</td>
+                <td className="py-2 text-center">{member.member.username}</td>
+                <td className="py-2 text-center">{member.role}</td>
+                <td className="py-2 text-center">
                   <a
                     href={member.profileLink}
                     target="_blank"

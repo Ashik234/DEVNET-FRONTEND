@@ -15,13 +15,13 @@ export default function EmailVerify() {
       try {
         const url = `http://localhost:8000/${params.id}/verify/${params.token}`;
         const { data } = await axios.get(url);
-        console.log(data);
         dispatch(
           changeUserDetails({
             userId: data.user._id,
             username: data.user.username,
             email: data.user.email,
             joinedDate: data.user.joinedDate,
+            status:data.user.status
           })
         );
         localStorage.setItem("userJWT", data.token1);

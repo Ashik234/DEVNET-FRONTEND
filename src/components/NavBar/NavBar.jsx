@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import DEVNET from "../../assets/DEVNET-bg.png";
 import { FiUser, FiMenu, FiLogOut } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,15 +6,25 @@ import { BiSearch } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { changeUserDetails } from "../../Redux/user/UserSlice";
+import { searchQuesions } from "../../services/userApi";
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [search,setSearch] = useState("")
+
   const profiledata = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  useEffect(() => {
+    searchQuesions().then((res) => {
+      setSearch(res.data)
+    });
+  }, []);
+
 
   const handleLogout = () => {
     dispatch(
@@ -31,9 +41,11 @@ function NavBar() {
 
   return (
     <div className="bg-slate-100 h-20 text-white flex justify-between items-center">
+      <Link to="/">
       <div className="pl-4">
         <img src={DEVNET} className="w-24 sm:w-32 md:w-40" alt="" />
       </div>
+      </Link>
       <div className="flex justify-center">
         <form className="max-w-sm px-4">
           <div className="relative">

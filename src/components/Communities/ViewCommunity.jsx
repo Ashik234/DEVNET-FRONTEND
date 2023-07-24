@@ -31,7 +31,6 @@ function ViewCommunity() {
     setActiveSection(section);
   };
 
-  console.log(community);
 
   return (
     <>
