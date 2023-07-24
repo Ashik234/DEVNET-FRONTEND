@@ -10,6 +10,7 @@ function CommunityMembers() {
 
   useEffect(() => {
     getSingleCommunity(id).then((res) => {
+      console.log(res.data);
       setCommunity(res.data.singlecommunity);
     });
   }, []);
