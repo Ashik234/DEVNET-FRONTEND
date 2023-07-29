@@ -49,7 +49,7 @@ function Community() {
         </thead>
         <tbody>
           {community.map((item, index) => (
-            <tr key={item._id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
+            <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
               <td className="border px-4 py-2 text-center">{index + 1}</td>
               <td className="border px-4 py-2 text-center">{item.title}</td>
               <td className="border px-4 py-2 text-center">{item.type}</td>

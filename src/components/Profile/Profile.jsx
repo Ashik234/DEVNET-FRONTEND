@@ -4,20 +4,19 @@ import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import PROFILE from "../../assets/profile.jpeg";
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import ProfileSaved from './ProfileSaved';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ProfileAsked from './ProfileAsked';
 
 function Profile() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const navigate = useNavigate();
+  
   const [github, setGithub] = useState('');
   const [linkedin, setLinkedin] = useState('');
-  const [about, setAbout] = useState('');
 
   const [activeSection, setActiveSection] = useState("about");
 
   const profiledata = useSelector((state) => state.user)
-
+console.log(profiledata);
   const handleSectionChange = (section) => {
     setActiveSection(section);
   };
@@ -26,6 +25,9 @@ function Profile() {
     setActiveSection(section);
   };
 
+  const editProfile = (id)=>{
+    navigate(`/profile/edit`,{state:id})
+  }
   return (
     <div className="bg-gray-100 px-4 py-10">
       <div className="container mx-auto max-w-5xl ">
@@ -72,7 +74,7 @@ function Profile() {
           </p>
           <div className="flex justify-end">
             <Link to="/profile/edit">
-              <button className="bg-blue-500 hover:bg-blue-600 text-white rounded px-4 py-2 mr-2">
+              <button onClick={()=>editProfile(profiledata.userId)} className="bg-blue-500 hover:bg-blue-600 text-white rounded px-4 py-2 mr-2">
                 Edit
               </button>
             </Link>
@@ -95,15 +97,13 @@ function Profile() {
             <h3 className="text-2xl font-semibold mb-2">About</h3>
             <textarea
               className="w-full p-2 border rounded"
-              value={about}
-              onChange={(e) => setAbout(e.target.value)}
-              rows={4}
+              rows={3}
               placeholder="Write something about yourself"
             />
           </div>
         )}
         {activeSection === "saved" && <ProfileSaved id={profiledata.id} />}
-        {activeSection === "asked" && <ProfileAsked />}
+        {activeSection === "asked" && <ProfileAsked id={profiledata.id}/>}
       </div>
     </div>
   );

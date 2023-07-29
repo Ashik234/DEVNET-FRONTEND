@@ -17,8 +17,9 @@ function AdminRoutes() {
   return (
     <Routes>
           <Route path='*' element={<NotFoundPage />} />
-          <Route exact path='/login' element={<AdminLogin />} />
-          <Route exact path='/home' element={<AdminHome/>}/>
+
+          <Route exact path='/login' element={<AdminPublicRoutes><AdminLogin /></AdminPublicRoutes>} />
+          <Route exact path='/home' element={<AdminPublicRoutes><AdminHome/></AdminPublicRoutes>}/>
           <Route element={<PrivateRoutes role={"admin"} route={"/admin/login"}/>}/>
           <Route path='/' element={<Layout/>}>
             <Route index element={<DashBoard/>}/>

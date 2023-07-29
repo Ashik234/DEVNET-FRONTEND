@@ -50,7 +50,7 @@ function Users() {
           <tbody>
             {users.map((user, index) => (
               <tr
-                key={user.id}
+                key={index}
                 className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
               >
                 <td className="border px-4 py-2 text-center">{index + 1}</td>

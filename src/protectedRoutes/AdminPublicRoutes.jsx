@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
-function AdminPublicRoutes() {
+function AdminPublicRoutes(props) {
     if(localStorage.getItem('adminJWT')){
         return <Navigate to="/admin"/>
     }

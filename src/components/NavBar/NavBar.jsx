@@ -6,7 +6,7 @@ import { BiSearch } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { changeUserDetails } from "../../Redux/user/UserSlice";
-import { searchQuesions } from "../../services/userApi";
+import { searchQuestions } from "../../services/userApi";
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -20,7 +20,7 @@ function NavBar() {
   };
 
   useEffect(() => {
-    searchQuesions().then((res) => {
+    searchQuestions().then((res) => {
       setSearch(res.data)
     });
   }, []);

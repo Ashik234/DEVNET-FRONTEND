@@ -30,6 +30,12 @@ const isUserAuth = () => {
   });
 };
 
+const getSingleUser = (id)=>{
+  return userAxiosInstance.get(`/profile/edit/${id}`,{
+    withCredentials:true
+  })
+}
+
 // QUESTIONS
 
 const askQuestion = (data) => {
@@ -68,8 +74,20 @@ const submitAnswer = (id,data)=>{
   })
 }
 
-const searchQuesions = ()=>{
-  return userAxiosInstance.get("/searchquestions",{
+const answerVerified = (id)=>{
+  return userAxiosInstance.post(`/verfied/${id}`,{
+    withCredentials:true
+  })
+}
+
+const searchQuestions = (query)=>{
+  return userAxiosInstance.get(`/searchquestions?q=${query}`,{
+    withCredentials:true
+  })
+}
+
+const askedQuestions = (id)=>{
+  return userAxiosInstance.get(`/askedquestions/${id}`,{
     withCredentials:true
   })
 }
@@ -108,6 +126,12 @@ const createEvent = (id,data)=>{
   })
 }
 
+const getAllEvents = ()=>{
+  return userAxiosInstance.get("events",{
+    withCredentials:true
+  })
+}
+
 const getEvents = (id)=>{
   return userAxiosInstance.get(`/events/${id}`,{
     withCredentials:true
@@ -120,24 +144,65 @@ const getSingleEvent =(id)=>{
   })
 }
 
+// CHAT
+
+const createChat = (data)=>{
+  return userAxiosInstance.post(`/createchat`,data,{
+    withCredentials:true
+  })
+}
+
+const userChat =(userId)=>{
+  return userAxiosInstance.get(`/getchat/${userId}`,{
+    withCredentials:true
+  })
+}
+
+const userGetMessages = (chatId)=>{
+  return userAxiosInstance.get(`/getmessages/${chatId}`,{
+    withCredentials:true
+  })
+}
+
+const userSendMessage = (data)=>{
+  return userAxiosInstance.post("/addmessage",data,{
+    withCredentials:true
+  })
+}
+
+const userGetDetails = (userId) => {
+  return userAxiosInstance.post(`/usergetdetails/${userId}`, {
+    withCredentials: true,
+  });
+};
+
 export {
   userRegister,
   userLogin,
   userRegisterWithGoogle,
   userLoginwithGoogle,
   isUserAuth,
+  getSingleUser,
   askQuestion,
   saveQuestion,
   getSavedQuestions,
   getQuestion,
   getSingleQuestion,
   submitAnswer,
-  searchQuesions,
+  answerVerified,
+  searchQuestions,
+  askedQuestions,
   createCommunity,
   getCommunity,
   getSingleCommunity,
   joinCommunity,
   createEvent,
+  getAllEvents,
   getEvents,
-  getSingleEvent
+  getSingleEvent,
+  createChat,
+  userChat,
+  userGetMessages,
+  userSendMessage,
+  userGetDetails
 };

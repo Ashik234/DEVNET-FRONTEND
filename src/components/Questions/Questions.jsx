@@ -3,6 +3,8 @@ import PROFILE from "../../assets/profile.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { FaBookmark } from "react-icons/fa";
+import { BiUpvote } from "react-icons/bi";
+import { BiDownvote } from "react-icons/bi";
 import { useNavigate, Link } from "react-router-dom";
 import { getQuestion, saveQuestion } from "../../services/userApi";
 import { toast } from "react-toastify";
@@ -24,20 +26,16 @@ function Questions() {
     navigate(`/questions/viewquestion`, { state: id });
   };
 
-  useEffect(() => {
-    const saveQuestions = () => {
-      try {
+  
+    const saveQuestions = (id) => {
         saveQuestion(id).then((res) => {
+          console.log(res.data);
           if (res.data.success) {
             toast.success(res.data.message);
           }
         });
-      } catch (error) {
-        console.log(error);
-      }
     };
     saveQuestions();
-  }, []);
 
   return (
     <div>
@@ -111,6 +109,10 @@ function Questions() {
                       <div className="mr-4">({item.createdAt})</div>
                     </div>
                   </div>
+                  <div className="">
+                    {/* <BiUpvote size={30} className="mr-3 cursor-pointer" />
+                    <BiDownvote size={30} className="cursor-pointer" /> */}
+                  </div>
                   <div className="flex items-center font-bold ml-7 px-9">
                     {item.title}
                   </div>
@@ -136,11 +138,15 @@ function Questions() {
                         icon={faComment}
                         className="w-6 h-6 text-gray-600 hover:text-gray-800 mr-3"
                       />
-                      <span className="text-left py-3">{item.answers} 2 Answers</span>
+                      <span className="text-left py-3">
+                        {item.answers} 2 Answers
+                      </span>
                     </div>
 
                     <div className="flex items-center">
-                      <button onClick={() => navigateToView(item._id)}>View Question</button>
+                      <button onClick={() => navigateToView(item._id)}>
+                        View Question
+                      </button>
                       <button
                         onClick={() => saveQuestion(item._id)}
                         className="relative ml-3"

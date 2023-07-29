@@ -25,6 +25,7 @@ function CreateCommunity() {
       formData.append("image", community.image);
       formData.append("type", community.type);
       formData.append("description", community.description);
+      console.log(formData);
     createCommunity(id,formData).then((res)=>{
       setCommunity(res.data)
       if(res.data.success){

@@ -17,7 +17,7 @@ function CommunityEvents({ id }) {
     navigate(`/communities/viewcommunity/viewevent`,{state:id})
   }
   
-  const navigateToView = (id) => {
+  const navigateToCreate = (id) => {
     navigate(`/communities/viewcommunity/create`, { state: id });
   };
 
@@ -29,7 +29,7 @@ function CommunityEvents({ id }) {
             Events happening around our community
           </h4>
           <button
-            onClick={() => navigateToView(id)}
+            onClick={() => navigateToCreate(id)}
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
           >
             Create Event
