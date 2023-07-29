@@ -144,7 +144,7 @@ const getSingleEvent =(id)=>{
   })
 }
 
-// CHAT
+// INDIVIDUAL CHAT
 
 const createChat = (data)=>{
   return userAxiosInstance.post(`/createchat`,data,{
@@ -176,6 +176,20 @@ const userGetDetails = (userId) => {
   });
 };
 
+// DISCUSSION CHAT
+
+const addmessage = (data)=>{
+  return userAxiosInstance.post("/addchat",data,{
+    withCredentials:true
+  })
+}
+
+const getAllMessage = (id)=>{
+  return userAxiosInstance.get(`/getallmessages/${id}`,{
+    withCredentials:true
+  })
+}
+
 export {
   userRegister,
   userLogin,
@@ -204,5 +218,7 @@ export {
   userChat,
   userGetMessages,
   userSendMessage,
-  userGetDetails
+  userGetDetails,
+  addmessage,
+  getAllMessage,
 };

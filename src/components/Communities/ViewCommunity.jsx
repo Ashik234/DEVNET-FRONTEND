@@ -53,7 +53,7 @@ function ViewCommunity() {
                 <div className="flex items-center">
                   <div className="w-28 h-28 overflow-hidden">
                     <img
-                      src={JAVASCRIPT}
+                      src={community.image}
                       alt="Community Profile"
                       className="w-full h-full object-cover"
                     />
@@ -87,22 +87,22 @@ function ViewCommunity() {
                 <ul className="flex space-x-36">
                   <li>
                     <button onClick={() => handleSectionChange("about")}>
-                      <h1 href="#">About Us</h1>
+                      <h1 >About Us</h1>
                     </button>
                   </li>
                   <li>
                     <button onClick={() => handleSectionChange("members")}>
-                      <h1 href="#">Members</h1>
+                      <h1 >Members</h1>
                     </button>
                   </li>
                   <li>
                     <button onClick={() => handleSectionChange("events")}>
-                      <h1 href="#">Events</h1>
+                      <h1 >Events</h1>
                     </button>
                   </li>
                   <li>
                     <button onClick={() => handleSectionChange("discussions")}>
-                      <h1 href="#">Discussions</h1>
+                      <h1 >Discussions</h1>
                     </button>
                   </li>
                 </ul>
@@ -122,7 +122,7 @@ function ViewCommunity() {
           )}
           {activeSection === "members" && <CommunityMembers />}
           {activeSection === "events" && <CommunityEvents id={community._id} />}
-          {activeSection === "discussions" && <CommunityDiscussions />}
+          {activeSection === "discussions" && <CommunityDiscussions id={community._id} />}
         </div>
       ) : (
         <div></div>

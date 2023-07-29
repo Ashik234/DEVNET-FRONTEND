@@ -1,44 +1,133 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from "react";
+import io from "socket.io-client";
+const baseURL = import.meta.env.VITE_USER_BASE_URL;
+import { addmessage, getAllMessage } from "../../services/userApi";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+function CommunityDiscussions({ id }) {
+  const socket = useRef();
+  const scroll = useRef();
+  const [value, setValue] = useState("");
+  const { userId } = useSelector((state) => state.user);
+  const params = useParams();
+  const communityId = params.id;
+  const [messages, setMessages] = useState([]);
 
-function CommunityDiscussions() {
-  const [messages, setMessages] = useState([]); 
-  const [newMessage, setNewMessage] = useState(''); 
-
-  const handleInputChange = (e) => {
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addmessage({ messages: value, communityId: id }).then((res) => {
+      socket.current.emit("send-message", res.data.data);
+    });
+    setValue("");
   };
 
-  const handleSendMessage = () => {
-    
+  const getMsg = () => {
+    getAllMessage(id).then((res) => {
+      setMessages(res.data.message);
+    });
   };
+
+  socket.current &&
+    socket.current.on("received-msg", (newMessage) => {
+      setMessages([...messages, newMessage]);
+    });
+  console.log(messages);
+
+  useEffect(() => {
+    scroll.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [messages]);
+
+  useEffect(() => {
+    getMsg();
+    socket.current = io(baseURL);
+    socket.current.emit("join-room", id);
+    return () => {
+      // Clean up scoket connection on component unmount
+      if (socket.current) {
+        socket.current.disconnect();
+      }
+    };
+  }, []);
 
   return (
-    <div className='container px-20 py-6'>
-      <h2 className='text-2xl font-bold mb-4'>Chat Discussion</h2>
-      <div className='chat-container bg-gray-100 p-4 rounded-lg'>
-          <div  className='message'>
-            <div className='bg-blue-500 text-black py-2 px-4 rounded-lg mb-2 max-w-md'>
-            ashik
+    <>
+      <div className=" w-full h-full border-2 rounded-md shadow p-2">
+        <div className="h-[90%] border-b-2 overflow-auto">
+          <div>
+            <div className="flex flex-col h-full overflow-x-auto mb-4">
+              <div ref={scroll} className="flex flex-col h-full">
+                <div className="grid grid-cols-12 gap-y-2">
+                  {messages.map((data, index) => {
+                    return (
+                      <React.Fragment key={index}>
+                        {data.from?._id === userId ? (
+                          <div className="col-start-6 col-end-13 p-3 rounded-lg">
+                            <div className="flex items-center justify-start flex-row-reverse">
+                              <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
+                                {data.from.username}
+                              </div>
+                              <div className="mr-2 text-sm text-gray-700 dark:text-gray-300">
+                                {data.message}
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="col-start-1 col-end-8 p-3 rounded-lg">
+                            <div className="flex flex-row items-center">
+                              <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
+                                {data.from.username}
+                              </div>
+                              <div className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                                {data.message}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-            <div className='text-right text-gray-500 text-sm'>120</div>
           </div>
+        </div>
+        <div className="flex gap-1 mt-2">
+          <div className="w-full">
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="chat" className="sr-only">
+                Your message
+              </label>
+              <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
+                <textarea
+                  id="chat"
+                  rows="1"
+                  className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Your message..."
+                  name="message"
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                ></textarea>
+                <button
+                  type="submit"
+                  className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600"
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="w-6 h-6 rotate-90"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
+                  </svg>
+                  <span className="sr-only">Send message</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-      <div className='mt-4 flex'>
-        <input
-          type='text'
-          className='flex-grow border rounded-l-lg p-2'
-          placeholder='Type your message...'
-          value={newMessage}
-          onChange={handleInputChange}
-        />
-        <button
-          className='bg-blue-500 text-white px-4 rounded-r-lg'
-          onClick={handleSendMessage}
-        >
-          Send
-        </button>
-      </div>
-    </div>
+    </>
   );
 }
 

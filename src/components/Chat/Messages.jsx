@@ -33,7 +33,6 @@ function Messages({
         });
     }
   }, [chat, userid]);
-  console.log(userData);
 
   useEffect(() => {
     if (chat !== null) {
@@ -46,7 +45,6 @@ function Messages({
         });
     }
   }, [chat]);
-  console.log(messages);
 
   const handleSend = (e) => {
     e.preventDefault();
@@ -114,7 +112,7 @@ function Messages({
                     <div className="ml-2 py-3 px-4 bg-gray-700 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white">
                       {msg.text}
                     </div>
-                    <span>{msg.createdAt}</span>
+                    <span>{format(msg.createdAt)}</span>
                   </div>
                 )}
               </div>

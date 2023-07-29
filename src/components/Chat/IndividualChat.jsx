@@ -9,22 +9,19 @@ import {
 import Messages from "./Messages";
 import ChatList from "./ChatList";
 import socketInstance from "../../Socket/Socket";
+
 function IndividualChat() {
   const [chats, setChats] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
-  const userData = useSelector((state) => state.user);
-  console.log(userData);
-
   const [sendMessage, setSendMessage] = useState(null);
   const [receiveMessage, setReceiveMessage] = useState(null);
-
+  const userData = useSelector((state) => state.user);
   const socket = useRef();
 
   useEffect(() => {
     userChat(userData.userId)
       .then((res) => {
-        console.log(res.data);
         setChats(res.data.chat);
       })
       .catch((err) => {
@@ -37,7 +34,6 @@ function IndividualChat() {
     socket.current.emit("add-new-user", userData.userId);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
-      console.log(onlineUsers,"hitgu");
     });
   }, [userData]);
 

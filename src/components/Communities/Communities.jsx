@@ -70,7 +70,7 @@ function Communities() {
                 >
                   <div className="flex items-center">
                     <img
-                      src={JAVASCRIPT}
+                      src={item.image}
                       alt="Community Profile"
                       className="w-16 h-16"
                     />

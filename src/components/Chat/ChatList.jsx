@@ -5,7 +5,6 @@ function ChatList({ data, userid, getUserData }) {
   const [userData, setUserData] = useState(null);
   useEffect(() => {
     const userId = data.members.find((id) => id !== userid);
-    console.log(userId);
     getUserData(userId)
       .then((res) => {
         setUserData(res.data.userData);
