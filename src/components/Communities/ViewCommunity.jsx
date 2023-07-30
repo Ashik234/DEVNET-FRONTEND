@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import JAVASCRIPT from "../../assets/javascript-logo.png";
 import COMMUNITY from "../../assets/community.jpg";
 import { useLocation } from "react-router-dom";
 import { getSingleCommunity, joinCommunity } from "../../services/userApi";

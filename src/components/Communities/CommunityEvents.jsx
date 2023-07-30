@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getEvents } from "../../services/userApi";
-import EVENT from "../../assets/event.png";
 
 function CommunityEvents({ id }) {
   const navigate = useNavigate();
@@ -42,7 +41,7 @@ function CommunityEvents({ id }) {
               className="flex border border-gray-300 p-4 rounded-lg hover:shadow-md transition-shadow mb-4 mt-8"
             >
               <img
-                src={EVENT}
+                src={item.image}
                 alt="Event 1"
                 className="w-72 h-44 object-cover rounded-lg mr-4"
               />

@@ -1,5 +1,5 @@
 import React from 'react'
-import Questions from '../../components/Questions/Questions'
+import Questions from './Questions'
 
 function Home() {
   return (

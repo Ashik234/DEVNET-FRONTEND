@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import COMMUNITY from "../../assets/community.jpg";
-import JAVASCRIPT from "../../assets/javascript-logo.png";
 import { useNavigate, Link } from "react-router-dom";
 import { getCommunity, joinCommunity } from "../../services/userApi";
 import { toast } from "react-toastify";
@@ -102,7 +101,7 @@ function Communities() {
                 >
                   <div className="flex items-center">
                     <img
-                      src={JAVASCRIPT}
+                      src={item.image}
                       alt="Community Profile"
                       className="w-16 h-16 "
                     />

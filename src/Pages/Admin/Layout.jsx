@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import SideBar from "./SideBar";
-import Navbar from "./NavBar";
+import SideBar from "../../components/Admin/SideBar";
+import Navbar from "../../components/Admin/NavBar";
 
 function Layout() {
   return (

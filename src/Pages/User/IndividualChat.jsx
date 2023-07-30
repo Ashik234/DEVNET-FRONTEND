@@ -6,8 +6,8 @@ import {
   userGetMessages,
   userSendMessage,
 } from "../../services/userApi";
-import Messages from "./Messages";
-import ChatList from "./ChatList";
+import Messages from "../../components/Chat/Messages";
+import ChatList from "../../components/Chat/ChatList";
 import socketInstance from "../../Socket/Socket";
 
 function IndividualChat() {

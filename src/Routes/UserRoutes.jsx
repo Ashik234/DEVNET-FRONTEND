@@ -6,14 +6,14 @@ import Home from "../Pages/User/Home";
 import EmailVerify from "../components/EmailVerify/EmailVerify";
 import NotFoundPage from "../Pages/NotFoundPage";
 import Layout from "../Pages/User/Layout";
-import Questions from "../components/Questions/Questions";
+import Questions from "../Pages/User/Questions";
 import Profile from "../components/Profile/Profile";
 import ProfileSaved from "../components/Profile/ProfileSaved";
 import EditProfile from "../components/Profile/EditProfile"
 import PrivateRoutes from "../protectedRoutes/PrivateRoutes";
 import PublicRoutes from "../protectedRoutes/PublicRoutes";
 import AskQuestion from "../components/Questions/AskQuestion";
-import Communities from "../components/Communities/Communities";
+import Communities from "../Pages/User/Communities";
 import ViewQuestion from "../components/Questions/ViewQuestion";
 import CreateCommunity from "../components/Communities/CreateCommunity";
 import ViewCommunity from "../components/Communities/ViewCommunity";
@@ -23,8 +23,8 @@ import CommunityDiscussions from "../components/Communities/CommunityDiscussions
 import CommunityCreateEvent from "../components/Communities/CommunityCreateEvent";
 import ViewEvent from "../components/Communities/ViewEvent";
 import Compiler from "../components/Compiler/Compiler";
-import Events from "../components/Events/Events";
-import IndividualChat from "../components/Chat/IndividualChat";
+import Events from "../Pages/User/Events";
+import IndividualChat from "../Pages/User/IndividualChat";
 
 function UserRoutes() {
   return (

@@ -5,7 +5,7 @@ import AdminLogin from '../Pages/Admin/AdminLogin';
 import AdminHome from '../Pages/Admin/AdminHome';
 import PrivateRoutes from '../protectedRoutes/PrivateRoutes';
 import AdminPublicRoutes from "../protectedRoutes/AdminPublicRoutes"
-import Layout from "../components/Admin/Layout"
+import Layout from '../Pages/Admin/Layout';
 import DashBoard from "../components/Admin/DashBoard"
 import Users from "../components/Admin/Users"
 import Events from '../components/Admin/Events';

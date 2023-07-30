@@ -12,8 +12,30 @@ function CommunityCreateEvent() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!event || !event.title || event.title.trim() === "") {
+      return toast.warn("Title should not be empty");
+    } else if (!event || !event.image || event.image === null) {
+      return toast.warn("Image should not be empty");
+    }else if(!event || !event.type || !event.type.trim()===""){
+      return toast.warn("Type should not be empty");
+    }else if(!event || !event.dateTime || !event.dateTime.trim()===""){
+      return toast.warn("Date should not be empty");
+    }else if (!event || !event.location || event.location.trim() === "") {
+      return toast.warn("Location should not be empty");
+    }else if (!event || !event.description || event.description.trim() === "") {
+      return toast.warn("Description should not be empty");
+    }
+     else {
     try {
-      createEvent(id,event).then((res)=>{
+      const formData = new FormData();
+      formData.append("title", event.title);
+      formData.append("image", event.image);
+      formData.append("type", event.type);
+      formData.append("dateTime", event.dateTime);
+      formData.append("location", event.location);
+      formData.append("description", event.description);
+      createEvent(id,formData).then((res)=>{
+        setEvent(res.data)
         toast.success(res.data.message)
         navigate("/communities/viewcommunity/events")
       })
@@ -21,6 +43,7 @@ function CommunityCreateEvent() {
       console.log(error );
     }
   };
+}
 
   return (
     <div className="p-10">
@@ -32,7 +55,6 @@ function CommunityCreateEvent() {
             type="text"
             id="title"
             name="title"
-            required
             onChange={(e)=> {setEvent({...event,[e.target.name]:e.target.value})}}
             className="w-full border border-gray-400 rounded p-2"
           />
@@ -42,8 +64,7 @@ function CommunityCreateEvent() {
           <input
             type="file"
             name="image"
-            required
-            onChange={(e)=> {setEvent({...event,[e.target.name]:e.target.value})}}
+            onChange={(e)=> {setEvent({...event,[e.target.name]:e.target.files[0]})}}
             className="w-full border border-gray-400 rounded p-2"
           />
         </div>
@@ -52,7 +73,6 @@ function CommunityCreateEvent() {
           <input
             type="text"
             name="type"
-            required
             onChange={(e)=> {setEvent({...event,[e.target.name]:e.target.value})}}
             className="w-full border border-gray-400 rounded p-2"
           />
@@ -63,7 +83,6 @@ function CommunityCreateEvent() {
             type="datetime-local"
             id="dateTime"
             name="dateTime"
-            required
             onChange={(e)=> {setEvent({...event,[e.target.name]:e.target.value})}}
             className="w-full border border-gray-400 rounded p-2"
           />
@@ -74,7 +93,6 @@ function CommunityCreateEvent() {
             type="text"
             id="location"
             name="location"
-            required
             onChange={(e)=> {setEvent({...event,[e.target.name]:e.target.value})}}
             className="w-full border border-gray-400 rounded p-2"
           />
@@ -84,7 +102,6 @@ function CommunityCreateEvent() {
           <textarea
             id="description"
             name="description"
-            required
             onChange={(e)=> {setEvent({...event,[e.target.name]:e.target.value})}}
             className="w-full border border-gray-400 rounded p-2"
             rows="4"
