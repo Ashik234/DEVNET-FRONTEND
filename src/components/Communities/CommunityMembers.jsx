@@ -13,7 +13,6 @@ function CommunityMembers() {
 
   useEffect(() => {
     getSingleCommunity(id).then((res) => {
-      console.log(res.data);
       setCommunity(res.data.singlecommunity);
     });
   }, []);
@@ -25,12 +24,15 @@ function CommunityMembers() {
   const navigateToCreate = (senderId, receiverId) => {
     createChat({ senderId: senderId, receiverId: receiverId })
       .then((res) => {
-        console.log(res.data);
         let data = res.data.chatData;
-        console.log(data);
-        navigate("/communitites/viewcommunity/members/individual", {
-          state: { data },
-        });
+        if(data.exists){
+          
+        }else{
+          navigate("/communitites/viewcommunity/members/individual", {
+            state: { data },
+          });
+        }
+       
       })
       .catch((err) => {
         console.log(err);
@@ -77,7 +79,7 @@ function CommunityMembers() {
                   <div className="flex justify-center items-center">
                     <button
                       onClick={() =>
-                        navigateToCreate(profiledata.userId, member._id)
+                        navigateToCreate(profiledata.userId, member.member._id)
                       }
                     >
                       <BsChatRightDotsFill />

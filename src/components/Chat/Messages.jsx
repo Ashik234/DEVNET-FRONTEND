@@ -17,7 +17,7 @@ function Messages({
 
   useEffect(() => {
     if (receiveMessage !== null && receiveMessage.chatId === chat._id) {
-      setMessages([...Messages, receiveMessage]);
+      setMessages([...messages, receiveMessage]);
     }
   }, [receiveMessage]);
 
@@ -64,7 +64,7 @@ function Messages({
     const receiverId = chat?.members?.find((id) => id !== userid);
     setSendMessage({ ...message, receiverId });
 
-    //alawys scrol to last msg
+    //always scroll to last msg
   };
   useEffect(() => {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
@@ -90,7 +90,7 @@ function Messages({
           <div className="overflow-y-auto mx-2 mt-3 h-[400px] max-h-[400px]">
             {messages.map((msg, i) => (
               <div key={i} ref={scroll}>
-                {msg.senderId === userid ? (
+                {msg.senderId !== userid ? (
                   <div className="flex justify-end mb-4 ">
                     <div className="mr-2 py-3 px-4  bg-blue-900 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
                       {msg.text}
@@ -124,7 +124,7 @@ function Messages({
               onChange={(e) => setNewMessage(e.target.value)}
               className="md:w-5/6 w-4/6  bg-gray-100 py-3 px-3 rounded-xl"
               type="text"
-              placeholder="type your message here..."
+              placeholder="Type your message here..."
             />
             <button
               onClick={handleSend}
@@ -137,7 +137,7 @@ function Messages({
       ) : (
         <div className="flex items-center justify-center py-2 shadow-lg border bg-blue-950 border-gray-300  rounded-t-xl pe-7 ">
           <div className="text-xl  font-bold">
-            <h1 className="ms-3 text-white ">Select a connetion</h1>
+            <h1 className="ms-3 text-white ">Select a Connection</h1>
           </div>
         </div>
       )}

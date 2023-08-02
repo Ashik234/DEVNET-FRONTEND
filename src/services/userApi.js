@@ -30,12 +30,6 @@ const isUserAuth = () => {
   });
 };
 
-const getSingleUser = (id)=>{
-  return userAxiosInstance.get(`/profile/edit/${id}`,{
-    withCredentials:true
-  })
-}
-
 // QUESTIONS
 
 const askQuestion = (data) => {
@@ -80,11 +74,12 @@ const answerVerified = (id)=>{
   })
 }
 
-const searchQuestions = (query)=>{
-  return userAxiosInstance.get(`/searchquestions?q=${query}`,{
-    withCredentials:true
-  })
-}
+const searchQuestions = (searchQuery) => {
+  return userAxiosInstance.get(`/searchquestions?query=${searchQuery}`, {
+    withCredentials: true,
+  });
+};
+
 
 const askedQuestions = (id)=>{
   return userAxiosInstance.get(`/askedquestions/${id}`,{
@@ -200,7 +195,6 @@ export {
   userRegisterWithGoogle,
   userLoginwithGoogle,
   isUserAuth,
-  getSingleUser,
   askQuestion,
   saveQuestion,
   getSavedQuestions,

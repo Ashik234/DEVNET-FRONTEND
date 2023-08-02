@@ -1,46 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { getSingleUser } from '../../services/userApi';
+import React, {useState } from "react";
 
 function EditProfile() {
-  const location = useLocation();
-  const id = location.state;
-  console.log(id);
   const [data, setData] = useState({
-    name: '',
-    github: '',
-    linkedin: '',
-    about: '',
+    username: "", 
+    github: "", 
+    linkedin: "", 
+    about: "",
   });
-
-  useEffect(() => {
-    getSingleUser(id).then((res) => {
-      console.log(res.data);
-      setData(res.data.userData);
-    });
-  }, []);
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value,
-  //   }));
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Assuming you have an updateUserData function in your userApi service
-  //   updateUserData(id, data)
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       // Handle successful update
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error updating user data:', error);
-  //       // Handle error
-  //     });
-  // };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -78,6 +44,7 @@ function EditProfile() {
             id="linkedin"
             name="linkedin"
             className="w-full border rounded-lg py-2 px-3"
+            
           />
         </div>
         <div className="mb-4">
@@ -88,6 +55,7 @@ function EditProfile() {
             id="about"
             name="about"
             className="w-full border rounded-lg py-2 px-3"
+           
           />
         </div>
         <button

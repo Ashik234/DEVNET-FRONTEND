@@ -4,7 +4,7 @@ function AdminPublicRoutes(props) {
     if(localStorage.getItem('adminJWT')){
         return <Navigate to="/admin"/>
     }
-    <Navigate to="/admin"/>
+    <Navigate to="/admin/login"/>
     return props.children
 }
 

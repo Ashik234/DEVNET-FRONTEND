@@ -16,20 +16,21 @@ function ViewQuestion() {
   
   useEffect(() => {
     getSingleQuestion(id).then((res) => {
+      console.log(res.data);
       setQuestion(res.data.singlequestion);
     });
   }, []);
 
-  const AnswerVerified = (e)=>{
+  // const AnswerVerified = (e)=>{
     
-    try {
-      answerVerified(id).then((res)=>{
-        console.log(res.data);
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  //   try {
+  //     answerVerified(id).then((res)=>{
+  //       console.log(res.data);
+  //     })
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
 
   const SubmitAnswer = (e) => {
@@ -66,7 +67,7 @@ function ViewQuestion() {
       <div className="mt-6 max-w-4xl w-full bg-white rounded-lg shadow-md p-6">
         <h2 className="text-lg font-bold mb-2">Answers</h2>
 
-        {question.answers.map((item, index) => (
+        {question?.answers.map((item, index) => (
           <div key={index} className="bg-gray-200 p-4 rounded-md mb-4">
             <div className="flex items-center mb-2 ml-10">
               <div className="bg-blue-500 rounded-full h-8 w-8 flex items-center justify-center mr-2">
@@ -77,10 +78,10 @@ function ViewQuestion() {
                 <p className="text-gray-500">Posted on (July 14, 2023)</p>
               </div>
             </div>
-            <div className='flex'>
+            {/* <div className='flex'>
             <TiTick onClick={()=>AnswerVerified(item._id)} size={30} className="cursor-pointer"/>
             <p className="text-gray-800 ml-4">{item.answer}</p>
-            </div>
+            </div> */}
           </div>
         ))}
       </div>

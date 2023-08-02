@@ -4,19 +4,25 @@ const baseURL = import.meta.env.VITE_USER_BASE_URL;
 import { addmessage, getAllMessage } from "../../services/userApi";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+
 function CommunityDiscussions({ id }) {
   const socket = useRef();
   const scroll = useRef();
   const [value, setValue] = useState("");
   const { userId } = useSelector((state) => state.user);
+  console.log(userId); 
   const params = useParams();
   const communityId = params.id;
   const [messages, setMessages] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const newMessage = { from: { _id: userId }, message: value };
+    // Update local state with the new message instantly
+    setMessages([...messages, newMessage]);
+    // Emit the message to the server and let it broadcast to other users
     addmessage({ messages: value, communityId: id }).then((res) => {
-      socket.current.emit("send-message", res.data.data);
+      socket.current.emit("send_message", res.data.data);
     });
     setValue("");
   };
@@ -28,10 +34,9 @@ function CommunityDiscussions({ id }) {
   };
 
   socket.current &&
-    socket.current.on("received-msg", (newMessage) => {
+    socket.current.on("received_msg", (newMessage) => {
       setMessages([...messages, newMessage]);
     });
-  console.log(messages);
 
   useEffect(() => {
     scroll.current?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -40,18 +45,18 @@ function CommunityDiscussions({ id }) {
   useEffect(() => {
     getMsg();
     socket.current = io(baseURL);
-    socket.current.emit("join-room", id);
+    socket.current.emit("join_room",id);
     return () => {
-      // Clean up scoket connection on component unmount
       if (socket.current) {
         socket.current.disconnect();
       }
     };
   }, []);
-
+console.log(messages);
+// console.log(messages[0].from?._id);
   return (
     <>
-      <div className=" w-full h-full border-2 rounded-md shadow p-2">
+      <div className="w-full h-full border-2 rounded-md shadow p-2">
         <div className="h-[90%] border-b-2 overflow-auto">
           <div>
             <div className="flex flex-col h-full overflow-x-auto mb-4">
@@ -63,12 +68,10 @@ function CommunityDiscussions({ id }) {
                         {data.from?._id === userId ? (
                           <div className="col-start-6 col-end-13 p-3 rounded-lg">
                             <div className="flex items-center justify-start flex-row-reverse">
-                              <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
-                                {data.from.username}
+                              <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0 ml-2">
+                                {data.from?.username}
                               </div>
-                              <div className="mr-2 text-sm text-gray-700 dark:text-gray-300">
-                                {data.message}
-                              </div>
+                                  <div>{data?.message}</div>
                             </div>
                           </div>
                         ) : (
@@ -77,9 +80,7 @@ function CommunityDiscussions({ id }) {
                               <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
                                 {data.from.username}
                               </div>
-                              <div className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                                {data.message}
-                              </div>
+                                  <div>{data.message}</div>
                             </div>
                           </div>
                         )}

@@ -16,9 +16,9 @@ function IndividualChat() {
   const [currentChat, setCurrentChat] = useState(null);
   const [sendMessage, setSendMessage] = useState(null);
   const [receiveMessage, setReceiveMessage] = useState(null);
+
   const userData = useSelector((state) => state.user);
   const socket = useRef();
-
   useEffect(() => {
     userChat(userData.userId)
       .then((res) => {
@@ -31,11 +31,19 @@ function IndividualChat() {
 
   useEffect(() => {
     socket.current = socketInstance;
+    console.log(socket.current);
     socket.current.emit("add-new-user", userData.userId);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
     });
   }, [userData]);
+
+  //send message to socket server
+  useEffect(() => {
+    if (sendMessage !== null) {
+      socket.current.emit("send-message", sendMessage);
+    }
+  }, [sendMessage]);
 
   //send message to socket server
   useEffect(() => {
@@ -55,7 +63,7 @@ function IndividualChat() {
           <div key={index} onClick={() => setCurrentChat(chat)}>
             <ChatList
               data={chat}
-              userid={userData._id}
+              userid={userData.userId}
               getUserData={userGetDetails}
             />
           </div>
@@ -63,7 +71,7 @@ function IndividualChat() {
       </div>
       <Messages
         chat={currentChat}
-        userid={userData._id}
+        userid={userData.userId}
         setSendMessage={setSendMessage}
         receiveMessage={receiveMessage}
         getUserData={userGetDetails}

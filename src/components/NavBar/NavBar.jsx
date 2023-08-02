@@ -1,12 +1,11 @@
 import React, { useState,useEffect } from "react";
 import DEVNET from "../../assets/DEVNET-bg.png";
-import { FiUser, FiMenu, FiLogOut } from "react-icons/fi";
+import { FiUser, FiMenu, FiLogOut, FiMessageSquare } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { BiSearch } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { changeUserDetails } from "../../Redux/user/UserSlice";
-import { searchQuestions } from "../../services/userApi";
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -19,11 +18,11 @@ function NavBar() {
     setMenuOpen(!menuOpen);
   };
 
-  useEffect(() => {
-    searchQuestions().then((res) => {
-      setSearch(res.data)
-    });
-  }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    navigate(`/questions?search=${search}`);
+  };
 
 
   const handleLogout = () => {
@@ -47,17 +46,19 @@ function NavBar() {
       </div>
       </Link>
       <div className="flex justify-center">
-        <form className="max-w-sm px-4">
-          <div className="relative">
-            <BiSearch className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3" />
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full py-2 pl-12 pr-3 text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-stone-950 sm:w-64 md:w-80 lg:w-96"
-            />
-          </div>
-        </form>
-      </div>
+      <form className="max-w-sm px-4" onSubmit={handleSubmit}>
+        <div className="relative">
+          <BiSearch className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3" />
+          <input
+            type="text"
+            placeholder="Search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full py-2 pl-12 pr-3 text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-stone-950 sm:w-64 md:w-80 lg:w-96"
+          />
+        </div>
+      </form>
+    </div>
       <div className="hidden sm:flex items-center">
         <Link to="/questions">
           <div className="mr-2 ml-2 flex items-center">
@@ -163,6 +164,11 @@ function NavBar() {
         {profiledata.username ? (
          <>
          <div className="flex items-center">
+        
+              <Link  to="/communitites/viewcommunity/members/individual"
+                className="text-gray-400 flex items-center transition duration-300 hover:text-gray-800">
+                <FiMessageSquare className="text-gray-400 text-lg mr-4" />
+              </Link>
            <Link
              to="/profile"
              className="text-gray-400 flex items-center transition duration-300 hover:text-gray-800"

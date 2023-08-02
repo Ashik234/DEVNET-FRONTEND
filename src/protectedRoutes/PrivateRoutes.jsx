@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { isUserAuth } from "../services/userApi";
 import { isAdminAuth } from "../services/adminApi";
 
-function privateRoutes({ role, route }) {
+function PrivateRoutes({ role, route }) {
   const [verify, setVerify] = useState(null);
   useEffect(() => {
     if (role === "user") {
@@ -33,4 +33,4 @@ function privateRoutes({ role, route }) {
   return verify ? <Outlet /> : <Navigate to={route} />;
 }
 
-export default privateRoutes;
+export default PrivateRoutes;
