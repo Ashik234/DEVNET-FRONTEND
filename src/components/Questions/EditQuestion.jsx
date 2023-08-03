@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 function EditQuestion() {
     const navigate = useNavigate();
+
   const location = useLocation();
   const id = location.state;
 

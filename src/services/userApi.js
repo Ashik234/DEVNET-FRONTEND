@@ -31,6 +31,7 @@ const isUserAuth = () => {
 };
 
 const editProfile = (id,data)=>{
+  console.log(data.get("image"));
   return userAxiosInstance.post(`/profile/edit/${id}`,data,{
     withCredentials:true
   })

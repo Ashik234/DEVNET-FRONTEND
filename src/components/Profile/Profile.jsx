@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import PROFILE from "../../assets/profile.jpeg";
-import { useSelector } from 'react-redux/es/hooks/useSelector';
-import ProfileSaved from './ProfileSaved';
-import { Link, useNavigate } from 'react-router-dom';
-import ProfileAsked from './ProfileAsked';
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import ProfileSaved from "./ProfileSaved";
+import { Link, useNavigate } from "react-router-dom";
+import ProfileAsked from "./ProfileAsked";
 
 function Profile() {
   const navigate = useNavigate();
-  
-  const [github, setGithub] = useState('');
-  const [linkedin, setLinkedin] = useState('');
+
+  const [github, setGithub] = useState("");
+  const [linkedin, setLinkedin] = useState("");
 
   const [activeSection, setActiveSection] = useState("about");
 
-  const profiledata = useSelector((state) => state.user)
-console.log(profiledata);
+  const profiledata = useSelector((state) => state.user);
+  console.log(profiledata);
   const handleSectionChange = (section) => {
     setActiveSection(section);
   };
@@ -25,11 +25,11 @@ console.log(profiledata);
     setActiveSection(section);
   };
 
-  const editProfile = (id)=>{
-    navigate(`/profile/edit`,{state:id})
-  }
+  const editProfile = (id) => {
+    navigate(`/profile/edit`, { state: id });
+  };
   return (
-    <div className="bg-gray-100 px-4 py-10">
+    <div className="bg-gray-100 px-4 py-20">
       <div className="container mx-auto max-w-5xl ">
         <h2 className="text-3xl font-semibold mb-4">Profile</h2>
         <div className="bg-white shadow rounded-lg p-4">
@@ -37,7 +37,7 @@ console.log(profiledata);
             <div className="mr-4">
               <img
                 className="w-20 h-20 rounded-full object-cover"
-                src={PROFILE}
+                src={profiledata.image}
                 alt="Profile"
               />
             </div>
@@ -46,7 +46,7 @@ console.log(profiledata);
               <p className="text-gray-600">{profiledata.email}</p>
               <div className="flex mt-2">
                 <a
-                  href={github}
+                  href={profiledata.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mr-2"
@@ -56,11 +56,7 @@ console.log(profiledata);
                     className="w-6 h-6 text-gray-600 hover:text-gray-800"
                   />
                 </a>
-                <a
-                  href={linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href={profiledata.linkedin} target="_blank" rel="noopener noreferrer">
                   <FontAwesomeIcon
                     icon={faLinkedin}
                     className="w-6 h-6 text-gray-600 hover:text-gray-800"
@@ -69,12 +65,13 @@ console.log(profiledata);
               </div>
             </div>
           </div>
-          <p className="text-gray-600 mb-2">
-            Joined: {profiledata.joinedDate}
-          </p>
+          <p className="text-gray-600 mb-2">Joined: {profiledata.joinedDate}</p>
           <div className="flex justify-end">
             <Link to="/profile/edit">
-              <button onClick={()=>editProfile(profiledata.userId)} className="bg-blue-500 hover:bg-blue-600 text-white rounded px-4 py-2 mr-2">
+              <button
+                onClick={() => editProfile(profiledata.userId)}
+                className="bg-blue-500 hover:bg-blue-600 text-white rounded px-4 py-2 mr-2"
+              >
                 Edit
               </button>
             </Link>
@@ -86,7 +83,7 @@ console.log(profiledata);
             </button>
             <button
               className="bg-yellow-500 hover:bg-yellow-600 text-white rounded px-4 py-2 ml-2"
-              onClick={()=>handleAskedQuestions("asked")}
+              onClick={() => handleAskedQuestions("asked")}
             >
               Asked
             </button>
@@ -95,15 +92,13 @@ console.log(profiledata);
         {activeSection === "about" && (
           <div className="mt-4">
             <h3 className="text-2xl font-semibold mb-2">About</h3>
-            <textarea
-              className="w-full p-2 border rounded"
-              rows={3}
-              placeholder="Write something about yourself"
-            />
+            <div className="w-full bg-white p-2 border rounded-lg">
+              {profiledata.about}
+            </div>
           </div>
         )}
         {activeSection === "saved" && <ProfileSaved id={profiledata.id} />}
-        {activeSection === "asked" && <ProfileAsked id={profiledata.id}/>}
+        {activeSection === "asked" && <ProfileAsked id={profiledata.id} />}
       </div>
     </div>
   );

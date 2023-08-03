@@ -80,7 +80,7 @@ function Messages({
             </div>
             <div className="ms-3 my-1">
               <img
-                src=""
+                src={userData?.image}
                 alt="img"
                 className="w-[40px] h-[40px] rounded-full"
               />

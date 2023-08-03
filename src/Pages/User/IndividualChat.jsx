@@ -30,7 +30,6 @@ function IndividualChat() {
       });
   }, []);
 
-  console.log(chats);
 
   useEffect(() => {
     socket.current = socketInstance;
@@ -40,7 +39,6 @@ function IndividualChat() {
       setOnlineUsers(users);
     });
   }, [userData]);
-  console.log(onlineUsers);
 
   //send message to socket server
   useEffect(() => {
@@ -57,6 +55,12 @@ function IndividualChat() {
     });
   }, []);
 
+  const checkOnlineStatus = (chats) => {
+    const chatMember = chats.members.find((member) => member !== userData.userId);
+    const online = onlineUsers.find((userData) => userData.userId === chatMember);
+    return online ? true : false;
+  };
+
   return (
     <div className="flex h-96 px-12 mt-8">
       <div
@@ -69,6 +73,7 @@ function IndividualChat() {
               data={chat}
               userid={userData.userId}
               getUserData={userGetDetails}
+              online={checkOnlineStatus(chat)}
             />
           </div>
         ))}

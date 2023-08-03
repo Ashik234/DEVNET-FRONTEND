@@ -15,7 +15,12 @@ function ProfileSaved({ id }) {
 
   return (
     <div>
-      {questions.map((question) => (
+      {questions.length === 0 ? (
+         <div className="bg-white rounded-lg shadow-lg p-4 mt-8 text-center">
+         <div className="text-lg font-bold mb-2">You have not saved any questions</div>
+       </div>
+      ):(
+      questions.map((question) => (
         <div className="bg-white rounded-lg shadow-lg p-4 mt-8" key={question._id}>
           <div className="flex items-center justify-between mb-3 mr-4">
             <div className="flex items-center mr-4 ml-3 mt-8">
@@ -56,7 +61,8 @@ function ProfileSaved({ id }) {
             </div>
           </div>
         </div>
-      ))}
+      ))
+    )}
     </div>
   );
 }
