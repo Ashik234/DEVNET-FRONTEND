@@ -22,12 +22,15 @@ function IndividualChat() {
   useEffect(() => {
     userChat(userData.userId)
       .then((res) => {
+        console.log(res.data.chat);
         setChats(res.data.chat);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  console.log(chats);
 
   useEffect(() => {
     socket.current = socketInstance;
@@ -37,6 +40,7 @@ function IndividualChat() {
       setOnlineUsers(users);
     });
   }, [userData]);
+  console.log(onlineUsers);
 
   //send message to socket server
   useEffect(() => {

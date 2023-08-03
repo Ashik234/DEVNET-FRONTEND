@@ -77,6 +77,7 @@ function CommunityMembers() {
                 </td>
                 <td className="py-2">
                   <div className="flex justify-center items-center">
+                  {profiledata.userId !== member.member._id && (
                     <button
                       onClick={() =>
                         navigateToCreate(profiledata.userId, member.member._id)
@@ -84,6 +85,7 @@ function CommunityMembers() {
                     >
                       <BsChatRightDotsFill />
                     </button>
+                  )}
                   </div>
                 </td>
               </tr>

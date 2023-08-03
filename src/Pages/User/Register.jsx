@@ -7,6 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { changeUserDetails } from "../../Redux/user/UserSlice";
 
 function Register() {
   const navigate = useNavigate();
@@ -38,9 +39,17 @@ function Register() {
         )
         .then((res) => {
           console.log(res.data);
-
           userRegisterWithGoogle(res.data).then((res) => {
+            console.log(res.data);
+            const data = res.data
             if (res.data.created) {
+              dispatch(
+                changeUserDetails({
+                  userId: data.user._id,
+                  username: data.user.username,
+                  email: data.user.email,
+                })
+              );
               localStorage.setItem("userJWT", res.data.token);
               toast.success("Registered successfully");
               navigate("/");

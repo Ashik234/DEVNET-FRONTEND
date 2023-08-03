@@ -5,6 +5,7 @@ import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { FaBookmark } from "react-icons/fa";
 import { BiUpvote } from "react-icons/bi";
 import { BiDownvote } from "react-icons/bi";
+import { LuEdit2 } from "react-icons/lu";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import {
   getQuestion,
@@ -12,6 +13,8 @@ import {
   searchQuestions,
 } from "../../services/userApi";
 import { toast } from "react-toastify";
+import { useSelector } from 'react-redux/es/hooks/useSelector';
+
 
 function Questions() {
   const navigate = useNavigate();
@@ -19,6 +22,8 @@ function Questions() {
   const [searchResults, setSearchResults] = useState([]);
   const location = useLocation();
   const searchQuery = new URLSearchParams(location.search).get("search");
+const profiledata = useSelector((state) => state.user)
+
   useEffect(() => {
     const getQuestions = () => {
       getQuestion().then((res) => {
@@ -27,7 +32,7 @@ function Questions() {
     };
     getQuestions();
   }, []);
-
+console.log(data);
   useEffect(() => {
     if (searchQuery) {
       searchQuestions(searchQuery)
@@ -44,6 +49,10 @@ function Questions() {
   const navigateToView = (id) => {
     navigate(`/questions/viewquestion`, { state: id });
   };
+
+  const navigateToEdit = (id)=>{
+    navigate(`/questions/edit`,{state:id})
+  }
 
   const saveQuestions = (id) => {
     saveQuestion(id).then((res) => {
@@ -143,6 +152,9 @@ function Questions() {
                               </div>
                               <div className="mr-4">({item.createdAt})</div>
                             </div>
+                            {profiledata.userId === item.userId._id && (
+                              <LuEdit2/>
+                            )}
                           </div>
                           <div className="">
                             {/* <BiUpvote size={30} className="mr-3 cursor-pointer" />
@@ -174,7 +186,7 @@ function Questions() {
                                 className="w-6 h-6 text-gray-600 hover:text-gray-800 mr-3"
                               />
                               <span className="text-left py-3">
-                                {item.answers} 2 Answers
+                                {item.numAnswers}
                               </span>
                             </div>
 
@@ -211,6 +223,11 @@ function Questions() {
                               </div>
                               <div className="mr-4">({item.createdAt})</div>
                             </div>
+                            {profiledata.userId === item.userId._id && (
+                              <button onClick={() => navigateToEdit(item._id)}>
+                                <LuEdit2/>
+                              </button>
+                            )}
                           </div>
                           <div className="">
                             {/* <BiUpvote size={30} className="mr-3 cursor-pointer" />
@@ -242,7 +259,7 @@ function Questions() {
                                 className="w-6 h-6 text-gray-600 hover:text-gray-800 mr-3"
                               />
                               <span className="text-left py-3">
-                                {item.answers} 2 Answers
+                              {item.numAnswers} Answers
                               </span>
                             </div>
 

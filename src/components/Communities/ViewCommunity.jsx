@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import CommunityMembers from "./CommunityMembers";
 import CommunityEvents from "./CommunityEvents";
 import CommunityDiscussions from "./CommunityDiscussions";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 
 function ViewCommunity() {
   const location = useLocation();
@@ -13,9 +14,12 @@ function ViewCommunity() {
 
   const [community, setCommunity] = useState(null);
   const [activeSection, setActiveSection] = useState("about");
+  const profiledata = useSelector((state) => state.user);
+  console.log(profiledata);
 
   useEffect(() => {
     getSingleCommunity(id).then((res) => {
+      console.log(res.data.singlecommunity);
       setCommunity(res.data.singlecommunity);
     });
   }, []);
@@ -29,7 +33,23 @@ function ViewCommunity() {
   const handleSectionChange = (section) => {
     setActiveSection(section);
   };
+  const isCurrentUserMember = () => {
+    if (!community || !community.members) {
+      return false;
+    }
+    const currentUserID = profiledata.userId;
 
+    for (const memberData of community.members) {
+      const memberID = memberData.member._id;
+      console.log(memberID);
+      if (memberID === currentUserID) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const currentUserMember = isCurrentUserMember();
 
   return (
     <>
@@ -67,15 +87,14 @@ function ViewCommunity() {
                     </p>
                   </div>
                 </div>
-                {/* {community.members[0].role != "admin" &&  */}
-
-                <button
-                  onClick={() => handleJoin(community._id)}
-                  className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
-                >
-                  Join
-                </button>
-                {/* } */}
+                {!currentUserMember && (
+                  <button
+                    onClick={() => handleJoin(community._id)}
+                    className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
+                  >
+                    Join
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -86,22 +105,22 @@ function ViewCommunity() {
                 <ul className="flex space-x-36">
                   <li>
                     <button onClick={() => handleSectionChange("about")}>
-                      <h1 >About Us</h1>
+                      <h1>About Us</h1>
                     </button>
                   </li>
                   <li>
                     <button onClick={() => handleSectionChange("members")}>
-                      <h1 >Members</h1>
+                      <h1>Members</h1>
                     </button>
                   </li>
                   <li>
                     <button onClick={() => handleSectionChange("events")}>
-                      <h1 >Events</h1>
+                      <h1>Events</h1>
                     </button>
                   </li>
                   <li>
                     <button onClick={() => handleSectionChange("discussions")}>
-                      <h1 >Discussions</h1>
+                      <h1>Discussions</h1>
                     </button>
                   </li>
                 </ul>
@@ -121,7 +140,9 @@ function ViewCommunity() {
           )}
           {activeSection === "members" && <CommunityMembers />}
           {activeSection === "events" && <CommunityEvents id={community._id} />}
-          {activeSection === "discussions" && <CommunityDiscussions id={community._id} />}
+          {activeSection === "discussions" && (
+            <CommunityDiscussions id={community._id} />
+          )}
         </div>
       ) : (
         <div></div>

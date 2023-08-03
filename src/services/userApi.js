@@ -30,6 +30,12 @@ const isUserAuth = () => {
   });
 };
 
+const editProfile = (id,data)=>{
+  return userAxiosInstance.post(`/profile/edit/${id}`,data,{
+    withCredentials:true
+  })
+}
+
 // QUESTIONS
 
 const askQuestion = (data) => {
@@ -52,6 +58,12 @@ const getSavedQuestions = (id)=>{
 
 const getQuestion =()=>{
   return userAxiosInstance.get("/questions",{
+    withCredentials:true
+  })
+}
+
+const editQuestion =(id,data)=>{
+  return userAxiosInstance.post(`/questions/edit/${id}`,data,{
     withCredentials:true
   })
 }
@@ -195,10 +207,12 @@ export {
   userRegisterWithGoogle,
   userLoginwithGoogle,
   isUserAuth,
+  editProfile,
   askQuestion,
   saveQuestion,
   getSavedQuestions,
   getQuestion,
+  editQuestion,
   getSingleQuestion,
   submitAnswer,
   answerVerified,

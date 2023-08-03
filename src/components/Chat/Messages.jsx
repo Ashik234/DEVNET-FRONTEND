@@ -95,7 +95,7 @@ function Messages({
                     <div className="mr-2 py-3 px-4  bg-blue-900 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
                       {msg.text}
                     </div>
-                    <span>{format(msg.createdAt)}</span>
+                    <span >{format(msg.createdAt)}</span>
                     <img
                       src=""
                       className="object-cover  h-8 w-8 rounded-full"
