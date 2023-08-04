@@ -17,22 +17,20 @@ function CommunityMembers() {
     });
   }, []);
 
-  const navigateToProfile = ( id) => {
-    navigate("/employer/applicants/profile",{state:{id}});
+  const navigateToProfile = (id) => {
+    navigate("/community/viewcommunity/members/profile", { state: { id } });
   };
 
   const navigateToCreate = (senderId, receiverId) => {
     createChat({ senderId: senderId, receiverId: receiverId })
       .then((res) => {
         let data = res.data.chatData;
-        if(data.exists){
-          
-        }else{
+        if (data.exists) {
+        } else {
           navigate("/communitites/viewcommunity/members/individual", {
             state: { data },
           });
         }
-       
       })
       .catch((err) => {
         console.log(err);
@@ -66,26 +64,31 @@ function CommunityMembers() {
                 <td className="py-2 text-center">{member.member.username}</td>
                 <td className="py-2 text-center">{member.role}</td>
                 <td className="py-2 text-center">
-                  <a onClick={()=>navigateToProfile(member._id)}
+                  <button
+                    onClick={() => navigateToProfile(member.member._id)}
                     href=""
+                    
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-500"
                   >
-                    Profile Link
-                  </a>
+                    Profile
+                  </button>
                 </td>
                 <td className="py-2">
                   <div className="flex justify-center items-center">
-                  {profiledata.userId !== member.member._id && (
-                    <button
-                      onClick={() =>
-                        navigateToCreate(profiledata.userId, member.member._id)
-                      }
-                    >
-                      <BsChatRightDotsFill />
-                    </button>
-                  )}
+                    {profiledata.userId !== member.member._id && (
+                      <button
+                        onClick={() =>
+                          navigateToCreate(
+                            profiledata.userId,
+                            member.member._id
+                          )
+                        }
+                      >
+                        <BsChatRightDotsFill />
+                      </button>
+                    )}
                   </div>
                 </td>
               </tr>

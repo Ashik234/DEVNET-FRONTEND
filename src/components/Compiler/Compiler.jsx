@@ -29,7 +29,6 @@ function Compiler() {
     <div className="bg-gray-200 p-4">
       <div className="flex items-center justify-between mb-4">
         <div className="text-xl font-semibold">DevNet Compiler</div>
-
         <button
           onClick={handleOutput}
           className="flex bg-green-600 text-white py-1 px-3 rounded"
@@ -39,52 +38,56 @@ function Compiler() {
         </button>
       </div>
 
-      <div className="flex">
-      <div className="text-lg font-semibold mb-2">HTML</div>
-        <AceEditor
-          mode="html"
-          theme="github"
-          value={htmlcode}
-          onChange={(newValue) => setHtmlCode(newValue)}
-          name="html-code-editor"
-          fontSize={14}
-          showPrintMargin={true}
-          showGutter={true}
-          highlightActiveLine={true}
-          className="flex-1 mr-2"
-        />
-           <div className="text-lg font-semibold mb-2">CSS</div>
-
-        <AceEditor
-          mode="css"
-          theme="github"
-          value={csscode}
-          onChange={(newValue) => setCssCode(newValue)}
-          name="css-code-editor"
-          fontSize={14}
-          showPrintMargin={true}
-          showGutter={true}
-          highlightActiveLine={true}
-          className="flex-1 mr-2"
-        />
-           <div className="text-lg font-semibold mb-2">JAVASCRIPT</div>
-
-        <AceEditor
-          mode="javascript"
-          theme="github"
-          value={jscode}
-          onChange={(newValue) => setJsCode(newValue)}
-          name="js-code-editor"
-          fontSize={14}
-          showPrintMargin={true}
-          showGutter={true}
-          highlightActiveLine={true}
-          className="flex-1"
-        />
+      <div className="flex flex-col md:flex-row">
+        <div className="w-full md:w-1/3 md:mr-2">
+          <div className="text-lg font-semibold mb-2">HTML</div>
+          <AceEditor
+            mode="html"
+            theme="github"
+            value={htmlcode}
+            onChange={(newValue) => setHtmlCode(newValue)}
+            name="html-code-editor"
+            fontSize={14}
+            showPrintMargin={true}
+            showGutter={true}
+            highlightActiveLine={true}
+            className="h-32 md:h-64"
+          />
+        </div>
+        <div className="w-full md:w-1/3 md:mx-2 mt-4 md:mt-0">
+          <div className="text-lg font-semibold mb-2">CSS</div>
+          <AceEditor
+            mode="css"
+            theme="github"
+            value={csscode}
+            onChange={(newValue) => setCssCode(newValue)}
+            name="css-code-editor"
+            fontSize={14}
+            showPrintMargin={true}
+            showGutter={true}
+            highlightActiveLine={true}
+            className="h-32 md:h-64"
+          />
+        </div>
+        <div className="w-full md:w-1/3 md:ml-2 mt-4 md:mt-0">
+          <div className="text-lg font-semibold mb-2">JAVASCRIPT</div>
+          <AceEditor
+            mode="javascript"
+            theme="github"
+            value={jscode}
+            onChange={(newValue) => setJsCode(newValue)}
+            name="js-code-editor"
+            fontSize={14}
+            showPrintMargin={true}
+            showGutter={true}
+            highlightActiveLine={true}
+            className="h-32 md:h-64"
+          />
+        </div>
       </div>
 
       <div className="mt-4">
-        <div className="text-xl font-semibold mb-2">Output Preview</div>
+        <div className="text-xl font-semibold mb-2">Output</div>
         <iframe
           id="output"
           className="w-full h-64 border bg-white rounded-lg"
@@ -95,4 +98,4 @@ function Compiler() {
   );
 }
 
-export default Compiler;    
+export default Compiler;

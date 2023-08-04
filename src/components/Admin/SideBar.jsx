@@ -4,7 +4,7 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { FiUsers } from "react-icons/fi";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { FaConnectdevelop } from "react-icons/fa";
-import { BiCalendarEvent } from "react-icons/bi";
+import { BiCalendarEvent,BiErrorCircle } from "react-icons/bi";
 import { CiLogout } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 function SideBar() {
@@ -49,6 +49,15 @@ function SideBar() {
               className="block hover:text-blue-400"
             >
               Notifications
+            </Link>
+          </li>
+          <li className="px-8 py-2 flex items-center">
+            <BiErrorCircle className="mr-2" />
+            <Link
+              to="/admin/reports"
+              className="block hover:text-blue-400"
+            >
+              Reports
             </Link>
           </li>
         </ul>

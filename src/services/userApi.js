@@ -69,6 +69,12 @@ const editQuestion =(id,data)=>{
   })
 }
 
+const reportQuestion = (id,data)=>{
+  return userAxiosInstance.post(`/questions/report/${id}`,data,{
+    withCredentials:true
+  })
+}
+
 const getSingleQuestion = (id)=>{
   return userAxiosInstance.get(`/viewquestion/${id}`,{
     withCredentials:true
@@ -179,6 +185,7 @@ const userSendMessage = (data)=>{
 }
 
 const userGetDetails = (userId) => {
+  console.log(userId);
   return userAxiosInstance.post(`/usergetdetails/${userId}`, {
     withCredentials: true,
   });
@@ -214,6 +221,7 @@ export {
   getSavedQuestions,
   getQuestion,
   editQuestion,
+  reportQuestion,
   getSingleQuestion,
   submitAnswer,
   answerVerified,

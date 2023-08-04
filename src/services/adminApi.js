@@ -30,6 +30,12 @@ const getCommunity = ()=>{
     })
 }
 
+const getReport = ()=>{
+    return adminAxiosInstance.get(`/reports`,{
+        withCredentials:true
+    })
+}
+
 const userAction = (id)=>{
     return adminAxiosInstance.get(`/useraction/${id}`,{
         withCredentials:true
@@ -47,13 +53,23 @@ const communityAction = (id)=>{
         withCredentials:true
     })
 }
+
+const reportAction = (id)=>{
+    return adminAxiosInstance.get(`/reportaction/${id}`,{
+        withCredentials:true
+    })
+}
+
+
 export {
     adminLogin,
     isAdminAuth,
     getUsers,
     getEvents,
     getCommunity,
+    getReport,
     userAction,
     eventAction,
-    communityAction
+    communityAction,
+    reportAction
 }

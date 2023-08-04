@@ -17,7 +17,6 @@ function PrivateRoutes({ role, route }) {
           console.log(err);
         });
     }else if(role==="admin"){
-      console.log("loggggggggg");
       isAdminAuth()
       .then((res)=>{
         setVerify(res.data.success)

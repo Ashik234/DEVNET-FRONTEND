@@ -10,6 +10,7 @@ function Communities() {
 
   useEffect(() => {
     getCommunity().then((res) => {
+      console.log(res.data.communityData);
       setData(res.data.communityData);
     });
   }, []);
@@ -75,7 +76,7 @@ function Communities() {
                     />
                     <div className="ml-4">
                       <h3 className="text-xl font-bold">{item.title}</h3>
-                      <p className="text-gray-600">Number of Members</p>
+                      <p className="text-gray-600">{item.type}</p>
                     </div>
                   </div>
                   <button

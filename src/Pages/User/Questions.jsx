@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { FaBookmark } from "react-icons/fa";
 import { BiUpvote } from "react-icons/bi";
-import { BiDownvote } from "react-icons/bi";
+import { BiDownvote, BiErrorCircle } from "react-icons/bi";
 import { LuEdit2 } from "react-icons/lu";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import {
@@ -13,26 +13,27 @@ import {
   searchQuestions,
 } from "../../services/userApi";
 import { toast } from "react-toastify";
-import { useSelector } from 'react-redux/es/hooks/useSelector';
-
+import { useSelector } from "react-redux/es/hooks/useSelector";
 
 function Questions() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [selectedTag, setSelectedTag] = useState("");
   const location = useLocation();
   const searchQuery = new URLSearchParams(location.search).get("search");
-const profiledata = useSelector((state) => state.user)
+  const profiledata = useSelector((state) => state.user);
 
   useEffect(() => {
     const getQuestions = () => {
       getQuestion().then((res) => {
+        console.log(res.data);
         setData(res.data.questionData);
       });
     };
     getQuestions();
   }, []);
-console.log(data);
+
   useEffect(() => {
     if (searchQuery) {
       searchQuestions(searchQuery)
@@ -50,9 +51,13 @@ console.log(data);
     navigate(`/questions/viewquestion`, { state: id });
   };
 
-  const navigateToEdit = (id)=>{
-    navigate(`/questions/edit`,{state:id})
-  }
+  const navigateToEdit = (id) => {
+    navigate(`/questions/edit`, { state: id });
+  };
+
+  const navigateToReport = (id) => {
+    navigate(`/questions/report`, { state: id });
+  };
 
   const saveQuestions = (id) => {
     saveQuestion(id).then((res) => {
@@ -64,6 +69,14 @@ console.log(data);
   };
   saveQuestions();
 
+
+  const handleTagSelect = (tag) => {
+    setSelectedTag(tag);
+  };
+
+  const filteredData = selectedTag
+    ? data.filter((item) => item.tags.includes(selectedTag))
+    : data;
   return (
     <div>
       {searchQuery && searchResults.length === 0 ? (
@@ -107,9 +120,17 @@ console.log(data);
                 <div className="flex flex-wrap items-center justify-between">
                   <div className="flex items-center mb-2">
                     <div className="relative mr-4">
-                      <select className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 focus:outline-none">
+                      <select
+                        className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 focus:outline-none"
+                        value={selectedTag}
+                        onChange={(e) => handleTagSelect(e.target.value)}
+                      >
                         <option value="">Tags</option>
-                        <option value="">JAVASCRIPT</option>
+                        {data.map((item) => (
+                          <option key={item._id} value={item.tags}>
+                            {item.tags}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -143,7 +164,7 @@ console.log(data);
                           <div className="flex items-center justify-between mb-4 mr-4 ml-3">
                             <div className="flex items-center mr-4 ml-5">
                               <img
-                                src={PROFILE}
+                                src={item.userId.image}
                                 alt="Profile"
                                 className="w-10 h-10 rounded-full mr-4 ml-7"
                               />
@@ -153,8 +174,9 @@ console.log(data);
                               <div className="mr-4">({item.createdAt})</div>
                             </div>
                             {profiledata.userId === item.userId._id && (
-                              <LuEdit2/>
+                              <LuEdit2 />
                             )}
+                            <BiErrorCircle />
                           </div>
                           <div className="">
                             {/* <BiUpvote size={30} className="mr-3 cursor-pointer" />
@@ -186,7 +208,7 @@ console.log(data);
                                 className="w-6 h-6 text-gray-600 hover:text-gray-800 mr-3"
                               />
                               <span className="text-left py-3">
-                                {item.numAnswers}
+                                {item.numAnswers} Answers
                               </span>
                             </div>
 
@@ -205,7 +227,7 @@ console.log(data);
                         </div>
                       );
                     })
-                  : data.map((item, index) => {
+                  : filteredData.map((item, index) => {
                       return (
                         <div
                           key={index}
@@ -214,7 +236,7 @@ console.log(data);
                           <div className="flex items-center justify-between mb-4 mr-4 ml-3">
                             <div className="flex items-center mr-4 ml-5">
                               <img
-                                src={PROFILE}
+                                src={item.userId.image}
                                 alt="Profile"
                                 className="w-10 h-10 rounded-full mr-4 ml-7"
                               />
@@ -225,13 +247,19 @@ console.log(data);
                             </div>
                             {profiledata.userId === item.userId._id && (
                               <button onClick={() => navigateToEdit(item._id)}>
-                                <LuEdit2/>
+                                <LuEdit2 />
                               </button>
                             )}
+                            <button onClick={() => navigateToReport(item._id)}>
+                              <BiErrorCircle
+                                size={25}
+                                className="text-red-600"
+                              />
+                            </button>
                           </div>
                           <div className="">
                             {/* <BiUpvote size={30} className="mr-3 cursor-pointer" />
-                    <BiDownvote size={30} className="cursor-pointer" /> */}
+                              <BiDownvote size={30} className="cursor-pointer" /> */}
                           </div>
                           <div className="flex items-center font-bold ml-7 px-9">
                             {item.title}
@@ -241,16 +269,26 @@ console.log(data);
                           </div>
 
                           <div className="flex items-center text-left px-9">
-                            <div className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 mr-4 ml-5">
-                              {item.tags}
-                            </div>
-                            <div className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 mr-4 ml-3">
-                              {item.tags}
-                            </div>
-                            <div className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 mr-4 ml-3">
-                              {item.tags}
-                            </div>
+                            {item.tags.map((tag, tagIndex) => (
+                              <div
+                                key={tagIndex}
+                                className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 mr-4 ml-3"
+                              >
+                                {tag}
+                              </div>
+                            ))}
                           </div>
+                          {/* <div className="flex items-center text-left px-9">
+                             <div className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 mr-4 ml-5">
+                               {item.tags}
+                             </div>
+                             <div className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 mr-4 ml-3">
+                              {item.tags}
+                             </div>
+                             <div className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 mr-4 ml-3">
+                               {item.tags}
+                             </div>
+                          </div> */}
 
                           <div className="flex items-center justify-between mx-7 px-9">
                             <div className="flex items-center">
@@ -259,7 +297,7 @@ console.log(data);
                                 className="w-6 h-6 text-gray-600 hover:text-gray-800 mr-3"
                               />
                               <span className="text-left py-3">
-                              {item.numAnswers} Answers
+                                {item.numAnswers} Answers
                               </span>
                             </div>
 

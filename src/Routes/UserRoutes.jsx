@@ -26,6 +26,8 @@ import Compiler from "../components/Compiler/Compiler";
 import Events from "../Pages/User/Events";
 import IndividualChat from "../Pages/User/IndividualChat";
 import EditQuestion from "../components/Questions/EditQuestion";
+import ReportQuestion from "../components/Questions/ReportQuestion";
+import CommunityMembersProfile from "../components/Communities/CommunityMembersProfile";
 
 function UserRoutes() {
   return (
@@ -45,10 +47,12 @@ function UserRoutes() {
         <Route exact path="/questions/ask" element={<AskQuestion />} />
         <Route exact path="/questions/viewquestion" element={<ViewQuestion/>}/>
         <Route exact path="/questions/edit" element={<EditQuestion/>}/>
+        <Route exact path="/questions/report" element={<ReportQuestion/>}/>
         <Route exact path="/communities" element={<Communities/>} />
         <Route exact path="/communities/createcommunity" element={<CreateCommunity/>}/>
         <Route exact path="/communities/viewcommunity" element={<ViewCommunity/>}/>
         <Route exact path="/communities/viewcommunity/members" element={<CommunityMembers/>}/>
+        <Route exact path="/community/viewcommunity/members/profile" element={<CommunityMembersProfile/>}/>
         <Route exact path="/communitites/viewcommunity/members/individual" element={<IndividualChat/>}/>
         <Route exact path="/communities/viewcommunity/events" element={<CommunityEvents/>}/>
         <Route exact path="/communities/viewcommunity/create" element={<CommunityCreateEvent/>}/>

@@ -12,6 +12,7 @@ import Events from '../components/Admin/Events';
 import Community from '../components/Admin/Community';
 import Notifications from '../components/Admin/Notifications';
 import AdminProfile from '../components/Admin/AdminProfile';
+import Reports from '../components/Admin/Reports';
 
 function AdminRoutes() {
   return (
@@ -27,6 +28,7 @@ function AdminRoutes() {
             <Route exact path='/events' element={<Events/>}/>
             <Route exact path='/communities' element={<Community/>}/>
             <Route exact path="/notifications" element={<Notifications/>}/>
+            <Route exact path='/reports' element={<Reports/>}/>
             <Route exact path='/adminprofile' element={<AdminProfile/>}/>
           </Route>
     </Routes>
