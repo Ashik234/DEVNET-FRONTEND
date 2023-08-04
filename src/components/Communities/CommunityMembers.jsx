@@ -3,7 +3,7 @@ import { getSingleCommunity, createChat } from "../../services/userApi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BsChatRightDotsFill } from "react-icons/bs";
 import { useSelector } from "react-redux/es/hooks/useSelector";
-
+import Loader from "../../Pages/Loader";
 function CommunityMembers() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -13,9 +13,12 @@ function CommunityMembers() {
 
   useEffect(() => {
     getSingleCommunity(id).then((res) => {
-      setCommunity(res.data.singlecommunity);
+      setTimeout(() => {
+        setCommunity(res.data.singlecommunity);
+      }, 500);
     });
   }, []);
+
 
   const navigateToProfile = (id) => {
     navigate("/community/viewcommunity/members/profile", { state: { id } });
@@ -38,7 +41,9 @@ function CommunityMembers() {
   };
 
   if (!community) {
-    return <div>Loading...</div>;
+    return (
+      <Loader/>
+    );
   }
 
   return (
@@ -67,7 +72,6 @@ function CommunityMembers() {
                   <button
                     onClick={() => navigateToProfile(member.member._id)}
                     href=""
-                    
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-500"

@@ -53,7 +53,6 @@ function CommunityDiscussions({ id }) {
     };
   }, []);
 console.log(messages);
-// console.log(messages[0].from?._id);
   return (
     <>
       <div className="w-full h-full border-2 rounded-md shadow p-2">
