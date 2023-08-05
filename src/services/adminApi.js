@@ -28,6 +28,18 @@ const getCommunity = ()=>{
     return adminAxiosInstance.get("/communities",{
         withCredentials:true
     })
+} 
+
+const addArticle = (formData)=>{
+    return adminAxiosInstance.post("/addarticle",formData,{
+        withCredentials:true
+    })
+}
+
+const getArticles = ()=>{
+    return adminAxiosInstance.get("/articles",{
+        withCredentials:true
+    })
 }
 
 const getReport = ()=>{
@@ -54,6 +66,12 @@ const communityAction = (id)=>{
     })
 }
 
+const articleAction = (id)=>{
+    return adminAxiosInstance.get(`/articleaction/${id}`,{
+        withCredentials:true
+    })
+}
+
 const reportAction = (id)=>{
     return adminAxiosInstance.get(`/reportaction/${id}`,{
         withCredentials:true
@@ -67,9 +85,12 @@ export {
     getUsers,
     getEvents,
     getCommunity,
+    addArticle,
+    getArticles,
     getReport,
     userAction,
     eventAction,
     communityAction,
+    articleAction,
     reportAction
 }

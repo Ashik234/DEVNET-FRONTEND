@@ -10,7 +10,7 @@ function CommunityDiscussions({ id }) {
   const scroll = useRef();
   const [value, setValue] = useState("");
   const { userId } = useSelector((state) => state.user);
-  console.log(userId); 
+  console.log(userId);
   const params = useParams();
   const communityId = params.id;
   const [messages, setMessages] = useState([]);
@@ -45,47 +45,47 @@ function CommunityDiscussions({ id }) {
   useEffect(() => {
     getMsg();
     socket.current = io(baseURL);
-    socket.current.emit("join_room",id);
+    socket.current.emit("join_room", id);
     return () => {
       if (socket.current) {
         socket.current.disconnect();
       }
     };
   }, []);
-console.log(messages);
+  console.log(messages);
+
   return (
     <>
       <div className="w-full h-full border-2 rounded-md shadow p-2">
         <div className="h-[90%] border-b-2 overflow-auto">
           <div>
-            <div className="flex flex-col h-full overflow-x-auto mb-4">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Community Discussions</h2>
+            <div className="flex flex-col h-full overflow-x-auto">
               <div ref={scroll} className="flex flex-col h-full">
                 <div className="grid grid-cols-12 gap-y-2">
-                  {messages.map((data, index) => {
-                    return (
-                      <React.Fragment key={index}>
-                        {data.from?._id === userId ? (
-                          <div className="col-start-6 col-end-13 p-3 rounded-lg">
-                            <div className="flex items-center justify-start flex-row-reverse">
-                              <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0 ml-2">
-                                {data.from?.username}
-                              </div>
-                                  <div>{data?.message}</div>
+                  {messages.map((data, index) => (
+                    <React.Fragment key={index}>
+                      {data.from?._id === userId ? (
+                        <div className="col-start-6 col-end-13 p-3 rounded-lg">
+                          <div className="flex items-center justify-start flex-row-reverse">
+                            <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0 ml-2">
+                              {data.from?.username}
                             </div>
+                            <div>{data?.message}</div>
                           </div>
-                        ) : (
-                          <div className="col-start-1 col-end-8 p-3 rounded-lg">
-                            <div className="flex flex-row items-center">
-                              <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
-                                {data.from.username}
-                              </div>
-                                  <div>{data.message}</div>
+                        </div>
+                      ) : (
+                        <div className="col-start-1 col-end-8 p-3 rounded-lg">
+                          <div className="flex flex-row items-center">
+                            <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
+                              {data.from.username}
                             </div>
+                            <div>{data.message}</div>
                           </div>
-                        )}
-                      </React.Fragment>
-                    );
-                  })}
+                        </div>
+                      )}
+                    </React.Fragment>
+                  ))}
                 </div>
               </div>
             </div>

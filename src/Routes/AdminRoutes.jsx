@@ -13,6 +13,8 @@ import Community from '../components/Admin/Community';
 import Notifications from '../components/Admin/Notifications';
 import AdminProfile from '../components/Admin/AdminProfile';
 import Reports from '../components/Admin/Reports';
+import Articles from '../components/Admin/Articles';
+import AddArticle from '../components/Admin/AddArticle';
 
 function AdminRoutes() {
   return (
@@ -28,6 +30,8 @@ function AdminRoutes() {
             <Route exact path='/events' element={<Events/>}/>
             <Route exact path='/communities' element={<Community/>}/>
             <Route exact path="/notifications" element={<Notifications/>}/>
+            <Route exact path='/articles' element={<Articles/>}/>
+            <Route exact path='/articles/add' element={<AddArticle/>}/>
             <Route exact path='/reports' element={<Reports/>}/>
             <Route exact path='/adminprofile' element={<AdminProfile/>}/>
           </Route>

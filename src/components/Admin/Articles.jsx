@@ -1,60 +1,79 @@
-import React, { useState, useEffect } from "react";
-import { getCommunity, communityAction } from "../../services/adminApi";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { articleAction, getArticles } from "../../services/adminApi";
+import { Link } from "react-router-dom";
 
-function Community() {
-  const [community, setCommunity] = useState([]);
+function Articles() {
+  const [articles, setArticles] = useState([]);
+
   useEffect(() => {
-    getCommunity()
+    getArticles()
       .then((res) => {
-        console.log(res.data);
-        setCommunity(res.data.communityData);
+        setArticles(res.data.articleData);
       })
       .catch((error) => {
-        console.error("Failed to fetch community data:", error);
+        console.error("Failed to fetch article data:", error);
       });
   }, []);
 
   const handleAction = (id) => {
-    communityAction(id)
+    articleAction(id)
       .then((res) => {
         toast.success(res.data.message);
-        getCommunity()
+        getArticles()
           .then((res) => {
-            setCommunity(res.data.communityData);
+            setArticles(res.data.articleData);
           })
           .catch((error) => {
-            console.error("Failed to fetch community data:", error);
+            console.error("Failed to fetch article data:", error);
           });
       })
       .catch((error) => {
-        console.error("Error blocking/unblocking Community:", error);
+        console.error("Error blocking/unblocking Article:", error);
       });
   };
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-4">Communities</h1>
-      <p className="mb-4">Home | Communities</p>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-3xl font-bold">Articles</h1>
+        <Link to="/admin/articles/add">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Add Article
+          </button>
+        </Link>
+      </div>
+      <p className="mb-4">Home | Articles</p>
       <table className="w-full table-auto border-collapse">
         <thead>
           <tr className="bg-gray-200">
             <th className="px-4 py-2 text-center">No</th>
-            <th className="px-4 py-2 text-center">Community Name</th>
-            <th className="px-4 py-2 text-center">Type</th>
+            <th className="px-4 py-2 text-center">Article Name</th>
+            <th className="px-4 py-2 text-center">Image</th>
+            <th className="px-4 py-2 text-center">Description</th>
             <th className="px-4 py-2 text-center">Status</th>
             <th className="px-4 py-2 text-center">Action</th>
           </tr>
         </thead>
         <tbody>
-          {community.map((item, index) => (
+          {articles.map((item, index) => (
             <tr
               key={index}
               className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
             >
               <td className="border px-4 py-2 text-center">{index + 1}</td>
               <td className="border px-4 py-2 text-center">{item.title}</td>
-              <td className="border px-4 py-2 text-center">{item.type}</td>
+              <td className="border px-4 py-2 flex justify-center items-center">
+                <img
+                  className="h-10 w-10"
+                  src={item.image}
+                  alt="category image"
+                />
+              </td>
+
+              <td className="border px-4 py-2 text-center">
+                {item.description}
+              </td>
               <td className="border px-4 py-2 text-center">
                 <div className="flex flex-col justify-center h-full">
                   {item.status ? "Active" : "Inactive"}
@@ -76,4 +95,4 @@ function Community() {
   );
 }
 
-export default Community;
+export default Articles;

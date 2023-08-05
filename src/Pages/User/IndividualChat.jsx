@@ -16,13 +16,13 @@ function IndividualChat() {
   const [currentChat, setCurrentChat] = useState(null);
   const [sendMessage, setSendMessage] = useState(null);
   const [receiveMessage, setReceiveMessage] = useState(null);
-
+  const [unreadCounts, setUnreadCounts] = useState({});
   const userData = useSelector((state) => state.user);
   const socket = useRef();
+  
   useEffect(() => {
     userChat(userData.userId)
       .then((res) => {
-        console.log(res.data.chat);
         setChats(res.data.chat);
       })
       .catch((err) => {
@@ -33,7 +33,6 @@ function IndividualChat() {
 
   useEffect(() => {
     socket.current = socketInstance;
-    console.log(socket.current);
     socket.current.emit("add-new-user", userData.userId);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
@@ -61,6 +60,28 @@ function IndividualChat() {
     return online ? true : false;
   };
 
+  // unreadCounts
+  useEffect(() => {
+    if (receiveMessage !== null && receiveMessage.chatId) {
+      setUnreadCounts(prevCounts => {
+        const newCounts = { ...prevCounts };
+        newCounts[receiveMessage.chatId] = (newCounts[receiveMessage.chatId] || 0) + 1;
+        return newCounts;
+      });
+    }
+  }, [receiveMessage]);
+
+  const handleChatClick = (chat) => {
+    setCurrentChat(chat);
+    console.log(chat);
+    setUnreadCounts(prevCounts => {
+      const newCounts = { ...prevCounts };
+      newCounts[chat.receiverId] = 0;
+      console.log(newCounts);
+      return newCounts;
+    });
+  };
+
   return (
     <div className="flex h-96 px-12 mt-8">
       <div
@@ -68,12 +89,13 @@ function IndividualChat() {
         style={{ maxWidth: "25%" }}
       >
         {chats.map((chat, index) => (
-          <div key={index} onClick={() => setCurrentChat(chat)}>
+          <div key={index} onClick={() => handleChatClick(chat)}>
             <ChatList
               data={chat}
               userid={userData.userId}
               getUserData={userGetDetails}
               online={checkOnlineStatus(chat)}
+              unreadCount={unreadCounts[chat._id] || 0} 
             />
           </div>
         ))}

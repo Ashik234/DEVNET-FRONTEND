@@ -185,7 +185,6 @@ const userSendMessage = (data)=>{
 }
 
 const userGetDetails = (userId) => {
-  console.log(userId);
   return userAxiosInstance.post(`/usergetdetails/${userId}`, {
     withCredentials: true,
   });

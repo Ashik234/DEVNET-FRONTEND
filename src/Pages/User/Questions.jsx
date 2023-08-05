@@ -77,6 +77,8 @@ function Questions() {
   const filteredData = selectedTag
     ? data.filter((item) => item.tags.includes(selectedTag))
     : data;
+
+    
   return (
     <div>
       {searchQuery && searchResults.length === 0 ? (

@@ -2,7 +2,6 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import SideBar from "../../components/Admin/SideBar";
 import Navbar from "../../components/Admin/NavBar";
-
 function Layout() {
   return (
     <div className="flex flex-col bg-neutral-100 w-full h-screen">
@@ -16,5 +15,4 @@ function Layout() {
     </div>
   );
 }
-
 export default Layout;

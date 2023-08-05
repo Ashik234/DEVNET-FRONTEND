@@ -9,7 +9,7 @@ function CreateCommunity() {
   const navigate = useNavigate()
   const location = useLocation();
   const id = location.state;
-
+console.log(id);
   const handleSubmit = (e) => {
    e.preventDefault()
    if (!community || !community.title || community.title.trim() === "") {
