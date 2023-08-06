@@ -88,7 +88,7 @@ const submitAnswer = (id,data)=>{
 }
 
 const answerVerified = (id)=>{
-  return userAxiosInstance.post(`/verfied/${id}`,{
+  return userAxiosInstance.post(`/verified/${id}`,{
     withCredentials:true
   })
 }

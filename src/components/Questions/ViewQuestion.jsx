@@ -22,15 +22,15 @@ function ViewQuestion() {
     });
   }, []);
 
-  // const AnswerVerified = (e)=>{
-  //   try {
-  //     answerVerified(id).then((res)=>{
-  //       console.log(res.data);
-  //     })
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  const AnswerVerified = (e)=>{
+    try {
+      answerVerified(id).then((res)=>{
+        console.log(res.data);
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const SubmitAnswer = (e) => {
     e.preventDefault();
@@ -39,10 +39,14 @@ function ViewQuestion() {
     } else {
       try {
         submitAnswer(id, answer).then((res) => {
-          setAnswer(res.data);
           if (res.data.success) {
+            setAnswer(res.data);
+            console.log(res.data);
             toast.success(res.data.message);
             navigate("/questions/viewquestion");
+          }else {
+            console.log("dddddd");
+            toast.warn(res.data.message)
           }
         });
       } catch (error) {
@@ -84,10 +88,10 @@ function ViewQuestion() {
                     <p className="text-gray-500">Posted on (July 14, 2023)</p>
                   </div>
                 </div>
-                {/* <div className='flex'>
+                <div className='flex'>
             <TiTick onClick={()=>AnswerVerified(item._id)} size={30} className="cursor-pointer"/>
             <p className="text-gray-800 ml-4">{item.answer}</p>
-            </div> */}
+            </div>
               </div>
             ))}
           </div>

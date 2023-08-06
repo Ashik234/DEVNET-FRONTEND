@@ -159,6 +159,7 @@ function Questions() {
                 {searchQuery && searchResults.length > 0
                   ? searchResults.map((item, index) => {
                       return (
+                        <Link to={`/questions/viewquestion/${item._id}`}>
                         <div
                           key={index}
                           className="bg-gray-400 mt-6 mx-auto max-w-4xl p-4 text-center rounded-lg relative"
@@ -227,6 +228,8 @@ function Questions() {
                             </div>
                           </div>
                         </div>
+                        </Link>
+
                       );
                     })
                   : filteredData.map((item, index) => {
