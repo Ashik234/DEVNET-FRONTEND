@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import DEVNET from "../../assets/DEVNET-bg.png";
 import { FiUser, FiMenu, FiLogOut, FiMessageSquare } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";

@@ -87,6 +87,12 @@ const submitAnswer = (id,data)=>{
   })
 }
 
+const editAnswer = (id,data)=>{
+  return userAxiosInstance.post(`/answer/edit/${id}`,data,{
+    withCredentials:true
+  })
+}
+
 const answerVerified = (id)=>{
   return userAxiosInstance.post(`/verified/${id}`,{
     withCredentials:true
@@ -204,10 +210,6 @@ const getAllMessage = (id)=>{
   })
 }
 
-// COMPILER 
-
-
-
 export {
   userRegister,
   userLogin,
@@ -223,6 +225,7 @@ export {
   reportQuestion,
   getSingleQuestion,
   submitAnswer,
+  editAnswer,
   answerVerified,
   searchQuestions,
   askedQuestions,

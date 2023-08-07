@@ -1,25 +1,22 @@
-import React from 'react'
-import React, { useState } from "react";
+import React, {useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { reportQuestion } from "../../services/userApi";
 import { toast } from "react-toastify";
+import { editAnswer} from '../../services/userApi';
 
 function EditAnswer() {
  const navigate = useNavigate();
   const location = useLocation();
   const id = location.state;
-  console.log(id);
   const [answer, setAnswer] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    reportQuestion(id, reportReason).then((res) => {
-        console.log(res.data);
+    editAnswer(id, answer).then((res) => {
         toast.success(res.data.message);
         navigate("/questions/viewquestion");
     })
     .catch((error) => {
-        console.error("Error updating question:", error);
+        console.error("Error updating answer:", error);
       });
   };
 
@@ -28,13 +25,13 @@ function EditAnswer() {
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-xl font-semibold mb-4">Edit Answer</h2>
         <p className="mb-4">
-          Please provide a reason for reporting this question:
+        Update and Improve Response for Better Understanding
         </p>
         <textarea
           name="answer"
           onChange={(e) => {
-            setReportReason({
-              ...reportReason,
+            setAnswer({
+              ...answer,
               [e.target.name]: e.target.value,
             });
           }}

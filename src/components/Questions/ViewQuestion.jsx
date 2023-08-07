@@ -5,32 +5,36 @@ import { submitAnswer, answerVerified } from "../../services/userApi";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { TiTick } from "react-icons/ti";
+import { LuEdit2 } from "react-icons/lu";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 
 function ViewQuestion() {
   const navigate = useNavigate();
   const location = useLocation();
   const id = location.state;
-  console.log(id);
-
+  const profiledata = useSelector((state) => state.user);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
 
   useEffect(() => {
     getSingleQuestion(id).then((res) => {
-      console.log(res.data);
       setQuestion(res.data.singlequestion);
     });
   }, []);
 
-  const AnswerVerified = (e)=>{
+  const navigateToEdit = (id) => {
+    navigate(`/questions/answer/edit`, { state: id });
+  };
+
+  const AnswerVerified = (id) => {
     try {
-      answerVerified(id).then((res)=>{
-        console.log(res.data);
-      })
+      answerVerified(id).then((res) => {
+        toast.success(res.data.message)
+      });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const SubmitAnswer = (e) => {
     e.preventDefault();
@@ -41,12 +45,10 @@ function ViewQuestion() {
         submitAnswer(id, answer).then((res) => {
           if (res.data.success) {
             setAnswer(res.data);
-            console.log(res.data);
             toast.success(res.data.message);
             navigate("/questions/viewquestion");
-          }else {
-            console.log("dddddd");
-            toast.warn(res.data.message)
+          } else {
+            toast.warn(res.data.message);
           }
         });
       } catch (error) {
@@ -87,11 +89,23 @@ function ViewQuestion() {
                     </p>
                     <p className="text-gray-500">Posted on (July 14, 2023)</p>
                   </div>
+                  {profiledata.userId === item.userId._id && (
+                    <button onClick={() => navigateToEdit(item._id)}>
+                      <LuEdit2 />
+                    </button>
+                  )}
                 </div>
-                <div className='flex'>
-            <TiTick onClick={()=>AnswerVerified(item._id)} size={30} className="cursor-pointer"/>
-            <p className="text-gray-800 ml-4">{item.answer}</p>
-            </div>
+                <div className="flex">
+                {profiledata.userId !== item.userId._id && (
+                  <TiTick
+                    onClick={() => AnswerVerified(item._id)}
+                    size={30}
+                    className={`cursor-pointer ${item.verified ? "text-green-500" : ""}`}
+                    
+                  />
+                  )}
+                  <p className="text-gray-800 ml-12">{item.answer}</p>
+                </div>
               </div>
             ))}
           </div>

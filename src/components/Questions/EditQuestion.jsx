@@ -16,7 +16,6 @@ function EditQuestion() {
 
   useEffect(() => {
     getSingleQuestion(id).then((res) => {
-      console.log(res.data);
       setQuestion(res.data.singlequestion);
     });
   }, []);
