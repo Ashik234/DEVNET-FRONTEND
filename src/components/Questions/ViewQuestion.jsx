@@ -96,7 +96,7 @@ function ViewQuestion() {
                   )}
                 </div>
                 <div className="flex">
-                {profiledata.userId !== item.userId._id && (
+                {profiledata.userId === item.userId._id && (
                   <TiTick
                     onClick={() => AnswerVerified(item._id)}
                     size={30}

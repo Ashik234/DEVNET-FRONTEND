@@ -138,6 +138,13 @@ const joinCommunity =(id)=>{
   })
 }
 
+const searchCommunity = (searchQuery) => {
+  return userAxiosInstance.get(`/searchcommunity?query=${searchQuery}`, {
+    withCredentials: true,
+  });
+};
+
+
 //EVENT
 
 const createEvent = (id,data)=>{
@@ -163,6 +170,12 @@ const getSingleEvent =(id)=>{
     withCredentials:true
   })
 }
+
+const searchEvents = (searchQuery) => {
+  return userAxiosInstance.get(`/searchevents?query=${searchQuery}`, {
+    withCredentials: true,
+  });
+};
 
 // INDIVIDUAL CHAT
 
@@ -233,10 +246,12 @@ export {
   getCommunity,
   getSingleCommunity,
   joinCommunity,
+  searchCommunity,
   createEvent,
   getAllEvents,
   getEvents,
   getSingleEvent,
+  searchEvents,
   createChat,
   userChat,
   userGetMessages,

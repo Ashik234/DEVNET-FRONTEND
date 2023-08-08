@@ -135,7 +135,7 @@ function Questions() {
                       </select>
                     </div>
                   </div>
-                  <div className="flex items-center mb-2">
+                  {/* <div className="flex items-center mb-2">
                     <div className="mr-2">Sorted by:</div>
                     <div className="relative">
                       <select className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 focus:outline-none">
@@ -143,7 +143,7 @@ function Questions() {
                         <option value="">Highest Votes</option>
                       </select>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="ml-auto">
                     <Link to="/questions/ask">
                       <button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full py-1 px-4">
@@ -158,7 +158,6 @@ function Questions() {
                 {searchQuery && searchResults.length > 0
                   ? searchResults.map((item, index) => {
                       return (
-                        <Link to={`/questions/viewquestion/${item._id}`}>
                         <div
                           key={index}
                           className="bg-gray-400 mt-6 mx-auto max-w-4xl p-4 text-center rounded-lg relative"
@@ -227,8 +226,6 @@ function Questions() {
                             </div>
                           </div>
                         </div>
-                        </Link>
-
                       );
                     })
                   : filteredData.map((item, index) => {

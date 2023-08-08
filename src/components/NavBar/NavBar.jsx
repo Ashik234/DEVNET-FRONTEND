@@ -18,7 +18,6 @@ function NavBar() {
     setMenuOpen(!menuOpen);
   };
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
     navigate(`/questions?search=${search}`);

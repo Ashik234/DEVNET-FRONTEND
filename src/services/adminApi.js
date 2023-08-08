@@ -12,6 +12,18 @@ const isAdminAuth =()=>{
     })
 }
 
+const userCount = ()=>{
+    return adminAxiosInstance.get("/usercount",{
+        withCredentials:true
+    })
+}
+
+const reportCount = ()=>{
+    return adminAxiosInstance.get("reportcount",{
+        withCredentials:true
+    })
+}
+
 const getUsers = ()=>{
     return adminAxiosInstance.get("/users",{
         withCredentials:true
@@ -82,6 +94,8 @@ const reportAction = (id)=>{
 export {
     adminLogin,
     isAdminAuth,
+    userCount,
+    reportCount,
     getUsers,
     getEvents,
     getCommunity,
