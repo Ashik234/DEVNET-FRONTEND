@@ -15,6 +15,7 @@ import AdminProfile from '../components/Admin/AdminProfile';
 import Reports from '../components/Admin/Reports';
 import Articles from '../components/Admin/Articles';
 import AddArticle from '../components/Admin/AddArticle';
+import EditArticle from '../components/Admin/EditArticle';
 
 function AdminRoutes() {
   return (
@@ -32,6 +33,7 @@ function AdminRoutes() {
             <Route exact path="/notifications" element={<Notifications/>}/>
             <Route exact path='/articles' element={<Articles/>}/>
             <Route exact path='/articles/add' element={<AddArticle/>}/>
+            <Route exact path='/articles/edit' element={<EditArticle/>}/>
             <Route exact path='/reports' element={<Reports/>}/>
             <Route exact path='/adminprofile' element={<AdminProfile/>}/>
           </Route>

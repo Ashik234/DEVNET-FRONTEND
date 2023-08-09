@@ -52,14 +52,14 @@ function CommunityDiscussions({ id }) {
       }
     };
   }, []);
-  console.log(messages);
 
   return (
     <>
-      <div className="w-full h-full border-2 rounded-md shadow p-2">
-        <div className="h-[90%] border-b-2 overflow-auto">
+      <div className="w-full h-full border-2 bg-gray-200 rounded-md shadow p-2 px-8">
+        <div className="h-[90%] border-b-2 bg-white rounded-md overflow-auto">
           <div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Community Discussions</h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-4 p-4">Community Discussions</h2>
+            <hr />
             <div className="flex flex-col h-full overflow-x-auto">
               <div ref={scroll} className="flex flex-col h-full">
                 <div className="grid grid-cols-12 gap-y-2">
@@ -77,7 +77,7 @@ function CommunityDiscussions({ id }) {
                       ) : (
                         <div className="col-start-1 col-end-8 p-3 rounded-lg">
                           <div className="flex flex-row items-center">
-                            <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
+                            <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0 mr-2">
                               {data.from.username}
                             </div>
                             <div>{data.message}</div>

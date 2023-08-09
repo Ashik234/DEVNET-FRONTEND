@@ -31,13 +31,26 @@ const isUserAuth = () => {
 };
 
 const editProfile = (id,data)=>{
-  console.log(data.get("image"));
   return userAxiosInstance.post(`/profile/edit/${id}`,data,{
     withCredentials:true
   })
 }
 
+const getArticles =()=>{
+  return userAxiosInstance.get("/articles",{
+    withCredentials:true
+  })
+}
+
+const getSingleArticle = (id)=>{
+  return userAxiosInstance.get(`/viewarticle/${id}`,{
+    withCredentials:true
+  })
+}
+
 // QUESTIONS
+
+
 
 const askQuestion = (data) => {
     return userAxiosInstance.post("/ask",data,{
@@ -46,6 +59,7 @@ const askQuestion = (data) => {
 };
 
 const saveQuestion = (id)=>{
+  console.log(id);
   return userAxiosInstance.post(`/save/${id}`,{
     withCredentials:true
   })
@@ -154,7 +168,7 @@ const createEvent = (id,data)=>{
 }
 
 const getAllEvents = ()=>{
-  return userAxiosInstance.get("events",{
+  return userAxiosInstance.get("/events",{
     withCredentials:true
   })
 }
@@ -230,6 +244,8 @@ export {
   userLoginwithGoogle,
   isUserAuth,
   editProfile,
+  getArticles,
+  getSingleArticle,
   askQuestion,
   saveQuestion,
   getSavedQuestions,

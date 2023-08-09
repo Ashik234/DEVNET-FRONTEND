@@ -48,6 +48,12 @@ const addArticle = (formData)=>{
     })
 }
 
+const editArticle = (id,formData) =>{
+    return adminAxiosInstance.post(`/editarticle/${id}`,formData,{
+        withCredentials:true
+    })
+}
+
 const getArticles = ()=>{
     return adminAxiosInstance.get("/articles",{
         withCredentials:true
@@ -100,6 +106,7 @@ export {
     getEvents,
     getCommunity,
     addArticle,
+    editArticle,
     getArticles,
     getReport,
     userAction,

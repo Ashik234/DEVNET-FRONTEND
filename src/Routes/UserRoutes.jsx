@@ -29,6 +29,7 @@ import EditQuestion from "../components/Questions/EditQuestion";
 import ReportQuestion from "../components/Questions/ReportQuestion";
 import CommunityMembersProfile from "../components/Communities/CommunityMembersProfile";
 import EditAnswer from "../components/Questions/EditAnswer";
+import ViewArticle from "../components/Articles/ViewArticle";
 
 function UserRoutes() {
   return (
@@ -50,6 +51,7 @@ function UserRoutes() {
         <Route exact path="/questions/edit" element={<EditQuestion/>}/>
         <Route exact path="/questions/answer/edit" element={<EditAnswer/>}/>
         <Route exact path="/questions/report" element={<ReportQuestion/>}/>
+        <Route exact path="/viewarticle" element={<ViewArticle/>}/>
         <Route exact path="/communities" element={<Communities/>} />
         <Route exact path="/communities/createcommunity" element={<CreateCommunity/>}/>
         <Route exact path="/communities/viewcommunity" element={<ViewCommunity/>}/>

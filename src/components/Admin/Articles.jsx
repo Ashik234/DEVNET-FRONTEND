@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { articleAction, getArticles } from "../../services/adminApi";
 import { Link } from "react-router-dom";
-
+import { FiEdit2 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 function Articles() {
+  const navigate = useNavigate();
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -31,6 +33,10 @@ function Articles() {
       .catch((error) => {
         console.error("Error blocking/unblocking Article:", error);
       });
+  };
+
+  const navigateToEdit = (id) => {
+    navigate(`/admin/articles/edit`, { state: id });
   };
 
   return (
@@ -79,7 +85,10 @@ function Articles() {
                   {item.status ? "Active" : "Inactive"}
                 </div>
               </td>
-              <td className="border px-4 py-2 text-center">
+              <td className="px-4 py-2 text-center flex justify-center items-center">
+              <button onClick={() => navigateToEdit(item._id)}>
+                <FiEdit2 className="mr-8" />
+                </button>
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   onClick={() => handleAction(item._id)}

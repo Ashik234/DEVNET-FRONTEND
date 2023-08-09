@@ -50,7 +50,7 @@ function SideBar() {
               Community
             </Link>
           </li>
-          <li className="px-8 py-2 flex items-center">
+          {/* <li className="px-8 py-2 flex items-center">
             <IoNotificationsOutline className="mr-2" />
             <Link
               to="/admin/notifications"
@@ -58,7 +58,7 @@ function SideBar() {
             >
               Notifications
             </Link>
-          </li>
+          </li> */}
           <li className="px-8 py-2 flex items-center">
             <PiNewspaperThin className="mr-2" />
             <Link
