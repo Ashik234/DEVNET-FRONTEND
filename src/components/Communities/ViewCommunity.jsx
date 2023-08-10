@@ -7,6 +7,7 @@ import CommunityMembers from "./CommunityMembers";
 import CommunityEvents from "./CommunityEvents";
 import CommunityDiscussions from "./CommunityDiscussions";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { LuEdit2 } from "react-icons/lu";
 
 function ViewCommunity() {
   const location = useLocation();
@@ -15,11 +16,9 @@ function ViewCommunity() {
   const [community, setCommunity] = useState(null);
   const [activeSection, setActiveSection] = useState("about");
   const profiledata = useSelector((state) => state.user);
-  console.log(profiledata);
 
   useEffect(() => {
     getSingleCommunity(id).then((res) => {
-      console.log(res.data.singlecommunity);
       setCommunity(res.data.singlecommunity);
     });
   }, []);
@@ -33,15 +32,20 @@ function ViewCommunity() {
   const handleSectionChange = (section) => {
     setActiveSection(section);
   };
+
+  const navigateToEdit = (id) => {
+    navigate(`/questions/edit`, { state: id });
+  };
+  
+  // Checking If The User Is A Member Of This Community
+
   const isCurrentUserMember = () => {
     if (!community || !community.members) {
       return false;
     }
     const currentUserID = profiledata.userId;
-
     for (const memberData of community.members) {
       const memberID = memberData.member._id;
-      console.log(memberID);
       if (memberID === currentUserID) {
         return true;
       }
@@ -50,6 +54,24 @@ function ViewCommunity() {
   };
 
   const currentUserMember = isCurrentUserMember();
+
+  // Checking If The User Is A Admin Of This Community
+
+  const isCurrentUserAdmin = () => {
+    if (!community || !community.members) {
+      return false;
+    }
+    const currentUserID = profiledata.userId;
+    for (const memberData of community.members) {
+      const memberID = memberData.member._id;
+      if (memberID === currentUserID && memberData.role === "Admin") {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const currentUserAdmin = isCurrentUserAdmin();
 
   return (
     <>
@@ -131,6 +153,14 @@ function ViewCommunity() {
           {activeSection === "about" && (
             <div className="bottom-0 left-0 right-0 mt-8 z-20">
               <div className="max-w-5xl mx-auto p-8 bg-slate-100 rounded-lg shadow-lg">
+                {currentUserAdmin && (
+                  <button onClick={() => navigateToEdit(item._id)}>
+                    <LuEdit2
+                      size={20}
+                      className="text-gray-600 hover:text-gray-800"
+                    />
+                  </button>
+                )}
                 <h2 className="text-2xl font-bold mb-4">
                   About {community?.title}
                 </h2>

@@ -9,6 +9,7 @@ function CommunityMembers() {
   const location = useLocation();
   const id = location.state;
   const profiledata = useSelector((state) => state.user);
+  
   const [community, setCommunity] = useState(null);
 
   useEffect(() => {

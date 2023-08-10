@@ -6,7 +6,6 @@ function ReportQuestion() {
   const navigate = useNavigate();
   const location = useLocation();
   const id = location.state;
-  console.log(id);
   const [reportReason, setReportReason] = useState("");
 
   const handleSubmit = (e) => {

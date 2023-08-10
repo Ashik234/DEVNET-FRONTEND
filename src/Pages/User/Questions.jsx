@@ -66,7 +66,7 @@ function Questions() {
       }
     });
   };
-  saveQuestions();
+  // saveQuestions();
 
   const handleTagSelect = (tag) => {
     setSelectedTag(tag);
@@ -128,8 +128,19 @@ function Questions() {
                   <div className="font-bold mr-4">{item.userId.username}</div>
                   <div className="mr-4">({item.createdAt})</div>
                 </div>
-                {profiledata.userId === item.userId._id && <LuEdit2 />}
-                <BiErrorCircle />
+                <div className="flex items-center">
+                  {profiledata.userId === item.userId._id && (
+                    <button onClick={() => navigateToEdit(item._id)}>
+                      <LuEdit2 size={20} className="text-gray-600 hover:text-gray-800" />
+                    </button>
+                  )}
+                  <button onClick={() => navigateToReport(item._id)}>
+                    <BiErrorCircle
+                      size={25}
+                      className="text-red-600 hover:text-red-800"
+                    />
+                  </button>
+                </div>
               </div>
               <div className="">
                 {/* <BiUpvote size={30} className="mr-3 cursor-pointer" />
@@ -154,27 +165,28 @@ function Questions() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between mx-7 px-9">
+              <div className="flex items-center justify-between mx-7 px-9 mt-3">
                 <div className="flex items-center">
                   <FontAwesomeIcon
                     icon={faComment}
-                    className="w-6 h-6 text-gray-600 hover:text-gray-800 mr-3"
+                    className="w-6 h-6 text-gray-600 hover:text-gray-800 mr-2"
                   />
-                  <span className="text-left py-3">
+                  <span className="text-sm text-gray-700">
                     {item.numAnswers} Answers
                   </span>
                 </div>
-
                 <div className="flex items-center">
-                  <button onClick={() => navigateToView(item._id)}>
+                  <button
+                    onClick={() => navigateToView(item._id)}
+                    className="text-blue-500 hover:text-blue-700 font-semibold"
+                  >
                     View Question
                   </button>
-                  <button
-                    onClick={() => saveQuestion(item._id)}
-                    className="relative ml-3"
-                  >
-                    <FaBookmark className="w-6 h-6 text-gray-600 hover:text-gray-800 mr-3" />
-                  </button>
+                  <div className="ml-3">
+                    <button onClick={() => saveQuestions(item._id)}>
+                      <FaBookmark className="w-6 h-6 text-gray-600 hover:text-gray-800 cursor-pointer" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -215,17 +227,23 @@ function Questions() {
                   </div>
                   <div className="text-gray-600 mr-4">({item.createdAt})</div>
                 </div>
-                {profiledata.userId === item.userId._id && (
-                  <button onClick={() => navigateToEdit(item._id)}>
-                    <LuEdit2 className="text-gray-600 hover:text-gray-800" />
+                <div className="flex items-center">
+                  {profiledata.userId === item.userId._id && (
+                    <button onClick={() => navigateToEdit(item._id)}>
+                      <LuEdit2 size={20} className="text-gray-600 hover:text-gray-800" />
+                    </button>
+                  )}
+                  <button onClick={() => navigateToReport(item._id)}>
+                    <BiErrorCircle
+                      size={25}
+                      className="text-red-600 hover:text-red-800"
+                    />
                   </button>
-                )}
-                <button onClick={() => navigateToReport(item._id)}>
-                  <BiErrorCircle
-                    size={25}
-                    className="text-red-600 hover:text-red-800"
-                  />
-                </button>
+                </div>
+              </div>
+              <div className="">
+                {/* <BiUpvote size={30} className="mr-3 cursor-pointer" />
+                        <BiDownvote size={30} className="cursor-pointer" /> */}
               </div>
               <div className="font-semibold text-lg ml-7 px-9 text-gray-800">
                 {item.title}
@@ -260,12 +278,11 @@ function Questions() {
                   >
                     View Question
                   </button>
-                  <button
-                    onClick={() => saveQuestions(item._id)}
-                    className="relative ml-3"
-                  >
-                    <FaBookmark className="w-6 h-6 text-gray-600 hover:text-gray-800" />
-                  </button>
+                  <div className="ml-3">
+                    <button onClick={() => saveQuestions(item._id)}>
+                      <FaBookmark className="w-6 h-6 text-gray-600 hover:text-gray-800 cursor-pointer" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

@@ -71,7 +71,7 @@ function CommunityDiscussions({ id }) {
                             <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0 ml-2">
                               {data.from?.username}
                             </div>
-                            <div>{data?.message}</div>
+                            <div className="rounded-lg p-2 bg-gray-200">{data?.message}</div>
                           </div>
                         </div>
                       ) : (
@@ -80,7 +80,7 @@ function CommunityDiscussions({ id }) {
                             <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0 mr-2">
                               {data.from.username}
                             </div>
-                            <div>{data.message}</div>
+                            <div className="rounded-lg p-2 bg-gray-200">{data.message}</div>
                           </div>
                         </div>
                       )}

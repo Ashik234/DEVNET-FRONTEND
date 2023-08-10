@@ -16,6 +16,13 @@ function Articles() {
     navigate(`/viewarticle`, { state: id });
   };
 
+  const truncateDescription = (description, maxLength) => {
+    if (description.length <= maxLength) {
+      return description;
+    }
+    return description.substr(0, maxLength) + "...";
+  };
+
   return (
     <div
       className="articles-container overflow-y-auto max-h-screen"
@@ -27,7 +34,7 @@ function Articles() {
           <img src={item.image} alt="" />
           <p className="text-black font-bold mb-4">{item?.title}</p>
           <p className="text-md text-semibold text-gray-700">
-            {item?.description}
+            {truncateDescription(item?.description, 80)}
           </p>
           <button
             className="text-blue-500 hover:underline mt-3 inline-block font-semibold"
