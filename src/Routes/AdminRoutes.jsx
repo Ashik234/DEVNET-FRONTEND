@@ -24,7 +24,7 @@ function AdminRoutes() {
 
           <Route exact path='/login' element={<AdminPublicRoutes><AdminLogin /></AdminPublicRoutes>} />
           <Route exact path='/home' element={<AdminPublicRoutes><AdminHome/></AdminPublicRoutes>}/>
-          <Route element={<PrivateRoutes role={"admin"} route={"/admin/login"}/>}/>
+          <Route element={<PrivateRoutes role={"admin"} route={"/admin/login"}/>}>
           <Route path='/' element={<Layout/>}>
             <Route index element={<DashBoard/>}/>
             <Route exact path='/users' element={<Users/>}/>
@@ -36,6 +36,7 @@ function AdminRoutes() {
             <Route exact path='/articles/edit' element={<EditArticle/>}/>
             <Route exact path='/reports' element={<Reports/>}/>
             <Route exact path='/adminprofile' element={<AdminProfile/>}/>
+          </Route>
           </Route>
     </Routes>
   )

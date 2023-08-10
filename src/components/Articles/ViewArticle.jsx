@@ -23,11 +23,16 @@ function ViewArticle() {
         <div className="w-full p-4">
           {article.map((item, index) => (
             <div key={index} className="border border-gray-300 rounded-lg p-4 mb-4">
-              <h2 className="text-lg font-semibold mb-3">Featured Article</h2>
-              <img src={item.image} alt="" className="w-full rounded-lg mb-2" />
-              <p className="text-gray-700 text-2xl font-bold">{item?.title}</p>
-              <p className="text-lg text-gray-700">{item?.description}</p>
-            </div>
+            <h2 className="text-lg font-semibold mb-3">Featured Article</h2>
+            <img
+              src={item.image}
+              alt=""
+              className="w-full max-w-xl rounded-lg mb-2" 
+            />
+            <p className="text-gray-700 text-2xl font-bold">{item?.title}</p>
+            <p className="text-lg text-gray-700">{item?.description}</p>
+          </div>
+          
           ))}
         </div>
       </div>

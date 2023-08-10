@@ -25,7 +25,7 @@ function Articles() {
         <div key={index} className="border border-gray-300 rounded-lg p-4 mb-4">
           <h2 className="text-lg font-semibold mb-3">Featured Article</h2>
           <img src={item.image} alt="" />
-          <p className="text-gray-700">{item?.title}</p>
+          <p className="text-black font-bold mb-4">{item?.title}</p>
           <p className="text-md text-semibold text-gray-700">
             {item?.description}
           </p>
