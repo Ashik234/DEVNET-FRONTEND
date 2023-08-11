@@ -67,7 +67,7 @@ function ViewQuestion() {
               Posted by {question.userId.username}
             </p>
             <p className="text-gray-500 text-sm mb-4">
-              Posted on July 14, 2023
+             ({question.createdAt})
             </p>
             <div className="bg-gray-200 p-4 rounded-md">
               <p>{question.description}</p>
@@ -100,7 +100,7 @@ function ViewQuestion() {
                   <TiTick
                     onClick={() => AnswerVerified(item._id)}
                     size={30}
-                    className={`cursor-pointer ${item.verified ? "text-green-500" : ""}`}
+                    className={`cursor-pointer ${item.verified ? "text-green-600" : ""}`}
                     
                   />
                   )}

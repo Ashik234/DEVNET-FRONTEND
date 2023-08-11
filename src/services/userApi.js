@@ -134,6 +134,13 @@ const createCommunity =(id,data)=>{
   })
 }
 
+const editCommunity =(id,data)=>{
+  console.log(id,data);
+  return userAxiosInstance.post(`/viewcommunity/${id}`,data,{
+    withCredentials:true
+  })
+}
+
 const getCommunity =()=>{
   return userAxiosInstance.get("/communities",{
     withCredentials:true
@@ -163,6 +170,13 @@ const searchCommunity = (searchQuery) => {
 
 const createEvent = (id,data)=>{
   return userAxiosInstance.post(`/create/${id}`,data,{
+    withCredentials:true
+  })
+}
+
+const editEvent=(id,data)=>{
+  console.log(id,data);
+  return userAxiosInstance.post(`/viewcommunities/${id}`,data,{
     withCredentials:true
   })
 }
@@ -259,11 +273,13 @@ export {
   searchQuestions,
   askedQuestions,
   createCommunity,
+  editCommunity,
   getCommunity,
   getSingleCommunity,
   joinCommunity,
   searchCommunity,
   createEvent,
+  editEvent,
   getAllEvents,
   getEvents,
   getSingleEvent,

@@ -14,6 +14,7 @@ import {
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import Articles from "../../components/Articles/Articles";
+import ReportQuestion from "../../components/Questions/ReportQuestion";
 
 function Questions() {
   const navigate = useNavigate();
@@ -23,6 +24,16 @@ function Questions() {
   const location = useLocation();
   const searchQuery = new URLSearchParams(location.search).get("search");
   const profiledata = useSelector((state) => state.user);
+
+   const [showEditModal, setShowEditModal] = useState(false);
+
+  const openEditModal = () => {
+    setShowEditModal(true);
+  };
+
+  const closeEditModal = () => {
+    setShowEditModal(false);
+  };
 
   useEffect(() => {
     const getQuestions = () => {
@@ -233,12 +244,17 @@ function Questions() {
                       <LuEdit2 size={20} className="text-gray-600 hover:text-gray-800" />
                     </button>
                   )}
-                  <button onClick={() => navigateToReport(item._id)}>
+                  <button onClick={openEditModal}>
                     <BiErrorCircle
                       size={25}
                       className="text-red-600 hover:text-red-800"
                     />
                   </button>
+                  {showEditModal && (
+            <div className="modal-overlay">
+              <ReportQuestion questionid={item._id}  onClose={closeEditModal} />
+            </div>
+          )}
                 </div>
               </div>
               <div className="">

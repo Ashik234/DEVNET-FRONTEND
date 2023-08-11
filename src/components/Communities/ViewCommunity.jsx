@@ -8,6 +8,7 @@ import CommunityEvents from "./CommunityEvents";
 import CommunityDiscussions from "./CommunityDiscussions";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { LuEdit2 } from "react-icons/lu";
+import EditCommunity from "./EditCommunity";
 
 function ViewCommunity() {
   const location = useLocation();
@@ -17,6 +18,15 @@ function ViewCommunity() {
   const [activeSection, setActiveSection] = useState("about");
   const profiledata = useSelector((state) => state.user);
 
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const openEditModal = () => {
+    setShowEditModal(true);
+  };
+
+  const closeEditModal = () => {
+    setShowEditModal(false);
+  };
   useEffect(() => {
     getSingleCommunity(id).then((res) => {
       setCommunity(res.data.singlecommunity);
@@ -33,10 +43,6 @@ function ViewCommunity() {
     setActiveSection(section);
   };
 
-  const navigateToEdit = (id) => {
-    navigate(`/questions/edit`, { state: id });
-  };
-  
   // Checking If The User Is A Member Of This Community
 
   const isCurrentUserMember = () => {
@@ -109,6 +115,14 @@ function ViewCommunity() {
                     </p>
                   </div>
                 </div>
+                {showEditModal && (
+                  <div className="modal-overlay">
+                    <EditCommunity
+                      communityId={community._id}
+                      onClose={closeEditModal}
+                    />
+                  </div>
+                )}
                 {!currentUserMember && (
                   <button
                     onClick={() => handleJoin(community._id)}
@@ -152,22 +166,26 @@ function ViewCommunity() {
 
           {activeSection === "about" && (
             <div className="bottom-0 left-0 right-0 mt-8 z-20">
-              <div className="max-w-5xl mx-auto p-8 bg-slate-100 rounded-lg shadow-lg">
+              <div className="max-w-5xl mx-auto p-8 bg-slate-100 rounded-lg shadow-lg flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold mb-2">
+                    About {community?.title}
+                  </h2>
+                  <p className="text-gray-600 mb-4">{community?.description}</p>
+                </div>
+
                 {currentUserAdmin && (
-                  <button onClick={() => navigateToEdit(item._id)}>
+                  <button onClick={openEditModal}>
                     <LuEdit2
-                      size={20}
+                      size={25}
                       className="text-gray-600 hover:text-gray-800"
                     />
                   </button>
                 )}
-                <h2 className="text-2xl font-bold mb-4">
-                  About {community?.title}
-                </h2>
-                <p className="text-gray-600">{community?.description}</p>
               </div>
             </div>
           )}
+
           {activeSection === "members" && <CommunityMembers />}
           {activeSection === "events" && <CommunityEvents id={community._id} />}
           {activeSection === "discussions" && (

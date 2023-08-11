@@ -1,19 +1,14 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { reportQuestion } from "../../services/userApi";
 import { toast } from "react-toastify";
-function ReportQuestion() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const id = location.state;
-  const [reportReason, setReportReason] = useState("");
 
+function ReportQuestion({questionid, onClose }) {
+  const [reportReason, setReportReason] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    reportQuestion(id, reportReason).then((res) => {
-        console.log(res.data);
+    reportQuestion(questionid, reportReason).then((res) => {
         toast.success(res.data.message);
-        navigate("/questions");
+        onClose()
     })
     .catch((error) => {
         console.error("Error Reporting question:", error);
@@ -47,9 +42,9 @@ function ReportQuestion() {
           </button>
           <button
             className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md"
-            onClick={() => navigate(-1)}
+            onClick={onClose}
           >
-            Cancel
+            Close
           </button>
         </div>
       </div>
