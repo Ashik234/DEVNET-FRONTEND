@@ -34,7 +34,7 @@ function ProfileAsked({ id }) {
             <div className="flex items-center justify-between mb-3 mr-4">
               <div className="flex items-center mr-4 ml-3 mt-8">
                 <img
-                  src={PROFILE}
+                  src={question?.image}
                   alt="Profile"
                   className="w-10 h-10 rounded-full mr-4 ml-7"
                 />

@@ -5,7 +5,7 @@ function PublicRoutes(props) {
   if(localStorage.getItem('userJWT')){
     return <Navigate to="/" />
   }
-  <Navigate to="/" />
+  <Navigate to="/login" />
   return props.children
 }
 

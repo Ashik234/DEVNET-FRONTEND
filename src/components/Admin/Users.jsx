@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 
 function Users() {
   const [users, setUsers] = useState([]);
-
   useEffect(() => {
     getUsers()
       .then((res) => {

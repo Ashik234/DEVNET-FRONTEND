@@ -29,6 +29,7 @@ function ViewQuestion() {
   const AnswerVerified = (id) => {
     try {
       answerVerified(id).then((res) => {
+        setQuestion(res.data.updatedAnswer);
         toast.success(res.data.message)
       });
     } catch (error) {
@@ -44,9 +45,12 @@ function ViewQuestion() {
       try {
         submitAnswer(id, answer).then((res) => {
           if (res.data.success) {
-            setAnswer(res.data);
+            getSingleQuestion(id).then((res) => {
+              setQuestion(res.data.singlequestion);
+            });
+            // setAnswer(res.data);
             toast.success(res.data.message);
-            navigate("/questions/viewquestion");
+            // navigate("/questions/viewquestion");
           } else {
             toast.warn(res.data.message);
           }
@@ -101,18 +105,17 @@ function ViewQuestion() {
                     onClick={() => AnswerVerified(item._id)}
                     size={30}
                     className={`cursor-pointer ${item.verified ? "text-green-600" : ""}`}
-                    
                   />
                   )}
                   <p className="text-gray-800 ml-12">{item.answer}</p>
                 </div>
               </div>
             ))}
+            
           </div>
 
           <div className="mt-6 max-w-4xl w-full bg-white rounded-lg shadow-md p-6">
             <h2 className="text-lg font-bold mb-2">Your Answer</h2>
-
             <div className="bg-gray-200 p-4 rounded-md">
               <textarea
                 className="w-full px-3 py-2 mb-2 rounded-md resize-none"
@@ -138,5 +141,4 @@ function ViewQuestion() {
     </div>
   );
 }
-
 export default ViewQuestion;

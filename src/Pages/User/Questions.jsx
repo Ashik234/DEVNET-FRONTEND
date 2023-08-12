@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import Articles from "../../components/Articles/Articles";
 import ReportQuestion from "../../components/Questions/ReportQuestion";
+import Loader from "../../Pages/Loader";
 
 function Questions() {
   const navigate = useNavigate();
@@ -38,7 +39,10 @@ function Questions() {
   useEffect(() => {
     const getQuestions = () => {
       getQuestion().then((res) => {
+      setTimeout(() => {
+
         setData(res.data.questionData);
+        }, 1000);
       });
     };
     getQuestions();
@@ -217,6 +221,7 @@ function Questions() {
                     Ask a Question
                   </button>
                 </Link>
+                <Loader/>
               </div>
             </div>
           </div>

@@ -18,7 +18,7 @@ console.log(eventId);
     const handleSubmit = (e) => {
       e.preventDefault();
       editEvent(eventId, event).then((res) => {
-        setEvent(res.data.updatedCommunity);
+        setEvent(res.data.updatedEvent);
           toast.success(res.data.message);
           onClose()
       })

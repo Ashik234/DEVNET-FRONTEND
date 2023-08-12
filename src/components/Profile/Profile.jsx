@@ -9,10 +9,6 @@ import ProfileAsked from "./ProfileAsked";
 
 function Profile() {
   const navigate = useNavigate();
-
-  const [github, setGithub] = useState("");
-  const [linkedin, setLinkedin] = useState("");
-
   const [activeSection, setActiveSection] = useState("about");
 
   const profiledata = useSelector((state) => state.user);

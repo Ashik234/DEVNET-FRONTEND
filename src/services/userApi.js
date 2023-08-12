@@ -48,9 +48,13 @@ const getSingleArticle = (id)=>{
   })
 }
 
+const likeArticle = (id)=>{
+  return userAxiosInstance.post(`/likearticle/${id}`,{
+    withCredentials:true
+  })
+}
+
 // QUESTIONS
-
-
 
 const askQuestion = (data) => {
     return userAxiosInstance.post("/ask",data,{
@@ -59,7 +63,6 @@ const askQuestion = (data) => {
 };
 
 const saveQuestion = (id)=>{
-  console.log(id);
   return userAxiosInstance.post(`/save/${id}`,{
     withCredentials:true
   })
@@ -135,7 +138,6 @@ const createCommunity =(id,data)=>{
 }
 
 const editCommunity =(id,data)=>{
-  console.log(id,data);
   return userAxiosInstance.post(`/viewcommunity/${id}`,data,{
     withCredentials:true
   })
@@ -175,7 +177,6 @@ const createEvent = (id,data)=>{
 }
 
 const editEvent=(id,data)=>{
-  console.log(id,data);
   return userAxiosInstance.post(`/viewcommunities/${id}`,data,{
     withCredentials:true
   })
@@ -260,6 +261,7 @@ export {
   editProfile,
   getArticles,
   getSingleArticle,
+  likeArticle,
   askQuestion,
   saveQuestion,
   getSavedQuestions,

@@ -19,7 +19,7 @@ const userCount = ()=>{
 }
 
 const reportCount = ()=>{
-    return adminAxiosInstance.get("reportcount",{
+    return adminAxiosInstance.get("/reportcount",{
         withCredentials:true
     })
 }

@@ -7,6 +7,7 @@ function EditAnswer() {
  const navigate = useNavigate();
   const location = useLocation();
   const id = location.state;
+  console.log(id);
   const [answer, setAnswer] = useState("");
 
   const handleSubmit = (e) => {

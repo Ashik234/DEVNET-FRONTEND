@@ -106,7 +106,7 @@ function Messages({
                     {msg.text}
                   </div>
                 </div>
-                <div className={`text-xs text-gray-500 ${msg.senderId === userid ? "text-left" : "text-right"}`}>
+                <div className={`mb-2 text-xs text-gray-500 ${msg.senderId === userid ? "text-left" : "text-right"}`}>
                   {format(msg.createdAt)}
                 </div>
               </div>

@@ -9,7 +9,7 @@ function PrivateRoutes({ role, route }) {
     if (role === "user") {
       isUserAuth()
         .then((res) => {
-          setVerify(res.data.success);
+          setVerify(true);
         })
         .catch((err) => {
           setVerify(false);
@@ -28,7 +28,7 @@ function PrivateRoutes({ role, route }) {
       });
     }
   }, []);
-  if (verify == null) return;
+  if (verify === null) return;
   return verify ? <Outlet /> : <Navigate to={route} />;
 }
 

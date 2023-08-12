@@ -3,6 +3,7 @@ import COMMUNITY from "../../assets/community.jpg";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { getCommunity, joinCommunity, searchCommunity } from "../../services/userApi";
 import { toast } from "react-toastify";
+import Loader from "../../Pages/Loader";
 
 function Communities() {
   const navigate = useNavigate();
@@ -14,7 +15,11 @@ function Communities() {
 
   useEffect(() => {
     getCommunity().then((res) => {
+      setTimeout(() => {
+
       setData(res.data.communityData);
+        }, 1000);
+
     });
   }, []);
 
@@ -86,10 +91,12 @@ function Communities() {
         </div>
         {displayData.length === 0 ? (
           <p className="font-bold text-xl text-center text-gray-500 mt-10">
+            <Loader/>
             {searchResults.length > 0
               ? "No matching communities found."
               : "No Communities Found. Be The First One To Create One!"}
           </p>
+          
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
             {displayData.map((item, index) => (
