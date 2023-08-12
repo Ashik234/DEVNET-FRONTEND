@@ -24,6 +24,12 @@ const reportCount = ()=>{
     })
 }
 
+const articleMetrics = ()=>{
+    return adminAxiosInstance.get("/articlemetrics",{
+        withCredentials:true
+    })
+}
+
 const getUsers = ()=>{
     return adminAxiosInstance.get("/users",{
         withCredentials:true
@@ -102,6 +108,7 @@ export {
     isAdminAuth,
     userCount,
     reportCount,
+    articleMetrics,
     getUsers,
     getEvents,
     getCommunity,

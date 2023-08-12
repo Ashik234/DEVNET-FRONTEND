@@ -4,7 +4,7 @@ import SideBar from "../../components/Admin/SideBar";
 import Navbar from "../../components/Admin/NavBar";
 function Layout() {
   return (
-    <div className="flex flex-col bg-neutral-100 w-full h-screen">
+    <div className="flex flex-col bg-neutral-100 w-full h-full">
       <Navbar />
       <div className="flex flex-col md:flex-row flex-1">
         <SideBar />
