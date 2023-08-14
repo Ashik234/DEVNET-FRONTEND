@@ -104,6 +104,12 @@ const submitAnswer = (id,data)=>{
   })
 }
 
+const getSingleAnswer = (id)=>{
+  return userAxiosInstance.get(`/singleanswer/${id}`,{
+    withCredentials:true
+  })
+}
+
 const editAnswer = (id,data)=>{
   return userAxiosInstance.post(`/answer/edit/${id}`,data,{
     withCredentials:true
@@ -270,6 +276,7 @@ export {
   reportQuestion,
   getSingleQuestion,
   submitAnswer,
+  getSingleAnswer,
   editAnswer,
   answerVerified,
   searchQuestions,

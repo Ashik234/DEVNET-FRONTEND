@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 function ReportQuestion({questionid, onClose }) {
   const [reportReason, setReportReason] = useState("");
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     reportQuestion(questionid, reportReason).then((res) => {

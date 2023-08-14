@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {getSingleCommunity, editCommunity } from "../../services/userApi";
 import { toast } from "react-toastify";
 
-function EditCommunity({communityId, onClose }) {
+function EditCommunity({communityId, onClose,onUpdate }) {
     const [community, setCommunity] = useState("");
 
     useEffect(() => {
@@ -16,6 +16,7 @@ function EditCommunity({communityId, onClose }) {
       editCommunity(communityId, community).then((res) => {
         setCommunity(res.data.updatedCommunity);
           toast.success(res.data.message);
+          onUpdate(res.data.updatedCommunity)
           onClose()
       })
       .catch((error) => {

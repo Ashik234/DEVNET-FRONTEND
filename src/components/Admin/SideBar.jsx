@@ -78,7 +78,7 @@ function SideBar() {
             </Link>
           </li>
         </ul>
-        <button onClick={logout} className="px-8 mt-40 py-2 flex items-center">
+        <button onClick={logout} className="px-8 mt-52 py-2 flex items-center">
           <CiLogout className="text-white mr-2" />
           Logout
         </button>

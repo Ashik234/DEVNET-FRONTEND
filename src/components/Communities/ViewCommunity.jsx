@@ -27,6 +27,11 @@ function ViewCommunity() {
   const closeEditModal = () => {
     setShowEditModal(false);
   };
+
+  const handleUpdate = (updatedCommunity) => {
+    setCommunity(updatedCommunity);
+  };
+
   useEffect(() => {
     getSingleCommunity(id).then((res) => {
       setCommunity(res.data.singlecommunity);
@@ -119,6 +124,7 @@ function ViewCommunity() {
                   <div className="modal-overlay">
                     <EditCommunity
                       communityId={community._id}
+                      onUpdate={handleUpdate}
                       onClose={closeEditModal}
                     />
                   </div>
@@ -176,7 +182,7 @@ function ViewCommunity() {
 
                 {currentUserAdmin && (
                   <button onClick={openEditModal}>
-                    <LuEdit2
+                    <LuEdit2 communityid = {community._id}
                       size={25}
                       className="text-gray-600 hover:text-gray-800"
                     />

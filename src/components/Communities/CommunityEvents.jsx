@@ -11,7 +11,7 @@ function CommunityEvents({ id }) {
   const [community, setCommunity] = useState(null);
   const profiledata = useSelector((state) => state.user);
   const [showEditModal, setShowEditModal] = useState(false);
-
+  
   useEffect(() => {
     getEvents(id).then((res) => {
       setEvent(res.data.eventData);

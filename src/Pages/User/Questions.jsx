@@ -257,7 +257,7 @@ function Questions() {
                   </button>
                   {showEditModal && (
             <div className="modal-overlay">
-              <ReportQuestion questionid={item._id}  onClose={closeEditModal} />
+              <ReportQuestion questionid={item._id} onClose={closeEditModal} />
             </div>
           )}
                 </div>

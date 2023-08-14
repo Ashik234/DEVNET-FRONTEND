@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 function EditEvent({eventId,onClose}) {
     const [event, setEvent] = useState("");
-console.log(eventId);
+    console.log(eventId);
     useEffect(() => {
         getSingleEvent(eventId)
           .then((res) => {
@@ -13,7 +13,7 @@ console.log(eventId);
           .catch((error) => {
             toast.error('Failed to fetch event data.');
           });
-      }, [eventId]);
+      }, []);
       
     const handleSubmit = (e) => {
       e.preventDefault();

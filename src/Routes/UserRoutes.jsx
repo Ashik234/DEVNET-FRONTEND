@@ -49,7 +49,7 @@ function UserRoutes() {
         <Route exact path="/questions/ask" element={<AskQuestion />} />
         <Route exact path="/questions/viewquestion" element={<ViewQuestion/>}/>
         <Route exact path="/questions/edit" element={<EditQuestion/>}/>
-        <Route exact path="/questions/answer/edit" element={<EditAnswer/>}/>
+        <Route exact path="/questions/viewquestion/answer/edit" element={<EditAnswer/>}/>
         <Route exact path="/questions/report" element={<ReportQuestion/>}/>
         <Route exact path="/viewarticle" element={<ViewArticle/>}/>
         <Route exact path="/communities" element={<Communities/>} />
