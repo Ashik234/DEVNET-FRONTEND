@@ -120,6 +120,7 @@ function Messages({
               className="w-full bg-gray-100 py-3 px-3 rounded-xl"
               type="text"
               placeholder="Type your message here..."
+              name="message"
             />
             <button
               onClick={handleSend}

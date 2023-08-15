@@ -3,7 +3,9 @@ import { toast } from "react-toastify";
 import { articleAction, getArticles } from "../../services/adminApi";
 import { Link } from "react-router-dom";
 import { FiEdit2 } from "react-icons/fi";
+import { AiOutlineEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+
 function Articles() {
   const navigate = useNavigate();
   const [articles, setArticles] = useState([]);
@@ -17,6 +19,13 @@ function Articles() {
         console.error("Failed to fetch article data:", error);
       });
   }, []);
+  const truncateDescription = (description, maxLength) => {
+    if (description.length <= maxLength) {
+      return description;
+    }
+    return description.substr(120, maxLength) + "...";
+  };
+
 
   const handleAction = (id) => {
     articleAction(id)
@@ -33,6 +42,10 @@ function Articles() {
       .catch((error) => {
         console.error("Error blocking/unblocking Article:", error);
       });
+  };
+
+  const navigateToView = (id) => {
+    navigate(`/admin/articles/view`, { state: id });
   };
 
   const navigateToEdit = (id) => {
@@ -78,7 +91,7 @@ function Articles() {
               </td>
 
               <td className="border px-4 py-2 text-center">
-                {item.description}
+                {truncateDescription(item.description,80)}
               </td>
               <td className="border px-4 py-2 text-center">
                 <div className="flex flex-col justify-center h-full">
@@ -86,6 +99,9 @@ function Articles() {
                 </div>
               </td>
               <td className="px-4 py-2 text-center flex justify-center items-center">
+                <button onClick={() => navigateToView(item._id)}>
+                  <AiOutlineEye size={20} className="mr-8" />
+                </button>
               <button onClick={() => navigateToEdit(item._id)}>
                 <FiEdit2 className="mr-8" />
                 </button>

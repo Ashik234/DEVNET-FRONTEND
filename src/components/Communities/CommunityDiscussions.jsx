@@ -3,27 +3,31 @@ import io from "socket.io-client";
 const baseURL = import.meta.env.VITE_USER_BASE_URL;
 import { addmessage, getAllMessage } from "../../services/userApi";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 
 function CommunityDiscussions({ id }) {
   const socket = useRef();
   const scroll = useRef();
   const [value, setValue] = useState("");
   const { userId } = useSelector((state) => state.user);
-  console.log(userId);
-  const params = useParams();
-  const communityId = params.id;
   const [messages, setMessages] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newMessage = { from: { _id: userId }, message: value };
+    const trimmedValue = value.trim();
+    if (trimmedValue === "") {
+      return;
+    }
+
+    const newMessage = { from: { _id: userId }, message: trimmedValue };
+
     // Update local state with the new message instantly
     setMessages([...messages, newMessage]);
+
     // Emit the message to the server and let it broadcast to other users
-    addmessage({ messages: value, communityId: id }).then((res) => {
+    addmessage({ messages: trimmedValue, communityId: id }).then((res) => {
       socket.current.emit("send_message", res.data.data);
     });
+
     setValue("");
   };
 
@@ -58,7 +62,9 @@ function CommunityDiscussions({ id }) {
       <div className="w-full h-full border-2 bg-gray-200 rounded-md shadow p-2 px-8">
         <div className="h-[90%] border-b-2 bg-white rounded-md overflow-auto">
           <div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-4 p-4">Community Discussions</h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-4 p-4">
+              Community Discussions
+            </h2>
             <hr />
             <div className="flex flex-col h-full overflow-x-auto">
               <div ref={scroll} className="flex flex-col h-full">
@@ -71,7 +77,9 @@ function CommunityDiscussions({ id }) {
                             <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0 ml-2">
                               {data.from?.username}
                             </div>
-                            <div className="rounded-lg p-2 bg-gray-200">{data?.message}</div>
+                            <div className="rounded-lg p-2 bg-gray-200">
+                              {data?.message}
+                            </div>
                           </div>
                         </div>
                       ) : (
@@ -80,7 +88,9 @@ function CommunityDiscussions({ id }) {
                             <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0 mr-2">
                               {data.from.username}
                             </div>
-                            <div className="rounded-lg p-2 bg-gray-200">{data.message}</div>
+                            <div className="rounded-lg p-2 bg-gray-200">
+                              {data.message}
+                            </div>
                           </div>
                         </div>
                       )}

@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { BsChatRightDotsFill } from "react-icons/bs";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import Loader from "../../Pages/Loader";
+
 function CommunityMembers() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -14,9 +15,7 @@ function CommunityMembers() {
 
   useEffect(() => {
     getSingleCommunity(id).then((res) => {
-      setTimeout(() => {
         setCommunity(res.data.singlecommunity);
-      }, 500);
     });
   }, []);
 
