@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import PROFILE from "../../assets/profile.jpeg";
+import PROFILE from "../../assets/Profile-Logo.png";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import ProfileSaved from "./ProfileSaved";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,7 +12,6 @@ function Profile() {
   const [activeSection, setActiveSection] = useState("about");
 
   const profiledata = useSelector((state) => state.user);
-  console.log(profiledata);
   const handleSectionChange = (section) => {
     setActiveSection(section);
   };
@@ -24,6 +23,7 @@ function Profile() {
   const editProfile = (id) => {
     navigate(`/profile/edit`, { state: id });
   };
+
   return (
     <div className="bg-gray-100 px-4 py-20">
       <div className="container mx-auto max-w-5xl ">

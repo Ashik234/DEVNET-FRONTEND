@@ -26,7 +26,7 @@ function Questions() {
   const searchQuery = new URLSearchParams(location.search).get("search");
   const profiledata = useSelector((state) => state.user);
 
-   const [showEditModal, setShowEditModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const openEditModal = () => {
     setShowEditModal(true);
@@ -36,12 +36,14 @@ function Questions() {
     setShowEditModal(false);
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 2;
+
   useEffect(() => {
     const getQuestions = () => {
       getQuestion().then((res) => {
-      setTimeout(() => {
-
-        setData(res.data.questionData);
+        setTimeout(() => {
+          setData(res.data.questionData);
         }, 1000);
       });
     };
@@ -68,10 +70,6 @@ function Questions() {
     navigate(`/questions/edit`, { state: id });
   };
 
-  const navigateToReport = (id) => {
-    navigate(`/questions/report`, { state: id });
-  };
-
   const saveQuestions = (id) => {
     saveQuestion(id).then((res) => {
       if (res.data.success) {
@@ -81,7 +79,6 @@ function Questions() {
       }
     });
   };
-  // saveQuestions();
 
   const handleTagSelect = (tag) => {
     setSelectedTag(tag);
@@ -90,6 +87,10 @@ function Questions() {
   const filteredData = selectedTag
     ? data.filter((item) => item.tags.includes(selectedTag))
     : data;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <div className="flex flex-wrap">
@@ -146,20 +147,31 @@ function Questions() {
                 <div className="flex items-center">
                   {profiledata.userId === item.userId._id && (
                     <button onClick={() => navigateToEdit(item._id)}>
-                      <LuEdit2 size={20} className="text-gray-600 hover:text-gray-800" />
+                      <LuEdit2
+                        size={20}
+                        className="text-gray-600 hover:text-gray-800"
+                      />
                     </button>
                   )}
-                  <button onClick={() => navigateToReport(item._id)}>
+                  <button onClick={openEditModal}>
                     <BiErrorCircle
                       size={25}
                       className="text-red-600 hover:text-red-800"
                     />
                   </button>
+                  {showEditModal && (
+                    <div className="modal-overlay">
+                      <ReportQuestion
+                        questionid={item._id}
+                        onClose={closeEditModal}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="">
                 {/* <BiUpvote size={30} className="mr-3 cursor-pointer" />
-                        <BiDownvote size={30} className="cursor-pointer" /> */}
+                    <BiDownvote size={30} className="cursor-pointer" /> */}
               </div>
               <div className="flex items-center font-bold ml-7 px-9">
                 {item.title}
@@ -168,16 +180,15 @@ function Questions() {
                 {item.description}
               </div>
 
-              <div className="flex items-center text-left px-9">
-                <div className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 mr-4 ml-5">
-                  {item.tags}
-                </div>
-                <div className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 mr-4 ml-3">
-                  {item.tags}
-                </div>
-                <div className="bg-gray-300 text-gray-800 rounded-full py-1 px-2 mr-4 ml-3">
-                  {item.tags}
-                </div>
+              <div className="flex items-center mt-3 ml-7 px-9">
+                {item.tags.map((tag, tagIndex) => (
+                  <div
+                    key={tagIndex}
+                    className="bg-blue-100 text-blue-600 rounded-full py-1 px-3 mr-2 text-sm"
+                  >
+                    {tag}
+                  </div>
+                ))}
               </div>
 
               <div className="flex items-center justify-between mx-7 px-9 mt-3">
@@ -221,12 +232,12 @@ function Questions() {
                     Ask a Question
                   </button>
                 </Link>
-                <Loader/>
+                <Loader />
               </div>
             </div>
           </div>
         ) : (
-          filteredData.map((item, index) => (
+          currentItems.map((item, index) => (
             <div
               key={index}
               className="border border-gray-300 rounded-lg p-4 mb-4"
@@ -246,7 +257,10 @@ function Questions() {
                 <div className="flex items-center">
                   {profiledata.userId === item.userId._id && (
                     <button onClick={() => navigateToEdit(item._id)}>
-                      <LuEdit2 size={20} className="text-gray-600 hover:text-gray-800" />
+                      <LuEdit2
+                        size={20}
+                        className="text-gray-600 hover:text-gray-800"
+                      />
                     </button>
                   )}
                   <button onClick={openEditModal}>
@@ -256,15 +270,18 @@ function Questions() {
                     />
                   </button>
                   {showEditModal && (
-            <div className="modal-overlay">
-              <ReportQuestion questionid={item._id} onClose={closeEditModal} />
-            </div>
-          )}
+                    <div className="modal-overlay">
+                      <ReportQuestion
+                        questionid={item._id}
+                        onClose={closeEditModal}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="">
                 {/* <BiUpvote size={30} className="mr-3 cursor-pointer" />
-                        <BiDownvote size={30} className="cursor-pointer" /> */}
+                    <BiDownvote size={30} className="cursor-pointer" /> */}
               </div>
               <div className="font-semibold text-lg ml-7 px-9 text-gray-800">
                 {item.title}
@@ -309,6 +326,22 @@ function Questions() {
             </div>
           ))
         )}
+        <div className="flex justify-center mt-4">
+          <button
+            className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold px-4 py-2 rounded-l"
+            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <button
+            className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold px-4 py-2 rounded-r"
+            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={indexOfLastItem >= filteredData.length}
+          >
+            Next
+          </button>
+        </div>
       </div>
       <div className="w-full md:w-1/4 p-4 border-l">
         <Articles />
