@@ -23,18 +23,19 @@ function ViewArticle() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
-      <div className="mb-4">
-        <img
-          className="max-w-full h-auto"
-          src={article.image}
-          alt="Article Image"
-        />
-      </div>
-      <p className="text-gray-600 mb-4">{article.date}</p>
-      <div className="text-lg mb-4">{article.description}</div>
+    <div className="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-lg">
+    <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
+    <div className="mb-4">
+      <img
+        className="max-w-full h-auto rounded-md"
+        src={article.image}
+        alt="Article Image"
+      />
     </div>
+    <p className="text-gray-600 mb-4">{article.date}</p>
+    <div className="text-lg mb-4">{article.description}</div>
+  </div>
+  
   );
 }
 

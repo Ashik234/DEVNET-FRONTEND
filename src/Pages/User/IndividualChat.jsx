@@ -73,11 +73,9 @@ function IndividualChat() {
 
   const handleChatClick = (chat) => {
     setCurrentChat(chat);
-    console.log(chat);
     setUnreadCounts(prevCounts => {
       const newCounts = { ...prevCounts };
       newCounts[chat.receiverId] = 0;
-      console.log(newCounts);
       return newCounts;
     });
   };

@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { changeUserDetails } from "../../Redux/user/UserSlice";
 import { useDispatch } from "react-redux";
+import { userBaseUrl } from "../../constants/constants";
 
 export default function EmailVerify() {
   const [validUrl, setValidUrl] = useState(false);
@@ -13,7 +14,7 @@ export default function EmailVerify() {
   useEffect(() => {
     const verifyEmailUrl = async () => {
       try {
-        const url = `http://localhost:8000/${params.id}/verify/${params.token}`;
+        const url = `${userBaseUrl}/${params.id}/verify/${params.token}`;
         const { data } = await axios.get(url);
         dispatch(
           changeUserDetails({

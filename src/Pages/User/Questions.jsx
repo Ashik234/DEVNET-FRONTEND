@@ -328,14 +328,14 @@ function Questions() {
         )}
         <div className="flex justify-center mt-4">
           <button
-            className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold px-4 py-2 rounded-l"
+            className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold px-4 py-2 rounded-l focus:outline-none disabled:opacity-50"
             onClick={() => setCurrentPage(currentPage - 1)}
             disabled={currentPage === 1}
           >
             Previous
           </button>
           <button
-            className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold px-4 py-2 rounded-r"
+            className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold px-4 py-2 rounded-r focus:outline-none disabled:opacity-50"
             onClick={() => setCurrentPage(currentPage + 1)}
             disabled={indexOfLastItem >= filteredData.length}
           >

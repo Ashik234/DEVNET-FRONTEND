@@ -52,7 +52,7 @@ function DashBoard() {
   ];
   const likesChartData = sorted?.map((article) => ({
     title: article.title,
-    likes: article.likes.count,
+    Likes: article.likes.count,
     
   }));
 
@@ -132,8 +132,6 @@ function DashBoard() {
                   return (
                     <div className="custom-tooltip">
                       <p className="label">{`${label} : ${payload[0].value}`}</p>
-                      <p className="intro">{/* Add your own intro logic here */}</p>
-                      {/* <p className="desc">Anything you want can be displayed here.</p> */}
                     </div>
                   );
                 }
@@ -141,7 +139,7 @@ function DashBoard() {
               }}
             />
             <Legend />
-            <Bar dataKey="likes" barSize={20} fill="rgba(255, 99, 132, 0.6)" />
+            <Bar dataKey="Likes" barSize={20} fill="rgba(255, 99, 132, 0.6)" />
           </BarChart>
         </ResponsiveContainer>
       </div>
